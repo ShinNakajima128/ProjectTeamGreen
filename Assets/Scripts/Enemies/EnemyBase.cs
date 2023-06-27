@@ -105,6 +105,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     }
     #endregion
 
+    #region protected
+    /// <summary>行動する</summary>
+    protected abstract void OnAction();
+    #endregion
+
     #region private method
     private void Setup()
     {
