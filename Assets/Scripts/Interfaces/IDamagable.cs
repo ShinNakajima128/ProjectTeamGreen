@@ -4,9 +4,6 @@
 public interface IDamagable
 {
     #region property
-    /// <summary>現在のHP</summary>
-    int CurrentHp { get; }
-
     /// <summary>無敵状態かどうか</summary>
     bool IsInvincible { get; }
     #endregion
