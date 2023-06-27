@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UniRx;
+using UniRx.Triggers;
 
 /// <summary>
 /// プレイヤーの機能全般を持つコンポ―ネント
@@ -14,7 +15,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     #region property
     public static PlayerController Instance { get; private set; }
     public bool IsInvincible => _isInvincible;
-    public Subject<float> ChangeAttackAmountSubject => _changeAttackAmountSubject;
+    public Subject<float> ChangeAttackCoefficientSubject => _changeAttackCoefficientSubject;
     #endregion
 
     #region serialize
@@ -32,7 +33,9 @@ public class PlayerController : MonoBehaviour, IDamagable
     #endregion
 
     #region Event
-    private Subject<float> _changeAttackAmountSubject = new Subject<float>();
+    /// <summary>スキルに掛け合わせる係数の変更時のSubject</summary>
+    private Subject<float> _changeAttackCoefficientSubject = new Subject<float>();
+
     #endregion
 
     #region unity methods
@@ -53,6 +56,16 @@ public class PlayerController : MonoBehaviour, IDamagable
         _move.IsFlipedProerty
              .Subscribe(value => FlipSprite(value))
              .AddTo(this);
+
+        this.UpdateAsObservable()
+            .Subscribe(_ =>
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    SkillManager.Instance.SetSkill(SkillType.Aura);
+                }
+            })
+            .AddTo(this);
     }
 
     private void OnEnable()
