@@ -10,31 +10,30 @@ using UniRx;
 public abstract class EnemyBase : MonoBehaviour, IDamagable
 {
     #region property
-    public int CurrentHp => _currentHp;
-
     public bool IsInvincible => _isInvincible;
     #endregion
 
     #region serialize
+    [Tooltip("敵のデータ")]
     [SerializeField]
     private EnemyData _enemyData = default;
     #endregion
 
     #region protected
-    /// <summary>
-    /// 現在のHP。実行中はこの変数を扱う 
-    /// </summary>
+    /// <summary>現在のHP</summary>
     protected int _currentHp;
-    /// <summary>
-    /// 現在の攻撃力。実行中はこの変数を扱う 
-    /// </summary>
+    /// <summary>現在の攻撃力</summary>
     protected int _currentAttackAmount;
-    protected bool _isActived = false;
+    /// <summary>行動可能かどうか</summary>
+    protected bool _isActionable = false;
+    /// <summary>無敵状態かどうか</summary>
     protected bool _isInvincible = false;
-   
+    /// <summary>敵の画像を描写するRenderer</summary>
+    protected SpriteRenderer _enemyRenderer;
     #endregion
 
     #region private
+    private bool _init = false;
     #endregion
 
     #region Constant
@@ -48,11 +47,26 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     {
         _currentHp = _enemyData.HP;
         _currentAttackAmount = _enemyData.AttackAmount;
+        _enemyRenderer = GetComponent<SpriteRenderer>();
+        _init = true;
     }
 
     protected virtual void Start()
     {
 
+    }
+
+    protected void OnEnable()
+    {
+        if (_init)
+        {
+            Setup();
+        }
+    }
+
+    protected void OnDisable()
+    {
+        
     }
 
     protected virtual void OnTriggerEnter(Collider other)
@@ -63,24 +77,39 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
             //インターフェースを通じてダメージ処理を実行
             if (TryGetComponent(out IDamagable target))
             {
-                //体力が0ではない且つ無敵状態ではない場合はダメージを与える
-                if (target.CurrentHp > 0 && !target.IsInvincible)
+                //無敵状態ではない場合はダメージを与える
+                if (!target.IsInvincible)
                 {
                     target.Damage(_currentAttackAmount);
                 }
             }
         }
     }
-
-    public void Damage(int amount)
-    {
-        throw new System.NotImplementedException();
-    }
     #endregion
 
     #region public method
+    /// <summary>
+    /// ダメージを受ける
+    /// </summary>
+    /// <param name="amount">ダメージ量</param>
+    public virtual void Damage(int amount)
+    {
+        _currentHp -= amount;
+
+        if (_currentHp <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+
+        Debug.Log($"{gameObject.name}:Damage");
+    }
     #endregion
 
     #region private method
+    private void Setup()
+    {
+        _currentHp = _enemyData.HP;
+        _enemyRenderer.color = Color.white;
+    }
     #endregion
 }
