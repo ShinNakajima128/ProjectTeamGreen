@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,11 +10,16 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     #region property
-    public int HP { get { return _hp; } }
-    public int AttackAmount { get { return _attackAmount; } }
+    public EnemyActionType Type => _actionType;
+    public int HP => _hp;
+    public int AttackAmount => _attackAmount;
     #endregion
 
     #region serialize
+    [Header("変数")]
+    [Tooltip("敵の行動の種類")]
+    [SerializeField]
+    private EnemyActionType _actionType = default;
 
     [Tooltip("敵のHP")]
     [SerializeField]
@@ -35,9 +41,6 @@ public class EnemyData : ScriptableObject
     #endregion
 
     #region Event
-    #endregion
-
-    #region unity methods
     #endregion
 
     #region public method
