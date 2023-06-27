@@ -22,6 +22,10 @@ public class EnemyData : ScriptableObject
     [Tooltip("攻撃力")]
     [SerializeField]
     private int _attackAmount = 1;
+
+    [Tooltip("プレイヤーに接触するまでの距離")]
+    [SerializeField]
+    private float _approachDistance = 0.1f;
     #endregion
 
     #region private
@@ -34,10 +38,6 @@ public class EnemyData : ScriptableObject
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
     #endregion
 
     #region public method
@@ -45,4 +45,17 @@ public class EnemyData : ScriptableObject
 
     #region private method
     #endregion
+}
+
+/// <summary>
+/// 敵の行動の種類
+/// </summary>
+public enum EnemyActionType
+{
+    /// <summary>動かない</summary>
+    None,
+    /// <summary>プレイヤーを追跡する</summary>
+    Chase,
+    /// <summary>各ボスの行動を行う</summary>
+    Boss
 }
