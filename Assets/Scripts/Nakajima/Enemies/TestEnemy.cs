@@ -25,7 +25,7 @@ public class TestEnemy : EnemyBase
     protected override void Awake()
     {
         base.Awake();
-        Debug.Log($"HP:{_currentHp} 攻撃力:{_currentAttackAmount}");
+        Debug.Log($"HP:{_currentHP} 攻撃力:{_currentAttackAmount}");
     }
     protected override void Start()
     {

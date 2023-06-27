@@ -21,9 +21,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
     #region protected
     /// <summary>現在のHP</summary>
-    protected int _currentHp;
+    protected float _currentHP;
     /// <summary>現在の攻撃力</summary>
-    protected int _currentAttackAmount;
+    protected float _currentAttackAmount;
     /// <summary>行動可能かどうか</summary>
     protected bool _isActionable = false;
     /// <summary>無敵状態かどうか</summary>
@@ -34,6 +34,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
     #region private
     private bool _init = false;
+
     #endregion
 
     #region Constant
@@ -45,7 +46,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     #region unity methods
     protected virtual void Awake()
     {
-        _currentHp = _enemyData.HP;
+        _currentHP = _enemyData.HP;
         _currentAttackAmount = _enemyData.AttackAmount;
         _enemyRenderer = GetComponent<SpriteRenderer>();
         _init = true;
@@ -53,7 +54,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
     protected virtual void Start()
     {
-
+        
     }
 
     protected void OnEnable()
@@ -69,7 +70,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         
     }
 
-    protected virtual void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         //プレイヤーにヒットした場合
         if (other.CompareTag(GameTag.Player))
@@ -92,11 +93,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     /// ダメージを受ける
     /// </summary>
     /// <param name="amount">ダメージ量</param>
-    public virtual void Damage(int amount)
+    public virtual void Damage(float amount)
     {
-        _currentHp -= amount;
+        _currentHP -= amount;
 
-        if (_currentHp <= 0)
+        if (_currentHP <= 0)
         {
             gameObject.SetActive(false);
         }
@@ -113,8 +114,13 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     #region private method
     private void Setup()
     {
-        _currentHp = _enemyData.HP;
+        _currentHP = _enemyData.HP;
         _enemyRenderer.color = Color.white;
+    }
+
+    private void ChangeAttackAmount(int coefficient)
+    {
+        _currentAttackAmount = coefficient;
     }
     #endregion
 }
