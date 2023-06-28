@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Drink : MonoBehaviour
+public class Drink : ItemBase
 {
     #region property
     #endregion
 
     #region serialize
+    [Tooltip("回復割合")]
+    [SerializeField]
+    private float _healRate = 0.3f;
     #endregion
 
     #region private
@@ -37,6 +40,21 @@ public class Drink : MonoBehaviour
     #endregion
 
     #region public method
+    public override void Use(PlayerController player)
+    {
+        Debug.Log($"{ItemType}を使用した");
+        float healAmount = player.CurrentMaxHP * _healRate;
+        player.Heal(healAmount);
+    }
+
+    public override void Return()
+    {
+        Debug.Log($"{ItemType}を非アクティブにした");
+
+        //座標をリセットして非表示にする
+        gameObject.transform.localPosition = Vector2.zero;
+        gameObject.SetActive(false);
+    }
     #endregion
 
     #region private method
