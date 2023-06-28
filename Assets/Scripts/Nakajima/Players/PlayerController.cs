@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour, IDamagable
              .Subscribe(value => FlipSprite(value))
              .AddTo(this);
 
+        //Update内で行う処理を登録
         this.UpdateAsObservable()
             .Subscribe(_ =>
             {
