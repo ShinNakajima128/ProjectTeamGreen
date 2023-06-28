@@ -40,13 +40,24 @@ public class Drink : ItemBase
     #endregion
 
     #region public method
+    /// <summary>
+    /// アイテムを使用
+    /// </summary>
+    /// <param name="player"></param>
     public override void Use(PlayerController player)
     {
         Debug.Log($"{ItemType}を使用した");
+        Destroy(gameObject);
+
+        //回復量を計算
         float healAmount = player.CurrentMaxHP * _healRate;
+
         player.Heal(healAmount);
     }
 
+    /// <summary>
+    /// 非アクティブ化
+    /// </summary>
     public override void Return()
     {
         Debug.Log($"{ItemType}を非アクティブにした");
