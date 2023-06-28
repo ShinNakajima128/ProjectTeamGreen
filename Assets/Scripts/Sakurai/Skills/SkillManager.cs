@@ -17,6 +17,7 @@ public class SkillManager : MonoBehaviour
     #endregion
 
     #region private
+    private Transform _playerTrans;
     #endregion
 
     #region Constant
@@ -29,6 +30,7 @@ public class SkillManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _playerTrans = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Start()
@@ -53,6 +55,9 @@ public class SkillManager : MonoBehaviour
         //スキルが非アクティブの場合はアクティブにする
         if (!skill.IsSkillActived)
         {
+            //スキルをプレイヤーの子オブジェクトにする
+            skill.gameObject.transform.SetParent(_playerTrans);
+            skill.gameObject.transform.localPosition = Vector2.zero;
             skill.OnSkillAction();
         }
         //既にアクティブの場合はスキルのレベルを上げる

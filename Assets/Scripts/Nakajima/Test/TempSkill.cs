@@ -11,9 +11,18 @@ public class TempSkill : SkillBase
     #endregion
 
     #region serialize
+    [Tooltip("テスト用の弾丸")]
+    [SerializeField]
+    private TempBallet _testBulletPrefab = default;
+
+    [Tooltip("スキルの攻撃間隔の初期値")]
+    [SerializeField]
+    private float _startAttackInterval = 1.0f;
     #endregion
 
     #region private
+    /// <summary>現在のスキルの攻撃間隔</summary>
+    private float _currentAttackInterval;
     #endregion
 
     #region Constant
@@ -26,6 +35,7 @@ public class TempSkill : SkillBase
     protected override void Awake()
     {
         base.Awake();
+        _currentAttackInterval = _startAttackInterval;
     }
 
     protected override void Start()
@@ -42,6 +52,7 @@ public class TempSkill : SkillBase
     {
         Debug.Log($"{Type}スキル発動");
         _isSkillActived = true;
+        StartCoroutine(SkillActionCoroutine());
     }
     /// <summary>
     /// スキルをレベルアップする
@@ -69,5 +80,16 @@ public class TempSkill : SkillBase
     #endregion
 
     #region private method
+    #endregion
+
+    #region coroutine method
+    protected override IEnumerator SkillActionCoroutine()
+    {
+        while (_isSkillActived)
+        {
+            Instantiate(_testBulletPrefab, transform.position, transform.rotation);
+            yield return new WaitForSeconds(_currentAttackInterval);
+        }
+    }
     #endregion
 }

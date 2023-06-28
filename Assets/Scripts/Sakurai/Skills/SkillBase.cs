@@ -81,5 +81,11 @@ public abstract class SkillBase : MonoBehaviour
     /// </summary>
     /// <param name="coefficient">係数</param>
     public abstract void AttackUpSkill(float coefficient);
+
+    /// <summary>
+    /// スキル実行時の処理を行うコルーチン
+    /// </summary>
+    /// <returns></returns>
+    protected abstract IEnumerator SkillActionCoroutine();
     #endregion
 }
