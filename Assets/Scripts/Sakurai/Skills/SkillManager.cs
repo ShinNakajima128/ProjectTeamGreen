@@ -33,7 +33,10 @@ public class SkillManager : MonoBehaviour
 
     private void Start()
     {
-
+        //ゲーム終了時に実行する処理を登録
+        StageManager.Instance.GameEndSubject
+                             .Subscribe(_ => InActiveAllSkill())
+                             .AddTo(this);
     }
     #endregion
 
@@ -56,6 +59,17 @@ public class SkillManager : MonoBehaviour
         else
         {
             skill.LebelUpSkill();
+        }
+    }
+
+    /// <summary>
+    /// スキルの処理を停止する。ゲーム終了時などに呼び出す
+    /// </summary>
+    public void InActiveAllSkill()
+    {
+        for (int i = 0; i < _skills.Length; i++)
+        {
+            _skills[i].StopSkill();
         }
     }
     #endregion
