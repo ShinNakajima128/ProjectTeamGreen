@@ -8,7 +8,7 @@ using UnityEngine;
 public abstract class SkillBase : MonoBehaviour
 {
     #region property
-    public SkillType Type => _skillData.Type;
+    public SkillType SkillType => _skillData.SkillType;
     public bool IsSkillActived => _isSkillActived;
     #endregion
 

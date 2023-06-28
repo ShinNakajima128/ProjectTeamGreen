@@ -10,10 +10,12 @@ using UniRx.Triggers;
 /// プレイヤーの機能全般を持つコンポ―ネント
 /// </summary>
 [RequireComponent(typeof(PlayerMove))]
+[RequireComponent(typeof(PlayerHealth))]
 public class PlayerController : MonoBehaviour, IDamagable
 {
     #region property
     public static PlayerController Instance { get; private set; }
+    public float CurrentMaxHP => _health.CurrentMaxHP;
     public bool IsInvincible => _isInvincible;
     public Subject<float> ChangeAttackCoefficientSubject => _changeAttackCoefficientSubject;
     #endregion
@@ -24,6 +26,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     #region private
     private PlayerInput _input;
     private PlayerMove _move;
+    private PlayerHealth _health;
     private SpriteRenderer _sr;
     private bool _isCanControl = false;
     private bool _isInvincible = false;
@@ -43,6 +46,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         _input = GetComponent<PlayerInput>();
         _move = GetComponent<PlayerMove>();
+        _health = GetComponent<PlayerHealth>();
         _sr = GetComponent<SpriteRenderer>();
     }
 
@@ -80,11 +84,37 @@ public class PlayerController : MonoBehaviour, IDamagable
         _input.actions["Move"].performed -= OnMove;
         _input.actions["Move"].canceled -= StopMove;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //アイテムオブジェクトに当たった場合
+        if (collision.CompareTag(GameTag.Item))
+        {
+            var item = collision.GetComponent<ItemBase>();
+
+            item.Use(this);
+        }
+    }
     #endregion
 
     #region public method
+    public void Heal(float amount)
+    {
+        _health.Heal(amount);
+        Debug.Log("PlayerのHPを回復");
+    }
+    /// <summary>
+    /// ダメージを受ける
+    /// </summary>
+    /// <param name="amount"></param>
     public void Damage(float amount)
     {
+        //ダメージを受けた後、プレイヤーのHPが無くなったら
+        if (_health.Damage(amount))
+        {
+            //仮の処理
+            StageManager.Instance.GameEndSubject.OnNext(Unit.Default);
+        }
         Debug.Log("Playerがダメージを受けた");
     }
     #endregion

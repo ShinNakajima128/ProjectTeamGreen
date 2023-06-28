@@ -13,7 +13,7 @@ public class TempSkill : SkillBase
     #region serialize
     [Tooltip("テスト用の弾丸")]
     [SerializeField]
-    private TempBallet _testBulletPrefab = default;
+    private TempBullet _testBulletPrefab = default;
 
     [Tooltip("スキルの攻撃間隔の初期値")]
     [SerializeField]
@@ -50,7 +50,7 @@ public class TempSkill : SkillBase
     /// </summary>
     public override void OnSkillAction()
     {
-        Debug.Log($"{Type}スキル発動");
+        Debug.Log($"{SkillType}スキル発動");
         _isSkillActived = true;
         StartCoroutine(SkillActionCoroutine());
     }
@@ -62,7 +62,7 @@ public class TempSkill : SkillBase
         //既にレベルが最大値の場合は処理を行わない
         if (_currentSkillLebel >= MAX_LEVEL)
         {
-            Debug.Log($"{Type}はレベル上限です");
+            Debug.Log($"{SkillType}はレベル上限です");
             return;
         }
         _currentSkillLebel++;
@@ -87,9 +87,15 @@ public class TempSkill : SkillBase
     {
         while (_isSkillActived)
         {
-            Instantiate(_testBulletPrefab, transform.position, transform.rotation);
+            var bullet = Instantiate(_testBulletPrefab, transform.position, transform.rotation);
+
+            bullet.SetAttackAmount(_currentAttackAmount);
+
             yield return new WaitForSeconds(_currentAttackInterval);
         }
+
+        //コルーチンを使用使用しない場合は以下を記述する
+        //yield return null;
     }
     #endregion
 }

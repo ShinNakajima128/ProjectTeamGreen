@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
-public class TempBallet : MonoBehaviour
+public class TempBullet : MonoBehaviour
 {
     #region property
     #endregion
@@ -19,6 +19,7 @@ public class TempBallet : MonoBehaviour
 
     #region private
     private Rigidbody2D _rb;
+    private float _currentAttackAmount = 0;
     #endregion
 
     #region Constant
@@ -55,9 +56,23 @@ public class TempBallet : MonoBehaviour
                 break;
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag(GameTag.Enemy))
+        {
+            var target = GetComponent<IDamagable>();
+
+            target.Damage(_currentAttackAmount);
+        }
+    }
     #endregion
 
     #region public method
+    public void SetAttackAmount(float amount)
+    {
+        _currentAttackAmount = amount;
+    }
     #endregion
 
     #region private method

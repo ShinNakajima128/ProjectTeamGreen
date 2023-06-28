@@ -30,7 +30,7 @@ public class SkillManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        _playerTrans = GameObject.FindGameObjectWithTag("Player").transform;
+        _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
     }
 
     private void Start()
@@ -50,7 +50,7 @@ public class SkillManager : MonoBehaviour
     public void SetSkill(SkillType type)
     {
         //スキル一覧から指定されたスキルを探索
-        var skill = _skills.FirstOrDefault(x => x.Type == type);
+        var skill = _skills.FirstOrDefault(x => x.SkillType == type);
 
         //スキルが非アクティブの場合はアクティブにする
         if (!skill.IsSkillActived)

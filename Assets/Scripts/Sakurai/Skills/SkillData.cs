@@ -7,7 +7,7 @@ using UnityEngine;
 public class SkillData : ScriptableObject
 {
     #region property
-    public SkillType Type => _skillType;
+    public SkillType SkillType => _skillType;
 
     public float AttackAmount => _attackAmount;
 
@@ -55,6 +55,9 @@ public class SkillData : ScriptableObject
     #endregion
 }
 
+/// <summary>
+/// スキルの種類
+/// </summary>
 public enum SkillType
 {
    Aura,
