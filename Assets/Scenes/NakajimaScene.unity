@@ -1291,7 +1291,7 @@ GameObject:
   - component: {fileID: 1998788984}
   m_Layer: 0
   m_Name: TestEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1417,5 +1417,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillData: {fileID: 11400000, guid: 5ce62addfea0043b496f22627ee90ab4, type: 2}
-  _testBulletPrefab: {fileID: 0}
+  _testBulletPrefab: {fileID: 605401484640801648, guid: 08f70aced67e1d04e9334d20a000e1b7,
+    type: 3}
   _startAttackInterval: 1
