@@ -17,6 +17,7 @@ public class SkillManager : MonoBehaviour
     #endregion
 
     #region private
+    private Transform _playerTrans;
     #endregion
 
     #region Constant
@@ -29,11 +30,15 @@ public class SkillManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
     }
 
     private void Start()
     {
-
+        //ゲーム終了時に実行する処理を登録
+        StageManager.Instance.GameEndSubject
+                             .Subscribe(_ => InActiveAllSkill())
+                             .AddTo(this);
     }
     #endregion
 
@@ -45,17 +50,31 @@ public class SkillManager : MonoBehaviour
     public void SetSkill(SkillType type)
     {
         //スキル一覧から指定されたスキルを探索
-        var skill = _skills.FirstOrDefault(x => x.Type == type);
+        var skill = _skills.FirstOrDefault(x => x.SkillType == type);
 
         //スキルが非アクティブの場合はアクティブにする
         if (!skill.IsSkillActived)
         {
+            //スキルをプレイヤーの子オブジェクトにする
+            skill.gameObject.transform.SetParent(_playerTrans);
+            skill.gameObject.transform.localPosition = Vector2.zero;
             skill.OnSkillAction();
         }
         //既にアクティブの場合はスキルのレベルを上げる
         else
         {
             skill.LebelUpSkill();
+        }
+    }
+
+    /// <summary>
+    /// スキルの処理を停止する。ゲーム終了時などに呼び出す
+    /// </summary>
+    public void InActiveAllSkill()
+    {
+        for (int i = 0; i < _skills.Length; i++)
+        {
+            _skills[i].StopSkill();
         }
     }
     #endregion

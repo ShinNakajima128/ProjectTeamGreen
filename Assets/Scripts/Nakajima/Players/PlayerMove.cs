@@ -22,16 +22,17 @@ public class PlayerMove : MonoBehaviour
 
     #region private
     private Rigidbody2D _rb;
-    private SpriteRenderer _sr;
+    /// <summary>移動可能かどうか</summary>
     private bool _isCanMove = false;
+    /// <summary>現在の移動方向</summary>
     private Vector2 _currentDir;
-    private Vector2 _inputMove;
     #endregion
 
     #region Constant
     #endregion
 
     #region Event
+    /// <summary>プレイヤーの画像が反転しているかのフラグ。切り替わり時に通知が行われる</summary>
     private ReactiveProperty<bool> _isFlipedProperty = new ReactiveProperty<bool>();
     #endregion
 
@@ -39,8 +40,6 @@ public class PlayerMove : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _sr = GetComponent<SpriteRenderer>();
-
         _isFlipedProperty.Value = false;
     }
 
@@ -51,26 +50,25 @@ public class PlayerMove : MonoBehaviour
                              .AddTo(this);
 
         this.FixedUpdateAsObservable()
-            .Where(_ => _isCanMove)
+            .Where(_ => _isCanMove) //操作可能な場合
             .Subscribe(_ =>
             {
+                //入力がない場合
                 if (_currentDir == Vector2.zero)
                 {
                     _rb.velocity = Vector2.zero;
                 }
                 else
                 {
-                    _inputMove = Vector2.up * _currentDir.y + Vector2.right * _currentDir.x;
-
-                    _rb.velocity = _inputMove.normalized * _moveSpeed;
+                    _rb.velocity = _currentDir.normalized * _moveSpeed;
                 }
 
-                if (!_isFlipedProperty.Value && _inputMove.x > 0)
+                if (!_isFlipedProperty.Value && _currentDir.x > 0)
                 {
                     _isFlipedProperty.Value = true;
                     Debug.Log("右向き");
                 }
-                else if (_isFlipedProperty.Value && _inputMove.x < 0)
+                else if (_isFlipedProperty.Value && _currentDir.x < 0)
                 {
                     _isFlipedProperty.Value = false;
                     Debug.Log("左向き");
@@ -82,6 +80,10 @@ public class PlayerMove : MonoBehaviour
     #endregion
 
     #region public method
+    /// <summary>
+    /// 入力された移動方向をセットする
+    /// </summary>
+    /// <param name="dir">方向</param>
     public void SetDirection(Vector2 dir)
     {
         _currentDir = dir;

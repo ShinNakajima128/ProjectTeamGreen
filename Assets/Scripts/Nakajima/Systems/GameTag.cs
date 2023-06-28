@@ -10,6 +10,7 @@ public class GameTag
     #region property
     public static string Player => _player;
     public static string Enemy => _enemy;
+    public static string Item => _item;
     #endregion
 
     #region Constant
@@ -21,5 +22,6 @@ public class GameTag
     /// 敵
     /// </summary>
     private static string _enemy = "Enemy";
+    private static string _item = "Item";
     #endregion
 }

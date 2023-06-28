@@ -8,7 +8,7 @@ using UnityEngine;
 public abstract class SkillBase : MonoBehaviour
 {
     #region property
-    public SkillType Type => _skillData.Type;
+    public SkillType SkillType => _skillData.SkillType;
     public bool IsSkillActived => _isSkillActived;
     #endregion
 
@@ -31,6 +31,8 @@ public abstract class SkillBase : MonoBehaviour
     #endregion
 
     #region Constant
+    /// <summary>スキルのレベルの最大値</summary>
+    protected const int MAX_LEVEL = 5;
     #endregion
 
     #region Event
@@ -50,6 +52,23 @@ public abstract class SkillBase : MonoBehaviour
 
     #region public method
     /// <summary>
+    /// スキルの処理を停止する
+    /// </summary>
+    public void StopSkill()
+    {
+        _isSkillActived = false;
+    }
+    #endregion
+
+    #region private method
+    private void Setup()
+    {
+        _currentAttackAmount = _skillData.AttackAmount;
+    }
+    #endregion
+
+    #region abstract method
+    /// <summary>
     /// スキル発動時のアクション
     /// </summary>
     public abstract void OnSkillAction();
@@ -62,12 +81,11 @@ public abstract class SkillBase : MonoBehaviour
     /// </summary>
     /// <param name="coefficient">係数</param>
     public abstract void AttackUpSkill(float coefficient);
-    #endregion
 
-    #region private method
-    private void Setup()
-    {
-        _currentAttackAmount = _skillData.AttackAmount;
-    }
+    /// <summary>
+    /// スキル実行時の処理を行うコルーチン
+    /// </summary>
+    /// <returns></returns>
+    protected abstract IEnumerator SkillActionCoroutine();
     #endregion
 }
