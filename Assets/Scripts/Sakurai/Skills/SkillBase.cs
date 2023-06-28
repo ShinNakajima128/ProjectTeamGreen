@@ -2,12 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillBase : MonoBehaviour
+/// <summary>
+/// 各スキルのベースとなるクラス。スキル作成時はこれを必ず継承すること
+/// </summary>
+public abstract class SkillBase : MonoBehaviour
 {
     #region property
+    public SkillType Type => _skillData.Type;
+    public bool IsSkillActived => _isSkillActived;
     #endregion
 
     #region serialize
+    [Tooltip("スキルデータ")]
+    [SerializeField]
+    private SkillData _skillData = default;
+    #endregion
+
+    #region protected
+    /// <summary>現在の攻撃力</summary>
+    protected float _currentAttackAmount = 0;
+    /// <summary>現在のスキルレベル</summary>
+    protected int _currentSkillLebel = 1;
+    /// <summary>スキルがアクティブかどうか</summary>
+    protected bool _isSkillActived = false;
     #endregion
 
     #region private
@@ -20,27 +37,37 @@ public class SkillBase : MonoBehaviour
     #endregion
 
     #region unity methods
-private void Awake()
-{
+    protected virtual void Awake()
+    {
+        Setup();
+    }
 
-}
+    protected virtual void Start()
+    {
 
-private void Start()
-{
-
-}
-
-private void Update()
-{
-
-}
+    }
     #endregion
 
     #region public method
+    /// <summary>
+    /// スキル発動時のアクション
+    /// </summary>
+    public abstract void OnSkillAction();
+    /// <summary>
+    /// スキルをレベルアップする
+    /// </summary>
+    public abstract void LebelUpSkill();
+    /// <summary>
+    /// スキルの攻撃力を上げる
+    /// </summary>
+    /// <param name="coefficient">係数</param>
+    public abstract void AttackUpSkill(float coefficient);
     #endregion
 
     #region private method
-
-    
+    private void Setup()
+    {
+        _currentAttackAmount = _skillData.AttackAmount;
+    }
     #endregion
 }
