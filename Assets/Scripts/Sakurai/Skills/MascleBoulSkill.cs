@@ -2,16 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 跳ね返るボールを扱うオブジェクト
+/// </summary>
 public class MascleBoulSkill : SkillBase
 {
-   
+
     #region property
     #endregion
 
     #region serialize
+    [Header("変数")]
+    [Tooltip("跳ね返るボール")]
+    [SerializeField]
+    private Boul _boudPrefab = default;
+
     #endregion
 
     #region private
+
+    /// <summary>ボールがスキルアップ時の速度に対する係数</summary>
+    private float _coefficient = 1.2f;
+
+    /// <summary>ボールを格納するリスト</summary>
+    private List<Boul> _currentBoulAmount = new List<Boul>();
+
     #endregion
 
     #region Constant
@@ -38,15 +53,24 @@ public class MascleBoulSkill : SkillBase
     #endregion
 
     #region public method
+
+    /// <summary>
+    /// スキル発動時のアクション
+    /// </summary>
     public override void OnSkillAction()
     {
         Debug.Log($"{SkillType}スキル発動");
         _isSkillActived = true;
         StartCoroutine(SkillActionCoroutine());
+        CreateNewBoul();
     }
 
+    /// <summary>
+    /// スキルをレベルアップする
+    /// </summary>
     public override void LebelUpSkill()
     {
+        //既にレベルが最大値の場合は処理を行わない
         if (_currentSkillLebel >= MAX_LEVEL)
         {
             Debug.Log($"{SkillType}はレベル上限です");
@@ -54,10 +78,19 @@ public class MascleBoulSkill : SkillBase
             return;
         }
         _currentSkillLebel++;
+        CreateNewBoul();
+        foreach (Boul boul in _currentBoulAmount)
+        {
+            boul.MoveSpeedChange(_coefficient);
+        }
 
         Debug.Log($"レベルアップ!{_currentSkillLebel}にあがった!");
     }
 
+    /// <summary>
+    /// スキルの攻撃力を上げる
+    /// </summary>
+    /// <param name="coefficient"></param>
     public override void AttackUpSkill(float coefficient)
     {
         _currentAttackAmount *= coefficient;
@@ -66,9 +99,20 @@ public class MascleBoulSkill : SkillBase
     #endregion
 
     #region private method
+    private void CreateNewBoul()
+    {
+        Boul newBoul = Instantiate(_boudPrefab, transform);
+        newBoul.SetAttackAmount(_currentAttackAmount);
+        _currentBoulAmount.Add(newBoul);
+    }
     #endregion
 
     #region coroutine method
+
+    /// <summary>
+    /// スキル発動中の処理
+    /// </summary>
+    /// <returns></returns>
     protected override IEnumerator SkillActionCoroutine()
     {
         yield return null;

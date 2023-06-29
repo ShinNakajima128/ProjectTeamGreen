@@ -12,7 +12,7 @@ public class Boul : MonoBehaviour
 
     #region serialize
     [SerializeField]
-    private float _moveSpeed = 1.0f;
+    private float _moveSpeed = 10.0f;
     #endregion
 
     #region private
@@ -30,6 +30,9 @@ public class Boul : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+
+        //ボールが早くなっても衝突検出可能にする。
+        _rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
 
     private void Start()
@@ -42,9 +45,10 @@ public class Boul : MonoBehaviour
 
     private void Update()
     {
-
+        _rb.velocity = _rb.velocity.normalized * _moveSpeed;
     }
 
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(GameTag.Enemy))
@@ -58,6 +62,20 @@ public class Boul : MonoBehaviour
     #endregion
 
     #region public method
+
+    public void SetAttackAmount(float amount)
+    {
+        _currentAttackAmount = amount;
+    }
+
+    /// <summary>
+    /// ボールの速さを変更する。
+    /// </summary>
+    /// <param name="coefficient">速さに対する係数</param>
+    public void MoveSpeedChange(float coefficient)
+    {
+        _moveSpeed *= coefficient;
+    }
     #endregion
 
     #region private method
