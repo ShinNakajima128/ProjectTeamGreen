@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: HealItem
   m_EditorClassIdentifier: 
   _itemType: 0
+  _activationLimit: 10
