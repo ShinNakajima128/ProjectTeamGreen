@@ -41,6 +41,10 @@ public class SkillTest : MonoBehaviour
                 {
                     SkillManager.Instance.SetSkill(SkillType.Fairy);
                 }
+                if (Input.GetKeyDown(KeyCode.G))
+                {
+                    SkillManager.Instance.SetSkill(SkillType.Boul);
+                }
             })
             .AddTo(this);
     }

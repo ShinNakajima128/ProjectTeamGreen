@@ -20,7 +20,7 @@ public class MascleFairySkill : SkillBase
     [SerializeField]
     private float _rotationSpeed = 1.0f;
 
-    [Tooltip("妖精が回転する速度の係数")]
+    [Tooltip("妖精が回転する速度に対する係数")]
     [SerializeField]
     private float _coefficient = 1.3f;
 
@@ -32,9 +32,13 @@ public class MascleFairySkill : SkillBase
     [SerializeField]
     private float _fairyRadius = 1.0f;
 
-    [Tooltip("妖精の開x始角度")]
+    [Tooltip("妖精の開始角度")]
     [SerializeField]
     private List<float> _currentFairyAngles = new List<float>();
+
+    [Tooltip("妖精の変更サイズ")]
+    [SerializeField]
+    private float _scaleFactor = 2.0f;
 
     private List<Fairy> _currentFairyAmount = new List<Fairy>();
 
@@ -88,12 +92,23 @@ public class MascleFairySkill : SkillBase
         if (_currentSkillLebel >= MAX_LEVEL)
         {
             Debug.Log($"{SkillType}はレベル上限です");
+
             return;
         }
         _currentSkillLebel++;
         _rotationSpeed *= _coefficient;
-        Debug.Log($"レベルアップ!{_currentSkillLebel}にあがった!");
+
         CreateNewFairy();
+
+        Debug.Log($"レベルアップ!{_currentSkillLebel}にあがった!");
+
+        if (_currentSkillLebel >= 3)
+        {
+            foreach (Fairy fairy in _currentFairyAmount)
+            {
+                fairy.SizaChange(_scaleFactor);
+            }
+        }
     }
 
     /// <summary>
@@ -127,6 +142,15 @@ public class MascleFairySkill : SkillBase
     #endregion
 
     #region private method
+    /// <summary>
+    /// スキル実行時の処理を行うコルーチン
+    /// </summary>
+    /// <returns></returns>
+
+    #endregion
+
+    #region coroutine method
+
     /// <summary>
     /// スキル実行時の処理を行うコルーチン
     /// </summary>

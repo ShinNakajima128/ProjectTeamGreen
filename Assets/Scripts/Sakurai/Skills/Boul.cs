@@ -2,24 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// フェアリーコンポーネント
-/// </summary>
-[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
-public class Fairy : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+
+public class Boul : MonoBehaviour
 {
     #region property
     #endregion
 
     #region serialize
-    [Header("変数")]
-    [Tooltip("現在の攻撃力")]
     [SerializeField]
-    private float _currentAttackAmount = 0;
+    private float _moveSpeed = 1.0f;
     #endregion
 
     #region private
+    private Rigidbody2D _rb;
+    private float _currentAttackAmount = 0;
     #endregion
 
     #region Constant
@@ -31,12 +29,15 @@ public class Fairy : MonoBehaviour
     #region unity methods
     private void Awake()
     {
-
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
     {
+        float angle = Random.Range(0, 360);
+        Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
 
+        _rb.velocity = direction * _moveSpeed;
     }
 
     private void Update()
@@ -48,23 +49,15 @@ public class Fairy : MonoBehaviour
     {
         if (collision.CompareTag(GameTag.Enemy))
         {
-           var target = GetComponent<IDamagable>();
+            var target = GetComponent<IDamagable>();
 
             target.Damage(_currentAttackAmount);
         }
     }
+
     #endregion
 
     #region public method
-    public void SetAttackAmount(float amount)
-    {
-        _currentAttackAmount = amount;
-    }
-
-    public void SizaChange(float scaleFactor)
-    {
-        transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
-    }
     #endregion
 
     #region private method
