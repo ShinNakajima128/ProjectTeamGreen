@@ -58,10 +58,9 @@ public class ItemGenerator : MonoBehaviour
         if (item != null)
         {
             item.SetActive(true);
+            ////指定した座標に移動
             item.transform.localPosition = pos;
         }
-        ////指定した座標に生成。現状は仮の処理で、プーリングしたオブジェクトを使用する処理に修正予定
-        //Instantiate(item, pos, Quaternion.identity);
     }
 
     /// <summary>
