@@ -11,6 +11,7 @@ using UniRx.Triggers;
 /// </summary>
 [RequireComponent(typeof(PlayerMove))]
 [RequireComponent(typeof(PlayerHealth))]
+[RequireComponent(typeof(PlayerStatus))]
 public class PlayerController : MonoBehaviour, IDamagable
 {
     #region property
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     private PlayerInput _input;
     private PlayerMove _move;
     private PlayerHealth _health;
+    private PlayerStatus _status;
     private SpriteRenderer _sr;
     private bool _isCanControl = false;
     private bool _isInvincible = false;
@@ -47,6 +49,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         _input = GetComponent<PlayerInput>();
         _move = GetComponent<PlayerMove>();
         _health = GetComponent<PlayerHealth>();
+        _status = GetComponent<PlayerStatus>();
         _sr = GetComponent<SpriteRenderer>();
     }
 
@@ -98,6 +101,10 @@ public class PlayerController : MonoBehaviour, IDamagable
     #endregion
 
     #region public method
+    /// <summary>
+    /// HPを回復する
+    /// </summary>
+    /// <param name="amount">回復量</param>
     public void Heal(float amount)
     {
         _health.Heal(amount);
@@ -116,6 +123,24 @@ public class PlayerController : MonoBehaviour, IDamagable
             StageManager.Instance.GameEndSubject.OnNext(Unit.Default);
         }
         Debug.Log("Playerがダメージを受けた");
+    }
+
+    /// <summary>
+    /// 攻撃力を上昇させる
+    /// </summary>
+    /// <param name="newValue">倍率（1.1倍、1.5倍といった元の攻撃力に掛け合わせる数字）</param>
+    public void PowerUp(float coefficient)
+    {
+        _status.ChangeCoefficient(coefficient);
+    }
+
+    /// <summary>
+    /// 経験値を獲得する
+    /// </summary>
+    /// <param name="value">獲得した経験値の値（正の値のみ）</param>
+    public void GetExp(uint value)
+    {
+        _status.AddExp(value);
     }
     #endregion
 
