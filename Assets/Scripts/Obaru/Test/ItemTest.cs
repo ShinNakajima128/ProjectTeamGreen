@@ -37,7 +37,7 @@ public class ItemTest : MonoBehaviour
         this.UpdateAsObservable()
             .Subscribe(_ =>
             {
-                Debug.Log($"HP:{_health.CurrentHP}");
+                //Debug.Log($"HP:{_health.CurrentHP}");
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
                     _player.Damage(10);
