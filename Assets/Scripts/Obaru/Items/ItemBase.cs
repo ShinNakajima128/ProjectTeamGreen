@@ -11,6 +11,8 @@ public abstract class ItemBase : MonoBehaviour
 {
     #region property
     public ItemType ItemType => _itemData.ItemType;
+    public uint ReserveAmount => _itemData.ReserveAmount;
+    public uint ActivationLimit => _itemData.ActivationLimit;
     #endregion
 
     #region serialize
