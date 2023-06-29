@@ -21,7 +21,7 @@ public class MascleBoulSkill : SkillBase
 
     #region private
 
-    /// <summary>ボールがスキルアップ時の速度に対する係数</summary>
+    /// <summary>スキルアップ時の速度に対する係数</summary>
     private float _coefficient = 1.2f;
 
     /// <summary>ボールを格納するリスト</summary>
@@ -99,6 +99,9 @@ public class MascleBoulSkill : SkillBase
     #endregion
 
     #region private method
+    /// <summary>
+    /// ボールの生成
+    /// </summary>
     private void CreateNewBoul()
     {
         Boul newBoul = Instantiate(_boudPrefab, transform);
@@ -108,7 +111,6 @@ public class MascleBoulSkill : SkillBase
     #endregion
 
     #region coroutine method
-
     /// <summary>
     /// スキル発動中の処理
     /// </summary>
