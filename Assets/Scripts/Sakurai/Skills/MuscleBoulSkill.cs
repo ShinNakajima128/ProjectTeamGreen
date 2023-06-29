@@ -43,7 +43,11 @@ public class MuscleBoulSkill : SkillBase
 
     private void Start()
     {
-
+        //ゲーム開始時は子オブジェクトを非アクティブc
+        if (!_isSkillActived)
+        {
+            childActive(false);
+        }
     }
 
     private void Update()
@@ -61,6 +65,7 @@ public class MuscleBoulSkill : SkillBase
     {
         Debug.Log($"{SkillType}スキル発動");
         _isSkillActived = true;
+        childActive(true);
         StartCoroutine(SkillActionCoroutine());
         CreateNewBoul();
     }
@@ -107,6 +112,18 @@ public class MuscleBoulSkill : SkillBase
         Boul newBoul = Instantiate(_boudPrefab, transform);
         newBoul.SetAttackAmount(_currentAttackAmount);
         _currentBoulAmount.Add(newBoul);
+    }
+
+    /// <summary>
+    /// 子オブジェクトはスキル発動中のみアクティブ状態
+    /// </summary>
+    /// <param name=""></param>
+    private void childActive(bool change)
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(change);
+        }
     }
     #endregion
 
