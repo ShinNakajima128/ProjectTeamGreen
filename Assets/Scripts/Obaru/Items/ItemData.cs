@@ -7,6 +7,8 @@ public class ItemData : ScriptableObject
 {
     #region property
     public ItemType ItemType => _itemType;
+    public uint ReserveAmount => _reserveAmount;
+    public uint ActivationLimit => _activationLimit;
     #endregion
 
     #region serialize
@@ -14,6 +16,13 @@ public class ItemData : ScriptableObject
     [Tooltip("アイテムの種類")]
     [SerializeField]
     private ItemType _itemType = default;
+
+    [SerializeField]
+    private uint _reserveAmount = 5;
+
+    [Tooltip("フィールドに生成される限度数")]
+    [SerializeField]
+    private uint _activationLimit = 10;
     #endregion
 
     #region private

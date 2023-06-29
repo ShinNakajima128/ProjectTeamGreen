@@ -14,6 +14,7 @@ public class TempItem : ItemBase
     #endregion
 
     #region private
+    private Coroutine _coroutine;
     #endregion
 
     #region Constant
@@ -32,6 +33,20 @@ public class TempItem : ItemBase
     {
 
     }
+
+    private void OnEnable()
+    {
+        _coroutine = StartCoroutine(TestCoroutine());
+    }
+
+    private void OnDisable()
+    {
+        if (_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
+    }
     #endregion
 
     #region public method
@@ -42,10 +57,12 @@ public class TempItem : ItemBase
     public override void Use(PlayerController player)
     {
         Debug.Log($"{ItemType}を使用した");
-        Destroy(gameObject);
+        gameObject.SetActive(false);
 
         //HPを回復する処理は、以下のように記述する
         //player.Heal(回復量);
+
+        
 
         //他のステータスを上げる処理は、まだステータス側の機能ができていないため
         //まだ記述できませんが、近日中にステータスの機能を作成する予定です
@@ -65,5 +82,14 @@ public class TempItem : ItemBase
     #endregion
 
     #region private method
+    #endregion
+
+    #region coroutine method
+    private IEnumerator TestCoroutine()
+    {
+        yield return new WaitForSeconds(15.0f);
+
+        gameObject.SetActive(false);
+    }
     #endregion
 }

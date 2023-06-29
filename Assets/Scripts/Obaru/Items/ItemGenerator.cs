@@ -18,11 +18,12 @@ public class ItemGenerator : MonoBehaviour
 
     [Tooltip("各アイテム")]
     [SerializeField]
-    private ItemBase[] _items = default;
+    private Item[] _items = default;
     #endregion
 
     #region private
     private Transform _playerTrans;
+    private Dictionary<ItemType, ObjectPool> _itemPoolDic = new Dictionary<ItemType, ObjectPool>();
     #endregion
 
     #region Constant
@@ -34,7 +35,7 @@ public class ItemGenerator : MonoBehaviour
     #region unity methods
     private void Awake()
     {
-        _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
+        Setup();
     }
 
     private void Start()
@@ -52,10 +53,15 @@ public class ItemGenerator : MonoBehaviour
     public void Generate(ItemType type, Vector2 pos)
     {
         //指定されたアイテムのオブジェクトデータを取得
-        var item = _items.FirstOrDefault(x => x.ItemType == type);
+        var item = _itemPoolDic.FirstOrDefault(x => x.Key == type).Value.Rent();
 
-        //指定した座標に生成。現状は仮の処理で、プーリングしたオブジェクトを使用する処理に修正予定
-        Instantiate(item, pos, Quaternion.identity);
+        if (item != null)
+        {
+            item.SetActive(true);
+            item.transform.localPosition = pos;
+        }
+        ////指定した座標に生成。現状は仮の処理で、プーリングしたオブジェクトを使用する処理に修正予定
+        //Instantiate(item, pos, Quaternion.identity);
     }
 
     /// <summary>
@@ -68,13 +74,25 @@ public class ItemGenerator : MonoBehaviour
     #endregion
 
     #region private method
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    private void Setup()
+    {
+        _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
+
+
+        for (int i = 0; i < _items.Length; i++)
+        {
+            _itemPoolDic.Add((ItemType)i, new ObjectPool(_items[i].ItemObj.gameObject, _items[i].ItemObj.ReserveAmount, _items[i].ItemObj.ActivationLimit, _items[i].Parent));
+        }
+    }
     #endregion
 
     #region coroutine method
     /// <summary>
     /// ランダムな位置にアイテムを生成するコルーチン
     /// </summary>
-    /// <returns></returns>
     private IEnumerator RandomGenerateCoroutine()
     {
         while (true)
@@ -93,4 +111,11 @@ public class ItemGenerator : MonoBehaviour
         }
     }
     #endregion
+}
+
+[System.Serializable]
+struct Item
+{
+    public ItemBase ItemObj;
+    public Transform Parent;
 }
