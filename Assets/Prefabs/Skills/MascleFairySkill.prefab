@@ -44,8 +44,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillData: {fileID: 11400000, guid: 87d73f4cfc5f4415b8bf738000fedf4d, type: 2}
-  _fairyPrefab: {fileID: 252038818740336804, guid: fb7f498c542514628901cacafc7d0168,
+  _fairyPrefab: {fileID: 7842396720932577370, guid: fb7f498c542514628901cacafc7d0168,
     type: 3}
-  _rotationSpeed: 1
-  _currentFairyAmount: []
-  _fairyRadius: 1
+  _rotationSpeed: 100
+  _coefficient: 1.3
+  _fairyRadius: 1.5
+  _currentFairyAngles:
+  - 0
+  - 90
+  - 180
+  - 270

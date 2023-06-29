@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 妖精召喚時のスキル
+/// </summary>
 public class MascleFairySkill : SkillBase
 {
     #region property
@@ -17,13 +20,24 @@ public class MascleFairySkill : SkillBase
     [SerializeField]
     private float _rotationSpeed = 1.0f;
 
-    [Tooltip("現在存在する妖精")]
+    [Tooltip("妖精が回転する速度の係数")]
     [SerializeField]
-    private List<GameObject> _currentFairyAmount = new List<GameObject>();
+    private float _coefficient = 1.3f;
+
+    //[Tooltip("現在存在する妖精")]
+    //[SerializeField]
+    //private List<GameObject> _currentFairyAmount = new List<GameObject>();
 
     [Tooltip("妖精が回転する半径")]
     [SerializeField]
     private float _fairyRadius = 1.0f;
+
+    [Tooltip("妖精の開x始角度")]
+    [SerializeField]
+    private List<float> _currentFairyAngles = new List<float>();
+
+    private List<Fairy> _currentFairyAmount = new List<Fairy>();
+
 
     #endregion
 
@@ -44,11 +58,7 @@ public class MascleFairySkill : SkillBase
 
     private void Start()
     {
-       // _isSkillActived = true;
-       // StartCoroutine(SkillActionCoroutine());
 
-       // GameObject newFairy = Instantiate(_fairyPrefab.gameObject);
-       // _currentFairyAmount.Add(newFairy);
     }
 
     private void Update()
@@ -68,8 +78,7 @@ public class MascleFairySkill : SkillBase
         Debug.Log($"{SkillType}スキル発動");
         _isSkillActived = true;
         StartCoroutine(SkillActionCoroutine());
-        GameObject newFairy = Instantiate(_fairyPrefab.gameObject);
-        _currentFairyAmount.Add(newFairy);
+        CreateNewFairy();
     }
     /// <summary>
     /// スキルをレベルアップする
@@ -82,10 +91,9 @@ public class MascleFairySkill : SkillBase
             return;
         }
         _currentSkillLebel++;
+        _rotationSpeed *= _coefficient;
         Debug.Log($"レベルアップ!{_currentSkillLebel}にあがった!");
-
-        GameObject newFairy = Instantiate(_fairyPrefab.gameObject);
-        _currentFairyAmount.Add(newFairy);
+        CreateNewFairy();
     }
 
     /// <summary>
@@ -100,6 +108,22 @@ public class MascleFairySkill : SkillBase
     #endregion
 
     #region private method
+    /// <summary>
+    /// レベルアップごとに妖精を召喚
+    /// </summary>
+    private void CreateNewFairy()
+    {
+        Fairy newFairy = Instantiate(_fairyPrefab,transform);
+        newFairy.SetAttackAmount(_currentAttackAmount);
+        _currentFairyAmount.Add(newFairy);
+
+        float angleStep = 360.0f / _currentFairyAmount.Count;
+        _currentFairyAngles.Clear();
+        for (int i = 0; i < _currentFairyAmount.Count; i++)
+        {
+            _currentFairyAngles.Add(angleStep * i);
+        }
+    }
     #endregion
 
     #region private method
@@ -111,20 +135,12 @@ public class MascleFairySkill : SkillBase
     {
         while (_isSkillActived)
         {
-            Debug.Log("妖精発動");
-            float angleStep = 360.0f / _currentFairyAmount.Count;
             for (int i = 0; i < _currentFairyAmount.Count; i++)
             {
-                float angle = angleStep * i;
-
-                Vector2 fairyPosition = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+                _currentFairyAngles[i] += _rotationSpeed * Time.deltaTime;
+                Vector2 fairyPosition = new Vector2(Mathf.Cos(_currentFairyAngles[i] * Mathf.Deg2Rad), Mathf.Sin(_currentFairyAngles[i] * Mathf.Deg2Rad));
                 fairyPosition *= _fairyRadius;
-                //fairyPosition += (Vector2)transform.localPosition;
-                //_currentFairyAmount[i].transform.localPosition = fairyPosition;
-                fairyPosition += (Vector2)transform.position;
-                _currentFairyAmount[i].transform.position = fairyPosition;
-
-                _currentFairyAmount[i].transform.RotateAround(transform.position, Vector3.up, _rotationSpeed * Time.deltaTime);
+                _currentFairyAmount[i].transform.localPosition = fairyPosition;
             }
             yield return null;
         }

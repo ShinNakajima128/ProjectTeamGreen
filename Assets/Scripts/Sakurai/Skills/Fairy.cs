@@ -56,6 +56,10 @@ public class Fairy : MonoBehaviour
     #endregion
 
     #region public method
+    public void SetAttackAmount(float amount)
+    {
+        _currentAttackAmount = amount;
+    }
     #endregion
 
     #region private method
