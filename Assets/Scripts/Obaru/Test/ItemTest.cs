@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 
-public class HealTest : MonoBehaviour
+public class ItemTest : MonoBehaviour
 {
     #region property
     #endregion
@@ -32,16 +34,21 @@ public class HealTest : MonoBehaviour
 
     private void Start()
     {
-
+        this.UpdateAsObservable()
+            .Subscribe(_ =>
+            {
+                //Debug.Log($"HP:{_health.CurrentHP}");
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    _player.Damage(10);
+                }
+            })
+            .AddTo(this);
     }
 
     private void Update()
     {
-        Debug.Log($"現在のHP{_health.CurrentHP}");
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            _player.Damage(10);
-        }
+
     }
     #endregion
 
