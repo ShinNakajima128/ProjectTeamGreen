@@ -117,7 +117,7 @@ public class MuscleBoulSkill : SkillBase
     /// <summary>
     /// 子オブジェクトはスキル発動中のみアクティブ状態
     /// </summary>
-    /// <param name=""></param>
+    /// <param name="">SetActiveの変数</param>
     private void childActive(bool change)
     {
         foreach (Transform child in transform)

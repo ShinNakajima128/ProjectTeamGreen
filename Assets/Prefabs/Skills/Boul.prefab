@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3324159199272294341}
   - component: {fileID: 3324159199272294338}
   - component: {fileID: 3324159199272294337}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Boul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,3 +134,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 10
+  _currentAttackAmount: 0

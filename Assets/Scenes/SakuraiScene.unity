@@ -390,6 +390,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MuscleFairySkill
       objectReference: {fileID: 0}
+    - target: {fileID: 6159895422074413163, guid: adadfd1fece98415ba74b68162ab1d91,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8490252507380179523, guid: adadfd1fece98415ba74b68162ab1d91,
         type: 3}
       propertyPath: m_RootOrder
@@ -447,6 +452,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adadfd1fece98415ba74b68162ab1d91, type: 3}
+--- !u!114 &586613116 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2650928737391419118, guid: adadfd1fece98415ba74b68162ab1d91,
+    type: 3}
+  m_PrefabInstance: {fileID: 586613115}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7d94002829184b1386350a6f36710c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &586613117 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8490252507380179523, guid: adadfd1fece98415ba74b68162ab1d91,
@@ -659,7 +676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skills:
-  - {fileID: 1413559048}
+  - {fileID: 586613116}
   - {fileID: 1413559048}
   - {fileID: 1821362444}
 --- !u!4 &1137013681
@@ -886,7 +903,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7130645357192020615, guid: 1e11fd744d4e84a87a3023c7f9d7bff5,
+  m_Sprite: {fileID: 6178906450773090927, guid: 394148e2b14e906459013f7b94cd649a,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -895,7 +912,7 @@ SpriteRenderer:
   m_Size: {x: 16, y: 16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1356906993
@@ -1364,6 +1381,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MuscleBoulSkill
       objectReference: {fileID: 0}
+    - target: {fileID: 2393719388478529039, guid: 251b7428bc9ca4aaf8c3bf9e2dc54a01,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2393719388478529040, guid: 251b7428bc9ca4aaf8c3bf9e2dc54a01,
         type: 3}
       propertyPath: m_RootOrder
@@ -1555,6 +1577,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MuscleKnuckleSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 2964477411638937896, guid: 580ca9d6cb10a4b44bb6ccb093e1fbf7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2964477411638937897, guid: 580ca9d6cb10a4b44bb6ccb093e1fbf7,
         type: 3}
