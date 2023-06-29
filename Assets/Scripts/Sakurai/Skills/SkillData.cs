@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// スキルのデータをまとめたデータオブジェクト
+/// </summary>
 [CreateAssetMenu(menuName ="MyScriptable/SkillData")]
 
 public class SkillData : ScriptableObject
@@ -21,12 +24,10 @@ public class SkillData : ScriptableObject
     [SerializeField]
     private SkillType _skillType = default;
 
-    [Header("変数")]
     [Tooltip("各スキルの初期の攻撃力")]
     [SerializeField]
     private float _attackAmount = 1.0f;
 
-    [Header("変数")]
     [Tooltip("パワーアップ時の補正値")]
     [SerializeField]
     private float _correctionvalue = 1.0f;
@@ -62,7 +63,7 @@ public enum SkillType
 {
    Aura,
    Fairy,
-   knuckle,
+   Knuckle,
    Boul,
    Throw
 }
