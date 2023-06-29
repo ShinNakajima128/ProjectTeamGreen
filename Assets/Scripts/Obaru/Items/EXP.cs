@@ -10,7 +10,7 @@ public class EXP : ItemBase
     #region serialize
     [Tooltip("経験値")]
     [SerializeField]
-    uint _expValue = 1;
+    private uint _expValue = 1;
     #endregion
 
     #region private

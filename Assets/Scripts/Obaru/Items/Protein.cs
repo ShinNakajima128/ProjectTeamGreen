@@ -10,7 +10,7 @@ public class Protein : ItemBase
     #region serialize
     [Tooltip("倍率")]
     [SerializeField]
-    float _coefficient = 1.1f;
+    private float _coefficient = 1.1f;
     #endregion
 
     #region private
