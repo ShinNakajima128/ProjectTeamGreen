@@ -43,8 +43,8 @@ public class ObjectPool
     {
         _pool = new List<GameObject>();
         _object = obj;
-        _parent = parent;
         _activationLimit = limit;
+        _parent = parent;
 
         for (int i = 0; i < reserveAmount; i++)
         {
@@ -60,7 +60,7 @@ public class ObjectPool
     /// <returns>使用するオブジェクト</returns>
     public GameObject Rent()
     {
-        if (_activationLimit <= _pool.Count(x => x.activeSelf))
+        if (_activationLimit <= _pool.Count(x => x.activeInHierarchy))
         {
             Debug.Log($"{_object}はアクティブ限度数に達しています");
             return null;
@@ -70,13 +70,12 @@ public class ObjectPool
         {
             if (!obj.activeSelf)
             {
-                obj.SetActive(true);
                 return obj;
             }
         }
 
         //無かった場合は新しく作り、それを渡す
-        var o = Object.Instantiate(_object as GameObject, _parent);
+        var o = Object.Instantiate(_object, _parent);
         _pool.Add(o);
         return o;
     }
