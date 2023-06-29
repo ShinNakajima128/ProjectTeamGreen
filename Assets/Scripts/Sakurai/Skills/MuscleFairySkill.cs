@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 妖精スキルを扱うオブジェクト
 /// </summary>
-public class MascleFairySkill : SkillBase
+public class MuscleFairySkill : SkillBase
 {
     #region property
     #endregion
@@ -116,7 +116,7 @@ public class MascleFairySkill : SkillBase
 
     #region private method
     /// <summary>
-    /// レベルアップごとに妖精を召喚
+    /// 妖精を生成
     /// </summary>
     private void CreateNewFairy()
     {

@@ -388,7 +388,7 @@ PrefabInstance:
     - target: {fileID: 6159895422074413163, guid: adadfd1fece98415ba74b68162ab1d91,
         type: 3}
       propertyPath: m_Name
-      value: MascleFairySkill
+      value: MuscleFairySkill
       objectReference: {fileID: 0}
     - target: {fileID: 8490252507380179523, guid: adadfd1fece98415ba74b68162ab1d91,
         type: 3}
@@ -447,18 +447,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: adadfd1fece98415ba74b68162ab1d91, type: 3}
---- !u!114 &586613116 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2650928737391419118, guid: adadfd1fece98415ba74b68162ab1d91,
-    type: 3}
-  m_PrefabInstance: {fileID: 586613115}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7d94002829184b1386350a6f36710c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &586613117 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8490252507380179523, guid: adadfd1fece98415ba74b68162ab1d91,
@@ -671,8 +659,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skills:
   - {fileID: 939874604}
-  - {fileID: 586613116}
-  - {fileID: 1821362444}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &1137013681
 Transform:
   m_ObjectHideFlags: 0
@@ -1010,6 +998,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1413559046
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1413559047}
+  m_Layer: 0
+  m_Name: MuscleKnuckleSkill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1413559047
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413559046}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.152872, y: 0.09423202, z: -13.213414}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1579013006
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,7 +1373,7 @@ PrefabInstance:
     - target: {fileID: 2393719388478529039, guid: 251b7428bc9ca4aaf8c3bf9e2dc54a01,
         type: 3}
       propertyPath: m_Name
-      value: MascleBoulSkill
+      value: MuscleBoulSkill
       objectReference: {fileID: 0}
     - target: {fileID: 2393719388478529040, guid: 251b7428bc9ca4aaf8c3bf9e2dc54a01,
         type: 3}
@@ -1420,18 +1438,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1821362442}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1821362444 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 608455961376090331, guid: 251b7428bc9ca4aaf8c3bf9e2dc54a01,
-    type: 3}
-  m_PrefabInstance: {fileID: 1821362442}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0aa44056c2d024a1d90ae9a90e46032c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1943780858
 GameObject:
   m_ObjectHideFlags: 0

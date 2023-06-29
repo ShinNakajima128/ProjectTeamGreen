@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 跳ね返るボールを扱うオブジェクト
 /// </summary>
-public class MascleBoulSkill : SkillBase
+public class MuscleBoulSkill : SkillBase
 {
 
     #region property
