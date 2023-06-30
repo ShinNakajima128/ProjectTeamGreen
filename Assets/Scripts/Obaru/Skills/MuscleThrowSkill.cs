@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(DumbbellGenerator))]
 public class MuscleThrowSkill : SkillBase
 {
     #region property
@@ -22,8 +24,12 @@ public class MuscleThrowSkill : SkillBase
     #region private
     /// <summary>現在のスキルの攻撃間隔</summary>
     private float _currentAttackInterval;
+    /// <summary>弾を撃つ方向</summary>
+    private Vector3 _targetDir = Vector3.zero;
+    /// <summary>エネミーのTransformのリスト</summary>
+    private List<Transform> _enemyList = new List<Transform>();
 
-    List<Transform> _enemyList = new List<Transform>();
+    private DumbbellGenerator _generator;
     #endregion
 
     #region Constant
@@ -37,11 +43,7 @@ public class MuscleThrowSkill : SkillBase
     {
         base.Awake();
         _currentAttackInterval = _startAttackInterval;
-    }
-
-    protected override void Start()
-    {
-        
+        _generator = GetComponent<DumbbellGenerator>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -88,7 +90,23 @@ public class MuscleThrowSkill : SkillBase
     #endregion
 
     #region private method
+    private void SetTarget()
+    {
+        Transform near = _enemyList.First();
+        float distance = 9999;
 
+        foreach (Transform enemyTransform in _enemyList)
+        {
+            float dist = Vector3.Distance(transform.position, enemyTransform.position);
+            if(dist < distance)
+            {
+                near = enemyTransform;
+                distance = dist;
+            }
+        }
+
+        _targetDir = (near.position - transform.position).normalized;
+    }
     #endregion
 
     #region coroutine method
@@ -96,10 +114,23 @@ public class MuscleThrowSkill : SkillBase
     {
         while (_isSkillActived)
         {
-            var dumbbell = Instantiate(_dumbbellPrefab, transform.position, transform.rotation);
+            if (_enemyList?.Count > 0)
+            {
+                SetTarget();
 
-            dumbbell.SetAttackAmount(_currentAttackAmount);
+                //var dumbbell = Instantiate(_dumbbellPrefab, transform.position, transform.rotation);
 
+                GameObject skillObj = _generator.DumbbellPool.Rent();
+                if (skillObj != null)
+                {
+                    var dumbbell = skillObj.GetComponent<Dumbbell>();
+                    dumbbell.RememberParent(transform);
+                    dumbbell.gameObject.SetActive(true);
+                    dumbbell.gameObject.transform.SetParent(null);
+                    dumbbell.SetAttackAmount(_currentAttackAmount);
+                    dumbbell.SetVelocity(_targetDir);
+                }
+            }
             yield return new WaitForSeconds(_currentAttackInterval);
         }
     }
