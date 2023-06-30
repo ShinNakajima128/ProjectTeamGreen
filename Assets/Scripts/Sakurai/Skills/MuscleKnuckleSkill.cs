@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 /// <summary>
 /// ナックルスキルを扱うオブジェクト
 /// </summary>
+
+[RequireComponent(typeof(KnucleGenerator))]
+
 public class MuscleKnuckleSkill : SkillBase
 {
     #region property
     #endregion
 
     #region serialize
+    [Header("変数")]
     [Tooltip("テスト用の弾丸")]
     [SerializeField]
     private Knuckle _knucklePrefab = default;
@@ -22,11 +28,21 @@ public class MuscleKnuckleSkill : SkillBase
     [Tooltip("スキルの攻撃間隔に対する係数")]
     [SerializeField]
     private float _coefficient = 2.0f;
+
+    [Tooltip("スキルの攻撃間隔に対する係数を増やす値")]
+    [SerializeField]
+    private float _coefficientUpdate = 4.0f;
     #endregion
 
     #region private
     /// <summary>現在のスキルの攻撃間隔</summary>
     private float _currentAttackInterval;
+
+    /// <summary>拳の生存時間</summary>
+    private float _lifeTime = 5.0f;
+
+    //コンポーネント
+    private KnucleGenerator _knucleGenerator;
     #endregion
 
     #region Constant
@@ -40,11 +56,8 @@ public class MuscleKnuckleSkill : SkillBase
     {
         base.Awake();
         _currentAttackInterval = _startAttackInterval;
-    }
 
-    protected override void Start()
-    {
-
+        _knucleGenerator = GetComponent<KnucleGenerator>();
     }
     #endregion
 
@@ -70,7 +83,7 @@ public class MuscleKnuckleSkill : SkillBase
             return;
         }
         _currentSkillLebel++;
-        //_currentAttackInterval /= _coefficient;
+        _currentAttackInterval /= _coefficient;
 
         Debug.Log($"レベルアップ!{_currentSkillLebel}に上がった！");
     }
@@ -89,12 +102,36 @@ public class MuscleKnuckleSkill : SkillBase
     #endregion
 
     #region coroutine method
+    /// <summary>
+    /// スキル実行時に行う処理のコルーチン
+    /// </summary>
+    /// <returns></returns>
     protected override IEnumerator SkillActionCoroutine()
     {
         while (_isSkillActived)
         {
-             Knuckle knuckle = Instantiate(_knucklePrefab, transform.position, transform.rotation);
-             knuckle.SetAttackAmount(_currentAttackAmount);
+            //Knuckle knuckle = Instantiate(_knucklePrefab, transform.position, transform.rotation);
+            GameObject sklObj = _knucleGenerator.KnucklePool.Rent();
+
+            if (sklObj != null)
+            {
+                Knuckle knuckle = sklObj.GetComponent<Knuckle>();
+
+                knuckle.gameObject.SetActive(true);
+                knuckle.SetAttackAmount(_currentAttackAmount);
+
+                if (_currentSkillLebel >= 3)
+                {
+                    knuckle.RandomDirection = knuckle.RondomEightDirection;
+                    _coefficient = _coefficientUpdate;
+                }
+                else
+                {
+                    knuckle.RandomDirection = knuckle.RondomFourDirection;
+                }
+
+                knuckle.RandomDirection.Invoke();
+            }
 
              yield return new WaitForSeconds(_currentAttackInterval);
         }

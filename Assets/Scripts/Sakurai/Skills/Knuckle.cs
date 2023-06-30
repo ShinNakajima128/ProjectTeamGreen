@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,13 +8,15 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
+
 public class Knuckle : MonoBehaviour
 {
     #region property
     #endregion
 
     #region serialize
-    /// <summary>拳の速さ</summary>
+    [Header("変数")]
+    [Tooltip("拳が動く速さ")]
     [SerializeField]
     private float _moveSpeed = 3.0f;
     #endregion
@@ -23,13 +26,19 @@ public class Knuckle : MonoBehaviour
 
     /// <summary>現在の攻撃力</summary>
     private float _currentAttackAmount = 0;
+
+    /// <summary>拳の生存時間</summary>
+    private float _lifeTime = 2.0f;
+
+    private Coroutine _currentCoroutine;
     #endregion
 
     #region Constant
     #endregion
 
     #region Event
-    
+    /// <summary>スキル機能変更用のデリゲート</summary>
+    public Action RandomDirection { get; set; }
     #endregion
 
     #region unity methods
@@ -40,53 +49,55 @@ public class Knuckle : MonoBehaviour
 
     private void Start()
     {
-        /*
-        int dirType = Random.Range(0, 4);
+        //2秒後にゲームオブジェクトは削除
+        //Destroy(this.gameObject, _lifeTime);
+    }
 
-        switch (dirType)
+    private void OnEnable()
+    {
+       _currentCoroutine = StartCoroutine(InactiveCoroutine());
+    }
+
+    private void OnDisable()
+    {
+        if (_currentCoroutine != null)
         {
-            case 0:
-                _rb.velocity = new Vector2(0, _moveSpeed);
-                break;
-            case 1:
-                _rb.velocity = new Vector2(_moveSpeed, 0);
-                break;
-            case 2:
-                _rb.velocity = new Vector2(0, -_moveSpeed);
-                break;
-            case 3:
-                _rb.velocity = new Vector2(-_moveSpeed, 0);
-                break;
-            default:
-                break;
-        }*/
+            StopCoroutine(_currentCoroutine);
+            _currentCoroutine = null;
+        }
+        transform.localPosition = Vector2.zero;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(GameTag.Enemy))
         {
-            var target = GetComponent<IDamagable>();
+            var target = collision.GetComponent<IDamagable>();
 
-            target.Damage(_currentAttackAmount);
+            if (target != null)
+            {
+                target.Damage(_currentAttackAmount);
+            }
         }
     }
     #endregion
 
+    #region public method
     /// <summary>
     /// ナックルに攻撃力を持たせる。
     /// </summary>
     /// <param name="amount">スキルデータから受け取る攻撃力</param>
-    #region public method
     public void SetAttackAmount(float amount)
     {
         _currentAttackAmount = amount;
     }
-    #endregion
 
-    #region private method
-    /*
-        int dirType = Random.Range(0, 4);
+    /// <summary>
+    /// 現在のレベル2までは4方向にランダム。
+    /// </summary>
+    public void RondomFourDirection()
+    {
+        int dirType = UnityEngine.Random.Range(0, 4);
 
         switch (dirType)
         {
@@ -104,7 +115,55 @@ public class Knuckle : MonoBehaviour
                 break;
             default:
                 break;
-        }*/
+        }
+    }
+
+    /// <summary>
+    /// 現在のレベル3から8方向にランダム。
+    /// </summary>
+    public void RondomEightDirection()
+    {
+        int dirType = UnityEngine.Random.Range(0, 8);
+
+        switch (dirType)
+        {
+            case 0:
+                _rb.velocity = new Vector2(0, _moveSpeed);
+                break;
+            case 1:
+                _rb.velocity = new Vector2(_moveSpeed, 0);
+                break;
+            case 2:
+                _rb.velocity = new Vector2(0, -_moveSpeed);
+                break;
+            case 3:
+                _rb.velocity = new Vector2(-_moveSpeed, 0);
+                break;
+            case 4:
+                _rb.velocity = new Vector2(_moveSpeed, _moveSpeed);
+                break;
+            case 5:
+                _rb.velocity = new Vector2(_moveSpeed, -_moveSpeed);
+                break;
+            case 6:
+                _rb.velocity = new Vector2(-_moveSpeed, _moveSpeed);
+                break;
+            case 7:
+                _rb.velocity = new Vector2(-_moveSpeed, -_moveSpeed);
+                break;
+            default:
+                break;
+        }
+    }
 
     #endregion
+
+    #region private method
+    #endregion
+
+    private IEnumerator InactiveCoroutine()
+    {
+        yield return new WaitForSeconds(_lifeTime);
+        gameObject.SetActive(false);
+    }
 }

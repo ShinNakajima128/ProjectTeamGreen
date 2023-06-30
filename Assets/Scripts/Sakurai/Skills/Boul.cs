@@ -39,7 +39,7 @@ public class Boul : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
 
-        //ボールが早くなっても衝突検出可能にする。
+        //ボールが早くなってもコライダーの衝突検出可能にする。
         _rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
 
@@ -62,9 +62,12 @@ public class Boul : MonoBehaviour
     {
         if (collision.CompareTag(GameTag.Enemy))
         {
-            //敵にダメージを与える
-            var target = GetComponent<IDamagable>();
-            target.Damage(_currentAttackAmount);
+            var target = collision.GetComponent<IDamagable>();
+
+            if (target != null)
+            {
+                target.Damage(_currentAttackAmount);
+            }
         }
     }
 

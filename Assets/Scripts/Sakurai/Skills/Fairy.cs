@@ -29,29 +29,18 @@ public class Fairy : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //タグがEnemyならダメージを与える
         if (collision.CompareTag(GameTag.Enemy))
         {
-           var target = GetComponent<IDamagable>();
+           var target = collision.GetComponent<IDamagable>();
 
-            target.Damage(_currentAttackAmount);
+            if (target != null)
+            {
+                target.Damage(_currentAttackAmount);
+            }
         }
     }
     #endregion
@@ -67,10 +56,10 @@ public class Fairy : MonoBehaviour
     }
 
     /// <summary>
-    /// スキルレベル3になったらサイズ変更
+    /// 現在のスキルレベルが3になったらサイズ変更
     /// </summary>
     /// <param name="scaleFactor">変更サイズ</param>
-    public void SizaChange(float scaleFactor)
+    public void SizeChange(float scaleFactor)
     {
         transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
     }
