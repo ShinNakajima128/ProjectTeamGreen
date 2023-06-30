@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2964477411638937897}
   - component: {fileID: 2017656607154516043}
+  - component: {fileID: 3352411620744476148}
   m_Layer: 0
   m_Name: MuscleKnuckleSkill
   m_TagString: Untagged
@@ -25,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2964477411638937896}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.152872, y: 0.09423202, z: -13.213414}
+  m_LocalPosition: {x: 0, y: 0, z: -13.213414}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -48,3 +49,21 @@ MonoBehaviour:
     type: 3}
   _startAttackInterval: 1
   _coefficient: 2
+  _coefficientUpdate: 4
+--- !u!114 &3352411620744476148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2964477411638937896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c2160cd24f724ebfae559d30b32dc40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _reserveAmount: 10
+  _limit: 100
+  _knucklePrefab: {fileID: -5767900203857440676, guid: eaea099cbc7cf4830903ba28a98191fd,
+    type: 3}
+  _parent: {fileID: 2964477411638937897}
