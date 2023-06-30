@@ -48,21 +48,10 @@ public class MuscleFairySkill : SkillBase
     #endregion
 
     #region unity methods
-    private void Awake()
+    protected override void Awake()
     {
-      
+        base.Awake();
     }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
-
 
     #endregion
 
@@ -98,7 +87,7 @@ public class MuscleFairySkill : SkillBase
         {
             foreach (Fairy fairy in _currentFairyAmount)
             {
-                fairy.SizaChange(_scaleFactor);
+                fairy.SizeChange(_scaleFactor);
             }
         }
     }
