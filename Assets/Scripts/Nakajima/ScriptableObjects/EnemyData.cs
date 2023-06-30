@@ -10,9 +10,10 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     #region property
-    public EnemyActionType Type => _actionType;
+    public EnemyActionType ActionType => _actionType;
     public int HP => _hp;
     public int AttackAmount => _attackAmount;
+    public float ApproachDistance => _approachDistance;
     #endregion
 
     #region serialize

@@ -27,6 +27,7 @@ public class TestEnemy : EnemyBase
         base.Awake();
         Debug.Log($"HP:{_currentHP} 攻撃力:{_currentAttackAmount}");
     }
+
     protected override void Start()
     {
         base.Start();
@@ -44,15 +45,15 @@ public class TestEnemy : EnemyBase
     #endregion
 
     #region protected
-    protected override void OnAction()
-    {
-        if (!_isActionable)
-        {
-            return;
-        }
-    }
     #endregion
 
     #region private method
+    #endregion
+
+    #region coroutine method
+    protected override IEnumerator OnActionCoroutine()
+    {
+        throw new System.NotImplementedException();
+    }
     #endregion
 }
