@@ -70,7 +70,7 @@ public class MuscleKnuckleSkill : SkillBase
             return;
         }
         _currentSkillLebel++;
-        //_currentAttackInterval /= _coefficient;
+        _currentAttackInterval /= _coefficient;
 
         Debug.Log($"レベルアップ!{_currentSkillLebel}に上がった！");
     }
@@ -89,12 +89,27 @@ public class MuscleKnuckleSkill : SkillBase
     #endregion
 
     #region coroutine method
+    /// <summary>
+    /// スキル実行時に行う処理のコルーチン
+    /// </summary>
+    /// <returns></returns>
     protected override IEnumerator SkillActionCoroutine()
     {
         while (_isSkillActived)
         {
              Knuckle knuckle = Instantiate(_knucklePrefab, transform.position, transform.rotation);
              knuckle.SetAttackAmount(_currentAttackAmount);
+
+            if (_currentSkillLebel >= 3)
+            {
+                knuckle.RandomDirection = knuckle.RondomEightDirection;
+            }
+            else
+            {
+                knuckle.RandomDirection = knuckle.RondomFourDirection;
+            }
+
+            knuckle.RandomDirection.Invoke();
 
              yield return new WaitForSeconds(_currentAttackInterval);
         }

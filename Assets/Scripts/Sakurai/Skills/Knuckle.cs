@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
+
+
 public class Knuckle : MonoBehaviour
 {
     #region property
@@ -29,7 +32,8 @@ public class Knuckle : MonoBehaviour
     #endregion
 
     #region Event
-    
+    /// <summary>スキル機能変更用のデリゲート</summary>
+    public Action RandomDirection { get; set; }
     #endregion
 
     #region unity methods
@@ -40,26 +44,7 @@ public class Knuckle : MonoBehaviour
 
     private void Start()
     {
-        /*
-        int dirType = Random.Range(0, 4);
 
-        switch (dirType)
-        {
-            case 0:
-                _rb.velocity = new Vector2(0, _moveSpeed);
-                break;
-            case 1:
-                _rb.velocity = new Vector2(_moveSpeed, 0);
-                break;
-            case 2:
-                _rb.velocity = new Vector2(0, -_moveSpeed);
-                break;
-            case 3:
-                _rb.velocity = new Vector2(-_moveSpeed, 0);
-                break;
-            default:
-                break;
-        }*/
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -73,20 +58,22 @@ public class Knuckle : MonoBehaviour
     }
     #endregion
 
+    #region public method
     /// <summary>
     /// ナックルに攻撃力を持たせる。
     /// </summary>
     /// <param name="amount">スキルデータから受け取る攻撃力</param>
-    #region public method
     public void SetAttackAmount(float amount)
     {
         _currentAttackAmount = amount;
     }
-    #endregion
 
-    #region private method
-    /*
-        int dirType = Random.Range(0, 4);
+    /// <summary>
+    /// 現在のレベル2までは4方向にランダム。
+    /// </summary>
+    public void RondomFourDirection()
+    {
+        int dirType = UnityEngine.Random.Range(0, 4);
 
         switch (dirType)
         {
@@ -104,7 +91,49 @@ public class Knuckle : MonoBehaviour
                 break;
             default:
                 break;
-        }*/
+        }
+    }
 
+    /// <summary>
+    /// 現在のレベル3から8方向にランダム。
+    /// </summary>
+    public void RondomEightDirection()
+    {
+        int dirType = UnityEngine.Random.Range(0, 8);
+
+        switch (dirType)
+        {
+            case 0:
+                _rb.velocity = new Vector2(0, _moveSpeed);
+                break;
+            case 1:
+                _rb.velocity = new Vector2(_moveSpeed, 0);
+                break;
+            case 2:
+                _rb.velocity = new Vector2(0, -_moveSpeed);
+                break;
+            case 3:
+                _rb.velocity = new Vector2(-_moveSpeed, 0);
+                break;
+            case 4:
+                _rb.velocity = new Vector2(_moveSpeed, _moveSpeed);
+                break;
+            case 5:
+                _rb.velocity = new Vector2(_moveSpeed, -_moveSpeed);
+                break;
+            case 6:
+                _rb.velocity = new Vector2(-_moveSpeed, _moveSpeed);
+                break;
+            case 7:
+                _rb.velocity = new Vector2(-_moveSpeed, -_moveSpeed);
+                break;
+            default:
+                break;
+        }
+    }
+
+    #endregion
+
+    #region private method
     #endregion
 }
