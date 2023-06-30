@@ -38,12 +38,12 @@ public class MuscleBoulSkill : SkillBase
     #region unity methods
     private void Awake()
     {
-
+        base.Awake();
     }
 
     private void Start()
     {
-        //ゲーム開始時は子オブジェクトを非アクティブc
+        //ゲーム開始時は子オブジェクトを非アクティブ
         if (!_isSkillActived)
         {
             childActive(false);

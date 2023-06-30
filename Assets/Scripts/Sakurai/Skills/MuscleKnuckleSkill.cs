@@ -11,6 +11,7 @@ public class MuscleKnuckleSkill : SkillBase
     #endregion
 
     #region serialize
+    [Header("変数")]
     [Tooltip("テスト用の弾丸")]
     [SerializeField]
     private Knuckle _knucklePrefab = default;
@@ -22,11 +23,18 @@ public class MuscleKnuckleSkill : SkillBase
     [Tooltip("スキルの攻撃間隔に対する係数")]
     [SerializeField]
     private float _coefficient = 2.0f;
+
+    [Tooltip("スキルの攻撃間隔に対する係数を増やす値")]
+    [SerializeField]
+    private float _coefficientUpdate = 4.0f;
     #endregion
 
     #region private
     /// <summary>現在のスキルの攻撃間隔</summary>
     private float _currentAttackInterval;
+
+    /// <summary>拳の生存時間</summary>
+    private float _lifeTime = 5.0f;
     #endregion
 
     #region Constant
@@ -103,6 +111,7 @@ public class MuscleKnuckleSkill : SkillBase
             if (_currentSkillLebel >= 3)
             {
                 knuckle.RandomDirection = knuckle.RondomEightDirection;
+                _coefficient = _coefficientUpdate;
             }
             else
             {

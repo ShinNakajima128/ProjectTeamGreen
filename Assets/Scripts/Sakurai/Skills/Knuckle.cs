@@ -16,7 +16,8 @@ public class Knuckle : MonoBehaviour
     #endregion
 
     #region serialize
-    /// <summary>拳の速さ</summary>
+    [Header("変数")]
+    [Tooltip("拳が動く速さ")]
     [SerializeField]
     private float _moveSpeed = 3.0f;
     #endregion
@@ -26,6 +27,9 @@ public class Knuckle : MonoBehaviour
 
     /// <summary>現在の攻撃力</summary>
     private float _currentAttackAmount = 0;
+
+    /// <summary>拳の生存時間</summary>
+    private float _lifeTime = 2.0f;
     #endregion
 
     #region Constant
@@ -44,16 +48,20 @@ public class Knuckle : MonoBehaviour
 
     private void Start()
     {
-
+        //3秒後にゲームオブジェクトは削除
+        Destroy(this.gameObject, _lifeTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(GameTag.Enemy))
         {
-            var target = GetComponent<IDamagable>();
+            var target = collision.GetComponent<IDamagable>();
 
-            target.Damage(_currentAttackAmount);
+            if (target != null)
+            {
+                target.Damage(_currentAttackAmount);
+            }
         }
     }
     #endregion

@@ -50,7 +50,7 @@ public class MuscleFairySkill : SkillBase
     #region unity methods
     private void Awake()
     {
-      
+        base.Awake();
     }
 
     private void Start()
@@ -98,7 +98,7 @@ public class MuscleFairySkill : SkillBase
         {
             foreach (Fairy fairy in _currentFairyAmount)
             {
-                fairy.SizaChange(_scaleFactor);
+                fairy.SizeChange(_scaleFactor);
             }
         }
     }
