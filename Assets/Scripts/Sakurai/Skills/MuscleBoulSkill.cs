@@ -36,24 +36,20 @@ public class MuscleBoulSkill : SkillBase
     #endregion
 
     #region unity methods
-    private void Awake()
+    protected override void Awake()
     {
-
+        base.Awake();
     }
 
-    private void Start()
+    protected override void Start()
     {
-        //ゲーム開始時は子オブジェクトを非アクティブc
+        //ゲーム開始時は子オブジェクトを非アクティブ
         if (!_isSkillActived)
         {
             childActive(false);
         }
     }
 
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method
