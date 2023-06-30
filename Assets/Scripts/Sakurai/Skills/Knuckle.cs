@@ -9,7 +9,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
 
-
 public class Knuckle : MonoBehaviour
 {
     #region property
@@ -30,6 +29,8 @@ public class Knuckle : MonoBehaviour
 
     /// <summary>拳の生存時間</summary>
     private float _lifeTime = 2.0f;
+
+    private Coroutine _currentCoroutine;
     #endregion
 
     #region Constant
@@ -48,8 +49,23 @@ public class Knuckle : MonoBehaviour
 
     private void Start()
     {
-        //3秒後にゲームオブジェクトは削除
-        Destroy(this.gameObject, _lifeTime);
+        //2秒後にゲームオブジェクトは削除
+        //Destroy(this.gameObject, _lifeTime);
+    }
+
+    private void OnEnable()
+    {
+       _currentCoroutine = StartCoroutine(InactiveCoroutine());
+    }
+
+    private void OnDisable()
+    {
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+            _currentCoroutine = null;
+        }
+        transform.localPosition = Vector2.zero;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -144,4 +160,10 @@ public class Knuckle : MonoBehaviour
 
     #region private method
     #endregion
+
+    private IEnumerator InactiveCoroutine()
+    {
+        yield return new WaitForSeconds(_lifeTime);
+        gameObject.SetActive(false);
+    }
 }

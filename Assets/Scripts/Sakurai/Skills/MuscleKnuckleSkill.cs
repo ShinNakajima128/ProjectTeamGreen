@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 /// <summary>
 /// ナックルスキルを扱うオブジェクト
 /// </summary>
+
+[RequireComponent(typeof(KnucleGenerator))]
+
 public class MuscleKnuckleSkill : SkillBase
 {
     #region property
@@ -35,6 +40,9 @@ public class MuscleKnuckleSkill : SkillBase
 
     /// <summary>拳の生存時間</summary>
     private float _lifeTime = 5.0f;
+
+    //コンポーネント
+    private KnucleGenerator _knucleGenerator;
     #endregion
 
     #region Constant
@@ -48,6 +56,8 @@ public class MuscleKnuckleSkill : SkillBase
     {
         base.Awake();
         _currentAttackInterval = _startAttackInterval;
+
+        _knucleGenerator = GetComponent<KnucleGenerator>();
     }
 
     protected override void Start()
@@ -105,20 +115,28 @@ public class MuscleKnuckleSkill : SkillBase
     {
         while (_isSkillActived)
         {
-             Knuckle knuckle = Instantiate(_knucklePrefab, transform.position, transform.rotation);
-             knuckle.SetAttackAmount(_currentAttackAmount);
+            //Knuckle knuckle = Instantiate(_knucklePrefab, transform.position, transform.rotation);
+            GameObject sklObj = _knucleGenerator.KnucklePool.Rent();
 
-            if (_currentSkillLebel >= 3)
+            if (sklObj != null)
             {
-                knuckle.RandomDirection = knuckle.RondomEightDirection;
-                _coefficient = _coefficientUpdate;
-            }
-            else
-            {
-                knuckle.RandomDirection = knuckle.RondomFourDirection;
-            }
+                Knuckle knuckle = sklObj.GetComponent<Knuckle>();
 
-            knuckle.RandomDirection.Invoke();
+                knuckle.gameObject.SetActive(true);
+                knuckle.SetAttackAmount(_currentAttackAmount);
+
+                if (_currentSkillLebel >= 3)
+                {
+                    knuckle.RandomDirection = knuckle.RondomEightDirection;
+                    _coefficient = _coefficientUpdate;
+                }
+                else
+                {
+                    knuckle.RandomDirection = knuckle.RondomFourDirection;
+                }
+
+                knuckle.RandomDirection.Invoke();
+            }
 
              yield return new WaitForSeconds(_currentAttackInterval);
         }

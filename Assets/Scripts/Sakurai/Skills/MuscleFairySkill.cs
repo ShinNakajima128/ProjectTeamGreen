@@ -48,12 +48,12 @@ public class MuscleFairySkill : SkillBase
     #endregion
 
     #region unity methods
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
     }
 
-    private void Start()
+    protected override void Start()
     {
 
     }
