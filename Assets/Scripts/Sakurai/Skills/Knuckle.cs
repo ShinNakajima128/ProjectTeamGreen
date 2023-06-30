@@ -37,6 +37,7 @@ public class Knuckle : MonoBehaviour
 
     private void Start()
     {
+        /*
         int dirType = Random.Range(0, 4);
 
         switch (dirType)
@@ -55,7 +56,7 @@ public class Knuckle : MonoBehaviour
                 break;
             default:
                 break;
-        }
+        }*/
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

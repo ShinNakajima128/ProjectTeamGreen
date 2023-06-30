@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// テスト用の仮スキル
+/// ナックルスキルを扱うオブジェクト
 /// </summary>
 public class MuscleKnuckleSkill : SkillBase
 {
@@ -17,7 +17,7 @@ public class MuscleKnuckleSkill : SkillBase
 
     [Tooltip("スキルの攻撃間隔の初期値")]
     [SerializeField]
-    private float _startAttackInterval = 1.0f;
+    private float _startAttackInterval = 5.0f;
 
     [Tooltip("スキルの攻撃間隔に対する係数")]
     [SerializeField]
@@ -70,7 +70,7 @@ public class MuscleKnuckleSkill : SkillBase
             return;
         }
         _currentSkillLebel++;
-        _currentAttackInterval /= _coefficient;
+        //_currentAttackInterval /= _coefficient;
 
         Debug.Log($"レベルアップ!{_currentSkillLebel}に上がった！");
     }
@@ -93,10 +93,10 @@ public class MuscleKnuckleSkill : SkillBase
     {
         while (_isSkillActived)
         {
-            Knuckle knuckle = Instantiate(_knucklePrefab, transform.position, transform.rotation);
-            knuckle.SetAttackAmount(_currentAttackAmount);
+             Knuckle knuckle = Instantiate(_knucklePrefab, transform.position, transform.rotation);
+             knuckle.SetAttackAmount(_currentAttackAmount);
 
-            yield return new WaitForSeconds(_currentAttackInterval);
+             yield return new WaitForSeconds(_currentAttackInterval);
         }
 
         //コルーチンを使用使用しない場合は以下を記述する
