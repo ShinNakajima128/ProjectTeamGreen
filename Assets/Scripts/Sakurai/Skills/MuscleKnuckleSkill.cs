@@ -18,6 +18,10 @@ public class MuscleKnuckleSkill : SkillBase
     [Tooltip("スキルの攻撃間隔の初期値")]
     [SerializeField]
     private float _startAttackInterval = 1.0f;
+
+    [Tooltip("スキルの攻撃間隔に対する係数")]
+    [SerializeField]
+    private float _coefficient = 2.0f;
     #endregion
 
     #region private
@@ -66,6 +70,8 @@ public class MuscleKnuckleSkill : SkillBase
             return;
         }
         _currentSkillLebel++;
+        _currentAttackInterval /= _coefficient;
+
         Debug.Log($"レベルアップ!{_currentSkillLebel}に上がった！");
     }
     // <summary>

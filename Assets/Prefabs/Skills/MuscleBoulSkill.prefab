@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 2393719388478529040}
   - component: {fileID: 608455961376090331}
   m_Layer: 0
-  m_Name: MascleBoulSkill
+  m_Name: MuscleBoulSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

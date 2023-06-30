@@ -47,3 +47,4 @@ MonoBehaviour:
   _knucklePrefab: {fileID: -5767900203857440676, guid: eaea099cbc7cf4830903ba28a98191fd,
     type: 3}
   _startAttackInterval: 1
+  _coefficient: 2

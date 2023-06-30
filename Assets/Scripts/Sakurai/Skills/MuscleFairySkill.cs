@@ -20,13 +20,13 @@ public class MuscleFairySkill : SkillBase
     [SerializeField]
     private float _rotationSpeed = 1.0f;
 
+    [Tooltip("妖精が回転する速度に対する係数")]
+    [SerializeField]
+    private float _coefficient = 1.3f;
 
     #endregion
 
     #region private
-    /// <summary>妖精が回転する速度に対する係数</summary>
-    private float _coefficient = 1.3f;
-
     /// <summary>妖精が回転する半径</summary>
     private float _fairyRadius = 1.0f;
 
