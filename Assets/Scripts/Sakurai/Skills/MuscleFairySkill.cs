@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 妖精召喚時のスキル
+/// 妖精スキルを扱うオブジェクト
 /// </summary>
-public class MascleFairySkill : SkillBase
+public class MuscleFairySkill : SkillBase
 {
     #region property
     #endregion
@@ -24,28 +24,21 @@ public class MascleFairySkill : SkillBase
     [SerializeField]
     private float _coefficient = 1.3f;
 
-    //[Tooltip("現在存在する妖精")]
-    //[SerializeField]
-    //private List<GameObject> _currentFairyAmount = new List<GameObject>();
-
-    [Tooltip("妖精が回転する半径")]
-    [SerializeField]
-    private float _fairyRadius = 1.0f;
-
-    [Tooltip("妖精の開始角度")]
-    [SerializeField]
-    private List<float> _currentFairyAngles = new List<float>();
-
-    [Tooltip("妖精の変更サイズ")]
-    [SerializeField]
-    private float _scaleFactor = 2.0f;
-
-    private List<Fairy> _currentFairyAmount = new List<Fairy>();
-
-
     #endregion
 
     #region private
+    /// <summary>妖精が回転する半径</summary>
+    private float _fairyRadius = 1.0f;
+
+    /// <summary>妖精の変更サイズ</summary>
+    private float _scaleFactor = 2.0f;
+
+    /// <summary>現在の妖精の数</summary>
+    private List<Fairy> _currentFairyAmount = new List<Fairy>();
+
+    /// <summary>妖精の開始角度</summary>
+    private List<float> _currentFairyAngles = new List<float>();
+
     #endregion
 
     #region Constant
@@ -97,7 +90,6 @@ public class MascleFairySkill : SkillBase
         }
         _currentSkillLebel++;
         _rotationSpeed *= _coefficient;
-
         CreateNewFairy();
 
         Debug.Log($"レベルアップ!{_currentSkillLebel}にあがった!");
@@ -124,7 +116,7 @@ public class MascleFairySkill : SkillBase
 
     #region private method
     /// <summary>
-    /// レベルアップごとに妖精を召喚
+    /// 妖精を生成
     /// </summary>
     private void CreateNewFairy()
     {
@@ -139,14 +131,6 @@ public class MascleFairySkill : SkillBase
             _currentFairyAngles.Add(angleStep * i);
         }
     }
-    #endregion
-
-    #region private method
-    /// <summary>
-    /// スキル実行時の処理を行うコルーチン
-    /// </summary>
-    /// <returns></returns>
-
     #endregion
 
     #region coroutine method

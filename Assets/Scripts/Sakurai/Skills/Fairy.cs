@@ -14,7 +14,7 @@ public class Fairy : MonoBehaviour
 
     #region serialize
     [Header("変数")]
-    [Tooltip("現在の攻撃力")]
+    [Tooltip("現在の妖精の攻撃力")]
     [SerializeField]
     private float _currentAttackAmount = 0;
     #endregion
@@ -46,6 +46,7 @@ public class Fairy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //タグがEnemyならダメージを与える
         if (collision.CompareTag(GameTag.Enemy))
         {
            var target = GetComponent<IDamagable>();
@@ -56,11 +57,19 @@ public class Fairy : MonoBehaviour
     #endregion
 
     #region public method
+    /// <summary>
+    /// 妖精に攻撃力をもたせる。
+    /// </summary>
+    /// <param name="amount">スキルデータから受け取る攻撃力</param>
     public void SetAttackAmount(float amount)
     {
         _currentAttackAmount = amount;
     }
 
+    /// <summary>
+    /// スキルレベル3になったらサイズ変更
+    /// </summary>
+    /// <param name="scaleFactor">変更サイズ</param>
     public void SizaChange(float scaleFactor)
     {
         transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
