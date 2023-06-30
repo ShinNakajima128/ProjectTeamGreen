@@ -13,12 +13,15 @@ public class Knuckle : MonoBehaviour
     #endregion
 
     #region serialize
+    /// <summary>拳の速さ</summary>
     [SerializeField]
     private float _moveSpeed = 3.0f;
     #endregion
 
     #region private
     private Rigidbody2D _rb;
+
+    /// <summary>現在の攻撃力</summary>
     private float _currentAttackAmount = 0;
     #endregion
 
@@ -70,6 +73,10 @@ public class Knuckle : MonoBehaviour
     }
     #endregion
 
+    /// <summary>
+    /// ナックルに攻撃力を持たせる。
+    /// </summary>
+    /// <param name="amount">スキルデータから受け取る攻撃力</param>
     #region public method
     public void SetAttackAmount(float amount)
     {
@@ -78,5 +85,26 @@ public class Knuckle : MonoBehaviour
     #endregion
 
     #region private method
+    /*
+        int dirType = Random.Range(0, 4);
+
+        switch (dirType)
+        {
+            case 0:
+                _rb.velocity = new Vector2(0, _moveSpeed);
+                break;
+            case 1:
+                _rb.velocity = new Vector2(_moveSpeed, 0);
+                break;
+            case 2:
+                _rb.velocity = new Vector2(0, -_moveSpeed);
+                break;
+            case 3:
+                _rb.velocity = new Vector2(-_moveSpeed, 0);
+                break;
+            default:
+                break;
+        }*/
+
     #endregion
 }
