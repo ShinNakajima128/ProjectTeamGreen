@@ -83,7 +83,10 @@ public class ItemGenerator : MonoBehaviour
 
         for (int i = 0; i < _items.Length; i++)
         {
-            _itemPoolDic.Add((ItemType)i, new ObjectPool(_items[i].ItemObj.gameObject, _items[i].ItemObj.ReserveAmount, _items[i].ItemObj.ActivationLimit, _items[i].Parent));
+            _itemPoolDic.Add((ItemType)i, new ObjectPool(_items[i].ItemPrefab.gameObject, 
+                                                        _items[i].ItemPrefab.ReserveAmount, 
+                                                        _items[i].ItemPrefab.ActivationLimit, 
+                                                        _items[i].Parent));
         }
     }
     #endregion
@@ -112,9 +115,12 @@ public class ItemGenerator : MonoBehaviour
     #endregion
 }
 
+/// <summary>
+/// アイテム
+/// </summary>
 [System.Serializable]
-struct Item
+class Item
 {
-    public ItemBase ItemObj;
+    public ItemBase ItemPrefab;
     public Transform Parent;
 }
