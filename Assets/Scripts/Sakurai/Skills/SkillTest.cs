@@ -33,6 +33,7 @@ public class SkillTest : MonoBehaviour
         this.UpdateAsObservable()
             .Subscribe(_ =>
             {
+                
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     SkillManager.Instance.SetSkill(SkillType.Aura);
@@ -44,6 +45,14 @@ public class SkillTest : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.G))
                 {
                     SkillManager.Instance.SetSkill(SkillType.Boul);
+                }
+                if (Input.GetKeyDown(KeyCode.H))
+                {
+                    SkillManager.Instance.SetSkill(SkillType.Knuckle);
+                }
+                if (Input.GetKeyDown(KeyCode.J))
+                {
+                    SkillManager.Instance.SetSkill(SkillType.Throw);
                 }
             })
             .AddTo(this);

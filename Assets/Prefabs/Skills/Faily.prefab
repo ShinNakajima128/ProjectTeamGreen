@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 2673041648277564311}
   - component: {fileID: 586641845799722990}
   - component: {fileID: 7842396720932577370}
-  m_Layer: 0
-  m_Name: MuscleFaily
+  m_Layer: 10
+  m_Name: Faily
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
