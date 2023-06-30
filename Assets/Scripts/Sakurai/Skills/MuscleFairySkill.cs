@@ -53,17 +53,6 @@ public class MuscleFairySkill : SkillBase
         base.Awake();
     }
 
-    protected override void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
-
-
     #endregion
 
     #region public method

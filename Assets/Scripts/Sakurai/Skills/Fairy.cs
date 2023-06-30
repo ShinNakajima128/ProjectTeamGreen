@@ -29,20 +29,6 @@ public class Fairy : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -59,11 +59,6 @@ public class MuscleKnuckleSkill : SkillBase
 
         _knucleGenerator = GetComponent<KnucleGenerator>();
     }
-
-    protected override void Start()
-    {
-
-    }
     #endregion
 
     #region public method

@@ -50,10 +50,6 @@ public class MuscleBoulSkill : SkillBase
         }
     }
 
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method
