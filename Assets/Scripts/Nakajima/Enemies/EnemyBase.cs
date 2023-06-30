@@ -72,6 +72,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
             .Select(x => _target ?? (_target = x.gameObject.GetComponent<IDamagable>()))
             .Subscribe(x =>
             {
+                //プレイヤーがダメージを受けない状態ではない場合
                 if (!x.IsInvincible)
                 {
                     x.Damage(_currentAttackAmount);

@@ -61,9 +61,12 @@ public class TempBullet : MonoBehaviour
     {
         if (collision.CompareTag(GameTag.Enemy))
         {
-            var target = GetComponent<IDamagable>();
+            var target = collision.GetComponent<IDamagable>();
 
-            target.Damage(_currentAttackAmount);
+            if (target != null)
+            {
+                target.Damage(_currentAttackAmount);
+            }
         }
     }
     #endregion

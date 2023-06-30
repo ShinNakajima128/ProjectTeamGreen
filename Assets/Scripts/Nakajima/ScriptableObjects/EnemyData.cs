@@ -10,6 +10,7 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
     #region property
+    public EnemyType EnemyType => _enemyType;
     public EnemyActionType ActionType => _actionType;
     public int HP => _hp;
     public int AttackAmount => _attackAmount;
@@ -18,6 +19,10 @@ public class EnemyData : ScriptableObject
 
     #region serialize
     [Header("変数")]
+    [Tooltip("敵の種類")]
+    [SerializeField]
+    private EnemyType _enemyType = default;
+
     [Tooltip("敵の行動の種類")]
     [SerializeField]
     private EnemyActionType _actionType = default;
@@ -49,6 +54,17 @@ public class EnemyData : ScriptableObject
 
     #region private method
     #endregion
+}
+
+/// <summary>
+/// 敵の種類
+/// </summary>
+public enum EnemyType
+{
+    Wave1_Chase1,
+    Wave1_Chase2,
+    Wave1_Point1,
+    Wave1_Boss
 }
 
 /// <summary>
