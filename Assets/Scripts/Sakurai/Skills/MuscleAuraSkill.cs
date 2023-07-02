@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MuscleAuraSkill : MonoBehaviour
+public class MuscleAuraSkill : SkillBase
 {
     #region property
     #endregion
 
     #region serialize
+
     #endregion
 
     #region private
@@ -20,12 +21,12 @@ public class MuscleAuraSkill : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
+    protected override void Awake()
     {
-
+        base.Awake();
     }
 
-    private void Start()
+    protected override void Start()
     {
 
     }
@@ -37,8 +38,40 @@ public class MuscleAuraSkill : MonoBehaviour
     #endregion
 
     #region public method
+
+    public override void OnSkillAction()
+    {
+        Debug.Log($"{SkillType}スキル発動");
+        _isSkillActived = true;
+    }
+
+    public override void LebelUpSkill()
+    {
+        if (_currentSkillLebel >= MAX_LEVEL)
+        {
+            Debug.Log($"{SkillType}はレベル上限です");
+
+            return;
+        }
+        _currentSkillLebel++;
+
+        Debug.Log($"レベルアップ!{_currentSkillLebel}にあがった!");
+    }
+
+    public override void AttackUpSkill(float coefficient)
+    {
+        _currentAttackAmount *= coefficient;
+    }
     #endregion
 
     #region private method
     #endregion
+
+    #region coroutine method
+    protected override IEnumerator SkillActionCoroutine()
+    {
+        yield return null;
+    }
+    #endregion
+
 }
