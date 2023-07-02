@@ -61,7 +61,7 @@ public class Fairy : MonoBehaviour
     /// <param name="scaleFactor">変更サイズ</param>
     public void SizeChange(float scaleFactor)
     {
-        transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+        transform.localScale = new Vector3(scaleFactor, scaleFactor,0);
     }
     #endregion
 
