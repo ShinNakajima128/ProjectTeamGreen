@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3858580775314400098}
-  m_Layer: 0
+  - component: {fileID: 5927217512047098392}
+  - component: {fileID: 5923526365143547080}
+  m_Layer: 10
   m_Name: HighAura
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,6 +34,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5927217512047098392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3858580775314400099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85892c494fc75431888180f6283f89aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentAttackAmount: 0
+--- !u!58 &5923526365143547080
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3858580775314400099}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!1 &3858580776348994507
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,7 +74,7 @@ GameObject:
   - component: {fileID: 3858580776348994506}
   - component: {fileID: 3858580776348994504}
   - component: {fileID: 3858580776348994505}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Par1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4797,7 +4828,7 @@ GameObject:
   - component: {fileID: 3858580776991387341}
   - component: {fileID: 3858580776991387331}
   - component: {fileID: 3858580776991387340}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ring1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
