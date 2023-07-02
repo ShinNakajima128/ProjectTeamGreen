@@ -16,6 +16,7 @@ public class Aura : MonoBehaviour
 
     #region private
 
+    //現在のオーラのスケール
     private float _currentScale = 1.0f;
     #endregion
 
@@ -26,20 +27,6 @@ public class Aura : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
