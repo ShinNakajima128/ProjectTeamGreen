@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurretEnemy : MonoBehaviour
+public class TurretEnemy : EnemyBase
 {
     #region property
     #endregion
 
     #region serialize
+    [Tooltip("敵の弾")]
+    [SerializeField]
+    private EnemyBullet _bullet = default;
+
+    [Tooltip("攻撃間隔")]
+    [SerializeField]
+    private float _attackInterval = 3.0f;
     #endregion
 
     #region private
@@ -20,19 +27,24 @@ public class TurretEnemy : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
+    protected override void Awake()
     {
-
+        base.Awake();
     }
 
-    private void Start()
+    protected override void Start()
     {
-
+        base.Start();
     }
 
-    private void Update()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+    }
 
+    protected override void OnDisable()
+    {
+        base.OnDisable();
     }
     #endregion
 
@@ -41,4 +53,9 @@ public class TurretEnemy : MonoBehaviour
 
     #region private method
     #endregion
+
+    protected override IEnumerator OnActionCoroutine()
+    {
+        throw new System.NotImplementedException();
+    }
 }

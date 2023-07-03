@@ -14,34 +14,65 @@ public class EnemyBullet : MonoBehaviour
     #endregion
 
     #region private
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
+    /// <summary>現在の攻撃力</summary>
+    private float _currentAttackAmount = 0;
+    /// <summary>弾の持続時間</summary>
+    private float _lifeTime = 5.0f;
+    private Rigidbody2D _rb;
+    private Coroutine _currentCoroutine = default;
     #endregion
 
     #region unity methods
     private void Awake()
     {
-
+        _rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-
+        _currentCoroutine = StartCoroutine(InactiveCoroutine());
     }
 
-    private void Update()
+    private void OnDisable()
     {
-
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+            _currentCoroutine = null;
+        }
     }
     #endregion
 
     #region public method
+    /// <summary>
+    /// 攻撃力の設定
+    /// </summary>
+    /// <param name="amount"></param>
+    public void SetAttackAmount(float amount)
+    {
+        _currentAttackAmount = amount;
+    }
+
+    /// <summary>
+    /// velocityの設定
+    /// </summary>
+    /// <param name="dir"></param>
+    public void SetVelocity(Vector3 dir)
+    {
+        _rb.velocity = dir * _moveSpeed;
+    }
     #endregion
 
-    #region private method
+    #region Coroutine method
+    /// <summary>
+    /// 一定時間後に非アクティブ化
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator InactiveCoroutine()
+    {
+        yield return new WaitForSeconds(_lifeTime);
+        gameObject.SetActive(false);
+    }
     #endregion
+
 }
