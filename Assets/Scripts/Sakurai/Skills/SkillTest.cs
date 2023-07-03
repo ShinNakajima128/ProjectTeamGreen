@@ -34,7 +34,7 @@ public class SkillTest : MonoBehaviour
             .Subscribe(_ =>
             {
                 
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.K))
                 {
                     SkillManager.Instance.SetSkill(SkillType.Aura);
                 }

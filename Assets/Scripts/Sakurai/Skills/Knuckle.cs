@@ -66,6 +66,7 @@ public class Knuckle : MonoBehaviour
             _currentCoroutine = null;
         }
         transform.localPosition = Vector2.zero;
+       
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

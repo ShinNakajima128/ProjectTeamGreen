@@ -117,6 +117,7 @@ public class MuscleKnuckleSkill : SkillBase
             {
                 Knuckle knuckle = sklObj.GetComponent<Knuckle>();
 
+                knuckle.transform.position = transform.position;  //追加
                 knuckle.gameObject.SetActive(true);
                 knuckle.SetAttackAmount(_currentAttackAmount);
 
