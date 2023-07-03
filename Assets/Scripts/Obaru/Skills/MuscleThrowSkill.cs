@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/// <summary>
+/// 一番近い敵に攻撃するスキル
+/// </summary>
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(DumbbellGenerator))]
 public class MuscleThrowSkill : SkillBase
 {
-    #region property
-    #endregion
-
     #region serialize
     [Tooltip("ダンベル（弾）")]
     [SerializeField]
@@ -19,6 +19,9 @@ public class MuscleThrowSkill : SkillBase
     [SerializeField]
     private float _startAttackInterval = 1.0f;
 
+    [Tooltip("スキルの攻撃間隔に対する係数")]
+    [SerializeField]
+    private float _coefficient = 1.2f;
     #endregion
 
     #region private
@@ -28,14 +31,7 @@ public class MuscleThrowSkill : SkillBase
     private Vector3 _targetDir = Vector3.zero;
     /// <summary>エネミーのTransformのリスト</summary>
     private List<Transform> _enemyList = new List<Transform>();
-
     private DumbbellGenerator _generator;
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
     #endregion
 
     #region unity methods
@@ -48,7 +44,7 @@ public class MuscleThrowSkill : SkillBase
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == GameTag.Enemy)
+        if(other.CompareTag(GameTag.Enemy))
         {
             _enemyList.Add(other.GetComponent<Transform>());
         }
@@ -56,7 +52,7 @@ public class MuscleThrowSkill : SkillBase
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == GameTag.Enemy)
+        if (other.CompareTag(GameTag.Enemy))
         {
             _enemyList.Remove(other.GetComponent<Transform>());
         }
@@ -64,6 +60,9 @@ public class MuscleThrowSkill : SkillBase
     #endregion
 
     #region public method
+    /// <summary>
+    /// スキルのレベルアップ
+    /// </summary>
     public override void LebelUpSkill()
     {
         //既にレベルが最大値の場合は処理を行わない
@@ -73,9 +72,14 @@ public class MuscleThrowSkill : SkillBase
             return;
         }
         _currentSkillLebel++;
+        _currentAttackInterval /= _coefficient;
+
         Debug.Log($"レベルアップ!{_currentSkillLebel}に上がった！");
     }
 
+    /// <summary>
+    /// スキルの発動
+    /// </summary>
     public override void OnSkillAction()
     {
         Debug.Log($"{SkillType}スキル発動");
@@ -83,6 +87,10 @@ public class MuscleThrowSkill : SkillBase
         StartCoroutine(SkillActionCoroutine());
     }
 
+    /// <summary>
+    /// スキルの攻撃力アップ
+    /// </summary>
+    /// <param name="coefficient"></param>
     public override void AttackUpSkill(float coefficient)
     {
         _currentAttackAmount *= coefficient;
@@ -90,6 +98,9 @@ public class MuscleThrowSkill : SkillBase
     #endregion
 
     #region private method
+    /// <summary>
+    /// 一番近い敵を探す
+    /// </summary>
     private void SetTarget()
     {
         Transform near = _enemyList.First();
@@ -110,6 +121,10 @@ public class MuscleThrowSkill : SkillBase
     #endregion
 
     #region coroutine method
+    /// <summary>
+    /// スキル実行時の処理を行うコルーチン
+    /// </summary>
+    /// <returns></returns>
     protected override IEnumerator SkillActionCoroutine()
     {
         while (_isSkillActived)
@@ -124,8 +139,8 @@ public class MuscleThrowSkill : SkillBase
                 if (skillObj != null)
                 {
                     var dumbbell = skillObj.GetComponent<Dumbbell>();
-                    dumbbell.RememberParent(transform);
                     dumbbell.gameObject.SetActive(true);
+                    dumbbell.SetShotPos(transform);
                     dumbbell.gameObject.transform.SetParent(null);
                     dumbbell.SetAttackAmount(_currentAttackAmount);
                     dumbbell.SetVelocity(_targetDir);

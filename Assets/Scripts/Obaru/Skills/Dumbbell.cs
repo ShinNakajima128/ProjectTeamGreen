@@ -2,30 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ダンベルコンポーネント
+/// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
 public class Dumbbell : MonoBehaviour
 {
-    #region property
-    #endregion
-
     #region serialize
+    [Tooltip("飛ぶ速さ")]
     [SerializeField]
     private float _moveSpeed = 3.0f;
     #endregion
 
     #region private
-    private Rigidbody2D _rb;
+    /// <summary>現在の攻撃力</summary>
     private float _currentAttackAmount = 0;
+    /// <summary>スキル持続時間</summary>
     private float _lifeTime = 5.0f;
+    private Rigidbody2D _rb;
     private Coroutine _currentCoroutine = default;
-    private Transform _parent = default;
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
     #endregion
 
     #region unity methods
@@ -46,7 +42,7 @@ public class Dumbbell : MonoBehaviour
             StopCoroutine(_currentCoroutine);
             _currentCoroutine = null;
         }
-        transform.SetParent(_parent);
+
         transform.localPosition = Vector3.zero;
     }
 
@@ -63,31 +59,43 @@ public class Dumbbell : MonoBehaviour
     #endregion
 
     #region public method
+    /// <summary>
+    /// 攻撃力の設定
+    /// </summary>
+    /// <param name="amount"></param>
     public void SetAttackAmount(float amount)
     {
         _currentAttackAmount = amount;
     }
 
+    /// <summary>
+    /// velocityの設定
+    /// </summary>
+    /// <param name="dir"></param>
     public void SetVelocity(Vector3 dir)
     {
         _rb.velocity = dir * _moveSpeed;
     }
 
-    public void RememberParent(Transform parent)
+    /// <summary>
+    /// 弾の発射位置を設定
+    /// </summary>
+    /// <param name="parent"></param>
+    public void SetShotPos(Transform parent)
     {
-        if (_parent == null)
-        {
-            _parent = parent;
-        }
+        transform.position = parent.position;
     }
     #endregion
 
-    #region private method
-    #endregion
-
+    #region Coroutine method
+    /// <summary>
+    /// 一定時間後に非アクティブ化
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator InactiveCoroutine()
     {
         yield return new WaitForSeconds(_lifeTime);
         gameObject.SetActive(false);
     }
+    #endregion
 }
