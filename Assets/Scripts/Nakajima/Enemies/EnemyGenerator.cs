@@ -17,8 +17,9 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField]
     private float _generateInterval = 1.0f;
 
-    //[SerializeField]
-    //private Vector2 _generatePoint = 
+    [Tooltip("生成される座標の絶対値")]
+    [SerializeField]
+    private Vector2 _generatePointAbsValue = default;
 
     [Tooltip("一度に生成する数")]
     [SerializeField]
@@ -28,10 +29,6 @@ public class EnemyGenerator : MonoBehaviour
     [Tooltip("各敵")]
     [SerializeField]
     private Enemy[] _enemies = default;
-
-    [Tooltip("生成する場所をまとめた親オブジェクト")]
-    [SerializeField]
-    private Transform _generatePointsParent = default;
     #endregion
 
     #region private
@@ -124,8 +121,28 @@ public class EnemyGenerator : MonoBehaviour
 
         while (_isInGame)
         {
-            var enemy = _enemyPoolDic[type].Rent();
+            for (int i = 0; i < _currentOnceGenerateAmount; i++)
+            {
+                var enemy = _enemyPoolDic[type].Rent();
 
+                //プールに敵オブジェクトがある場合は指定範囲の中でランダムな座標に生成
+                if (enemy != null)
+                {
+                    enemy.SetActive(true);
+
+                    float randomX = UnityEngine.Random.Range(_playerTrans.position.x + _generatePointAbsValue.x,
+                                                             _playerTrans.position.x + _generatePointAbsValue.x + 2.5f);
+                    float randomY = UnityEngine.Random.Range(_playerTrans.position.y,
+                                                             _playerTrans.position.y + _generatePointAbsValue.y);
+
+                    randomX = UnityEngine.Random.Range(0, 2) == 0 ? randomX : randomX * -1;
+                    randomY = UnityEngine.Random.Range(0, 2) == 0 ? randomY : randomY * -1;
+
+                    Vector2 generatePos = new Vector2(randomX, randomY);
+                    enemy.transform.localPosition = generatePos;
+                }
+            }
+            
             yield return interval;
         }
     }
@@ -138,6 +155,7 @@ public class EnemyGenerator : MonoBehaviour
 [Serializable]
 class Enemy 
 {
+    public string EnemyName;
     public EnemyBase EnemyPrefab;
     public uint ReserveAmount;
     public uint ActivationLimit;
