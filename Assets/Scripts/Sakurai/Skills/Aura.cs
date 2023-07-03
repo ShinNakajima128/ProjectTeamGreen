@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// オーラコンポーネント
+/// </summary>
 public class Aura : MonoBehaviour
 {
     #region property

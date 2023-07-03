@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// オーラを扱うオブジェクト
+/// </summary>
 public class MuscleAuraSkill : SkillBase
 {
     #region property
