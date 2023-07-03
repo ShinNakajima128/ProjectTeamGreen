@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _generateInterval: 2
   _items:
-  - ItemObj: {fileID: 370131487689047317, guid: 118aa8fa4863eec45bb690a6c774b7af,
+  - ItemPrefab: {fileID: 768345823086110253, guid: 6a1d22319b220b24da7a2ef9faa43fde,
       type: 3}
     Parent: {fileID: 6355326078942542571}
 --- !u!1 &6355326079381132476

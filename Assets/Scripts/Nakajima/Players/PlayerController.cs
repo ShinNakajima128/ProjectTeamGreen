@@ -68,10 +68,10 @@ public class PlayerController : MonoBehaviour, IDamagable
         this.UpdateAsObservable()
             .Subscribe(_ =>
             {
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    SkillManager.Instance.SetSkill(SkillType.Aura);
-                }
+                //if (Input.GetKeyDown(KeyCode.Space))
+                //{
+                //    SkillManager.Instance.SetSkill(SkillType.Aura);
+                //}
             })
             .AddTo(this);
     }
