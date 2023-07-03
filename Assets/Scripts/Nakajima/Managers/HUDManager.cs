@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
+using TMPro;
 
 /// <summary>
 /// HUDの機能全般を管理するManagerクラス
@@ -14,9 +15,9 @@ public class HUDManager : MonoBehaviour
     #endregion
 
     #region serialize
-    [Tooltip("討伐数を表示するText")]
+    [Tooltip("討伐数を表示するTMP")]
     [SerializeField]
-    private Text _defeatText = default;
+    private TextMeshProUGUI _defeatTMP = default;
     #endregion
 
     #region private
@@ -53,7 +54,7 @@ public class HUDManager : MonoBehaviour
     /// <param name="amount">討伐数</param>
     private void ViewDefeatedAmount(uint amount)
     {
-        _defeatText.text = $"討伐数:{amount}体";
+        _defeatTMP.text = $"{amount}";
     }
     #endregion
 }

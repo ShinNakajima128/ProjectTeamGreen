@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     public static PlayerController Instance { get; private set; }
     public float CurrentMaxHP => _health.CurrentMaxHP;
     public bool IsInvincible => _isInvincible;
+    public PlayerHealth Health => _health;
+    public PlayerStatus Status => _status;
     public Subject<float> ChangeAttackCoefficientSubject => _changeAttackCoefficientSubject;
     #endregion
 
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     #region unity methods
     private void Awake()
     {
+        Instance = this;
         _input = GetComponent<PlayerInput>();
         _move = GetComponent<PlayerMove>();
         _health = GetComponent<PlayerHealth>();
