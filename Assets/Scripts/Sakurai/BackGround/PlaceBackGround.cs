@@ -25,10 +25,14 @@ public class PlaceBackGround : MonoBehaviour
     #region private
 
     //タイルの配列
-    private GameObject[,] tiles = new GameObject[3, 3];
+    private GameObject[,] _tiles;
+
+    //プレイヤーの前回の座標を保存する変数
+    private Vector3 _lastPlayerPos;
     #endregion
 
     #region Constant
+    private const int GRID_SIZE = 3; 
     #endregion
 
     #region Event
@@ -42,21 +46,25 @@ public class PlaceBackGround : MonoBehaviour
 
     void Start()
     {
+        _tiles = new GameObject[GRID_SIZE, GRID_SIZE];
+        _lastPlayerPos = _player.transform.position;
+
         // タイルの初期配置
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < GRID_SIZE; i++)
         {
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < GRID_SIZE; j++)
             {
                 // タイルを生成
                 GameObject tile = Instantiate(_tilePrefab);
 
                 // タイルを配列に保存
-                tiles[i, j] = tile;
+                _tiles[i, j] = tile;
 
                 // タイルの位置を設定
                 tile.transform.position = new Vector3((j - 1) * _tileSize, (1 - i) * _tileSize, 0);
             }
         }
+
     }
 
 
@@ -65,23 +73,31 @@ public class PlaceBackGround : MonoBehaviour
         // プレイヤーの座標を取得
         Vector3 playerPos = _player.transform.position;
 
-        // タイルの端に近づいたら
-        if (playerPos.x > _tileSize / 2)
+        // プレイヤーが一定の距離だけ移動したかを確認
+        if (Mathf.Abs(playerPos.x - _lastPlayerPos.x) > _tileSize)
         {
-            ShiftTilesLeft();
-        }
-        else if (playerPos.x < -_tileSize / 2)
-        {
-            ShiftTilesRight();
+            if (playerPos.x > _lastPlayerPos.x)
+            {
+                ShiftTilesRight();
+            }
+            else
+            {
+                ShiftTilesLeft();
+            }
+            _lastPlayerPos.x = playerPos.x;
         }
 
-        if (playerPos.y > _tileSize / 2)
+        if (Mathf.Abs(playerPos.y - _lastPlayerPos.y) > _tileSize)
         {
-            ShiftTilesDown();
-        }
-        else if (playerPos.y < -_tileSize / 2)
-        {
-            ShiftTilesUp();
+            if (playerPos.y > _lastPlayerPos.y)
+            {
+                ShiftTilesUp();
+            }
+            else
+            {
+                ShiftTilesDown();
+            }
+            _lastPlayerPos.y = playerPos.y;
         }
     }
     #endregion
@@ -90,104 +106,71 @@ public class PlaceBackGround : MonoBehaviour
     #endregion
 
     #region private method
-    // タイルを左にシフト
+
     void ShiftTilesLeft()
     {
-        // 左にシフトするコードを書く
-        GameObject[] temp = new GameObject[3];
-        for (int i = 0; i < 3; i++)
-        {
-            temp[i] = tiles[i, 2];
-        }
+        GameObject temp;
 
-        // 中央と左の列を右にシフト
         for (int i = 0; i < 3; i++)
         {
-            tiles[i, 2] = tiles[i, 1];
-            tiles[i, 1] = tiles[i, 0];
-        }
+            _tiles[i, 2].transform.position += new Vector3(-3f * _tileSize, 0, 0);
 
-        // 一番左の列を更新
-        for (int i = 0; i < 3; i++)
-        {
-            tiles[i, 0] = temp[i];
-            tiles[i, 0].transform.position += new Vector3(-3f * _tileSize, 0, 0);
+            // タイルの位置を配列内で更新
+            temp = _tiles[i, 2];
+            _tiles[i, 2] = _tiles[i, 1];
+            _tiles[i, 1] = _tiles[i, 0];
+            _tiles[i, 0] = temp;
         }
     }
 
     // タイルを右にシフト
     void ShiftTilesRight()
     {
-        // 右にシフトするコードを書く
-        // 一番左の列を保存
-        GameObject[] temp = new GameObject[3];
-        for (int i = 0; i < 3; i++)
-        {
-            temp[i] = tiles[i, 0];
-        }
+        GameObject temp;
 
-        // 中央と右の列を左にシフト
         for (int i = 0; i < 3; i++)
         {
-            tiles[i, 0] = tiles[i, 1];
-            tiles[i, 1] = tiles[i, 2];
-        }
+            _tiles[i, 0].transform.position += new Vector3(3.0f * _tileSize, 0, 0);
 
-        // 一番右の列を更新
-        for (int i = 0; i < 3; i++)
-        {
-            tiles[i, 2] = temp[i];
-            tiles[i, 2].transform.position += new Vector3(3f * _tileSize, 0, 0);
+            //タイルの位置を配列内で更新
+            temp = _tiles[i, 0];
+            _tiles[i, 0] = _tiles[i, 1];
+            _tiles[i, 1] = _tiles[i, 2];
+            _tiles[i, 2] = temp;
         }
     }
 
     // タイルを下にシフト
-    void ShiftTilesDown()
+    private void ShiftTilesDown()
     {
-        // 下にシフトするコードを書く
-        GameObject[] temp = new GameObject[3];
-        for (int i = 0; i < 3; i++)
-        {
-            temp[i] = tiles[0, i];
-        }
+        GameObject temp;
 
-        // 中央と下の行を上にシフト
         for (int i = 0; i < 3; i++)
         {
-            tiles[0, i] = tiles[1, i];
-            tiles[1, i] = tiles[2, i];
-        }
+            _tiles[0, i].transform.position += new Vector3(0, -3f * _tileSize, 0);
 
-        // 一番下の行を更新
-        for (int i = 0; i < 3; i++)
-        {
-            tiles[2, i] = temp[i];
-            tiles[2, i].transform.position += new Vector3(0, -3f * _tileSize, 0);
+            //タイルの位置を配列内で更新
+            temp = _tiles[0, i];
+            _tiles[0, i] = _tiles[1, i];
+            _tiles[1, i] = _tiles[2, i];
+            _tiles[2, i] = temp;
         }
     }
-
+  
     // タイルを上にシフト
-    void ShiftTilesUp()
+    private void ShiftTilesUp()
     {
-        // 上にシフトするコードを書く
-        GameObject[] temp = new GameObject[3];
-        for (int i = 0; i < 3; i++)
-        {
-            temp[i] = tiles[2, i];
-        }
+        GameObject temp;
 
-        // 中央と上の行を下にシフト
         for (int i = 0; i < 3; i++)
         {
-            tiles[2, i] = tiles[1, i];
-            tiles[1, i] = tiles[0, i];
-        }
+            _tiles[2, i].transform.position += new Vector3(0, 3f * _tileSize, 0);
 
-        // 一番上の行を更新
-        for (int i = 0; i < 3; i++)
-        {
-            tiles[0, i] = temp[i];
-            tiles[0, i].transform.position += new Vector3(0, 3f * _tileSize, 0);
+            //タイルの位置を配列内で更新
+            temp = _tiles[2, i];
+            _tiles[2, i] = _tiles[1, i];
+            _tiles[1, i] = _tiles[0, i];
+            _tiles[0, i] = temp; 
         }
     }
     #endregion
