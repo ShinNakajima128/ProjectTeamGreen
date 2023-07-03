@@ -11,6 +11,7 @@ using UniRx.Triggers;
 public abstract class EnemyBase : MonoBehaviour, IDamagable
 {
     #region property
+    public EnemyType EnemyType => _enemyData.EnemyType;
     public EnemyActionType ActionType => _enemyData.ActionType;
     public bool IsInvincible => _isInvincible;
     public float ApproachDistance => _enemyData.ApproachDistance;
@@ -131,6 +132,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         
         if (_currentHP <= 0)
         {
+            //討伐数を加算
+            EnemyManager.Instance.DefeatAmount.Value++;
             gameObject.SetActive(false);
         }
 
@@ -152,6 +155,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     {
         _currentAttackAmount = coefficient;
     }
+
     #endregion
     /// <summary>
     /// 敵毎のアクションの処理を行うコルーチン
