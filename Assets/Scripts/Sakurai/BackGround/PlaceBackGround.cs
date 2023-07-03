@@ -3,38 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlaceBackGround : MonoBehaviour
-{
+{ 
     #region property
     #endregion
 
     #region serialize
     [Header("変数")]
-    [Tooltip("プレイヤープレハブ")]
+    [Tooltip("タイルのサイズ")]
     [SerializeField]
-    private GameObject _player = default;
+    private float _tileSize = 16f;
 
-    [Tooltip("背景プレハブ")]
+    [Tooltip("プレイヤーの位置取得")]
+    [SerializeField]
+    private GameObject _player;
+
+    [Tooltip("背景用のプレハブ")]
     [SerializeField]
     private GameObject _tilePrefab;
-
-    [Tooltip("背景のサイズ")]
-    [SerializeField]
-    private float _tileSize = 16.0f;
-
-    [Tooltip("背景のサイズ")]
-    [SerializeField]
-    private int _arraySize = 3;
-
     #endregion
 
     #region private
 
-    //プレイヤーの現在位置
-    private Vector2 _playerPos;
-
-    //背景タイルを格納する配列
-    private GameObject[,] _tiles;
-
+    //タイルの配列
+    private GameObject[,] tiles = new GameObject[3, 3];
     #endregion
 
     #region Constant
@@ -49,81 +40,48 @@ public class PlaceBackGround : MonoBehaviour
 
     }
 
-    private void Start()
+    void Start()
     {
-        _playerPos = _player.transform.position;
-        _tiles = new GameObject[_arraySize, _arraySize];
-
-        //タイルの初期化
-        for (int i = 0; i < _arraySize; i++)
+        // タイルの初期配置
+        for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < _arraySize; j++)
+            for (int j = 0; j < 3; j++)
             {
-                Vector2 pos = new Vector2((i - 1) * _tileSize, (j - 1) * _tileSize);
-                _tiles[i, j] = Instantiate(_tilePrefab, pos, Quaternion.identity, transform);
+                // タイルを生成
+                GameObject tile = Instantiate(_tilePrefab);
+
+                // タイルを配列に保存
+                tiles[i, j] = tile;
+
+                // タイルの位置を設定
+                tile.transform.position = new Vector3((j - 1) * _tileSize, (1 - i) * _tileSize, 0);
             }
         }
     }
 
-    private void Update()
+
+    void Update()
     {
-        //プレイヤーが新しいタイルに移動したかどうかをチェック
-        Vector2 displacement = (Vector2)_player.transform.position - _playerPos;
-        int dx = Mathf.RoundToInt(displacement.x / _tileSize);
-        int dy = Mathf.RoundToInt(displacement.y / _tileSize);
+        // プレイヤーの座標を取得
+        Vector3 playerPos = _player.transform.position;
 
-        if (dx != 0 || dy != 0)
+        // タイルの端に近づいたら
+        if (playerPos.x > _tileSize / 2)
         {
-            _playerPos += new Vector2(dx * _tileSize, dy * _tileSize);
+            ShiftTilesLeft();
+        }
+        else if (playerPos.x < -_tileSize / 2)
+        {
+            ShiftTilesRight();
+        }
 
-            //背景タイルを再配置
-            for (int i = 0; i < _arraySize; i++)
-            {
-                for (int j = 0; j < _arraySize; j++)
-                {
-                    Vector2 pos = new Vector2((i - dx)* _tileSize,(j-dy)*_tileSize);
-                    _tiles[(i - dx + _arraySize) % _arraySize, (j - dy + _arraySize)].transform.position = pos;
-                }
-            }
-
-            //背景タイルの配列をシフト
-            if (dx != 0)
-            {
-                GameObject[,] newTiles = new GameObject[_arraySize, _arraySize];
-                for (int i = 0; i < _arraySize; i++)
-                {
-                    List<GameObject> temp = new List<GameObject>();
-                    for (int j = 0; j < _arraySize; j++)
-                    {
-                        temp.Add(_tiles[i - dx + _arraySize % _arraySize, j]);
-                    }
-
-                    for (int j = 0; j < _arraySize; j++)
-                    {
-                        newTiles[i, j] = temp[j];
-                    }
-                }
-                _tiles = newTiles;
-            }
-
-            if (dy != 0)
-            {
-                GameObject[,] newTiles = new GameObject[_arraySize, _arraySize];
-                for (int i = 0; i < _arraySize; i++)
-                {
-                    List<GameObject> temp = new List<GameObject>();
-                    for (int j = 0; j < _arraySize; j++)
-                    {
-                        temp.Add(_tiles[j, (i - dy + _arraySize) % _arraySize]);
-                    }
-
-                    for (int j = 0; j < _arraySize; j++)
-                    {
-                        newTiles[j, i] = temp[j];
-                    }
-                }
-                _tiles = newTiles;
-            }
+        if (playerPos.y > _tileSize / 2)
+        {
+            ShiftTilesDown();
+        }
+        else if (playerPos.y < -_tileSize / 2)
+        {
+            ShiftTilesUp();
         }
     }
     #endregion
@@ -132,5 +90,105 @@ public class PlaceBackGround : MonoBehaviour
     #endregion
 
     #region private method
+    // タイルを左にシフト
+    void ShiftTilesLeft()
+    {
+        // 左にシフトするコードを書く
+        GameObject[] temp = new GameObject[3];
+        for (int i = 0; i < 3; i++)
+        {
+            temp[i] = tiles[i, 2];
+        }
+
+        // 中央と左の列を右にシフト
+        for (int i = 0; i < 3; i++)
+        {
+            tiles[i, 2] = tiles[i, 1];
+            tiles[i, 1] = tiles[i, 0];
+        }
+
+        // 一番左の列を更新
+        for (int i = 0; i < 3; i++)
+        {
+            tiles[i, 0] = temp[i];
+            tiles[i, 0].transform.position += new Vector3(-3f * _tileSize, 0, 0);
+        }
+    }
+
+    // タイルを右にシフト
+    void ShiftTilesRight()
+    {
+        // 右にシフトするコードを書く
+        // 一番左の列を保存
+        GameObject[] temp = new GameObject[3];
+        for (int i = 0; i < 3; i++)
+        {
+            temp[i] = tiles[i, 0];
+        }
+
+        // 中央と右の列を左にシフト
+        for (int i = 0; i < 3; i++)
+        {
+            tiles[i, 0] = tiles[i, 1];
+            tiles[i, 1] = tiles[i, 2];
+        }
+
+        // 一番右の列を更新
+        for (int i = 0; i < 3; i++)
+        {
+            tiles[i, 2] = temp[i];
+            tiles[i, 2].transform.position += new Vector3(3f * _tileSize, 0, 0);
+        }
+    }
+
+    // タイルを下にシフト
+    void ShiftTilesDown()
+    {
+        // 下にシフトするコードを書く
+        GameObject[] temp = new GameObject[3];
+        for (int i = 0; i < 3; i++)
+        {
+            temp[i] = tiles[0, i];
+        }
+
+        // 中央と下の行を上にシフト
+        for (int i = 0; i < 3; i++)
+        {
+            tiles[0, i] = tiles[1, i];
+            tiles[1, i] = tiles[2, i];
+        }
+
+        // 一番下の行を更新
+        for (int i = 0; i < 3; i++)
+        {
+            tiles[2, i] = temp[i];
+            tiles[2, i].transform.position += new Vector3(0, -3f * _tileSize, 0);
+        }
+    }
+
+    // タイルを上にシフト
+    void ShiftTilesUp()
+    {
+        // 上にシフトするコードを書く
+        GameObject[] temp = new GameObject[3];
+        for (int i = 0; i < 3; i++)
+        {
+            temp[i] = tiles[2, i];
+        }
+
+        // 中央と上の行を下にシフト
+        for (int i = 0; i < 3; i++)
+        {
+            tiles[2, i] = tiles[1, i];
+            tiles[1, i] = tiles[0, i];
+        }
+
+        // 一番上の行を更新
+        for (int i = 0; i < 3; i++)
+        {
+            tiles[0, i] = temp[i];
+            tiles[0, i].transform.position += new Vector3(0, 3f * _tileSize, 0);
+        }
+    }
     #endregion
 }
