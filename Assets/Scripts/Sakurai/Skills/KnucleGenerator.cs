@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ナックルをPool機能
+/// </summary>
 public class KnucleGenerator : MonoBehaviour
 {
     #region property
