@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlaceBackGround : MonoBehaviour
+public class BackGroundPlacer : MonoBehaviour
 { 
     #region property
     #endregion

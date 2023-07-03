@@ -62,6 +62,16 @@ public class MuscleBoulSkill : SkillBase
         Debug.Log($"{SkillType}スキル発動");
         _isSkillActived = true;
         childActive(true);
+
+        //メインカメラの位置を取得。
+        Transform mainCameraTransform = Camera.main.transform;
+
+        //メインカメラの子オブジェクトにする。
+        foreach (Transform child in transform)
+        {
+            child.SetParent(mainCameraTransform);
+        }
+
         StartCoroutine(SkillActionCoroutine());
         CreateNewBoul();
     }
