@@ -13,6 +13,9 @@ public class EnemyManager : MonoBehaviour
     #region property
     public static EnemyManager Instance { get; private set; }
     public ReactiveProperty<uint> DefeatAmount => _defeatAmountProperty;
+    /// <summary>
+    /// 討伐数を表示する処理の購読のみ可能なプロパティ
+    /// </summary>
     public IObservable<uint> DefeatedEnemyAmountViewObserver => _defeatedEnemyAmountViewSubject;
     #endregion
 
@@ -30,6 +33,7 @@ public class EnemyManager : MonoBehaviour
     #region Event
     /// <summary>討伐数</summary>
     private ReactiveProperty<uint> _defeatAmountProperty = new ReactiveProperty<uint>();
+    /// <summary>討伐数を表示する処理のSubject</summary>
     private Subject<uint> _defeatedEnemyAmountViewSubject = new Subject<uint>();
     #endregion
 
