@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
+using DG.Tweening;
 
 /// <summary>
 /// 敵の機能全般を管理するベースクラス。
@@ -129,6 +130,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         _currentHP -= amount;
 
         Debug.Log(amount);
+        DamageAnimation();
         
         if (_currentHP <= 0)
         {
@@ -156,6 +158,18 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         _currentAttackAmount = coefficient;
     }
 
+    private void DamageAnimation()
+    {
+        transform.DOShakeScale(1.1f, 0.25f)
+                 .SetEase(Ease.InBounce);
+
+        _enemyRenderer.DOColor(Color.red, 0.1f)
+                      .SetLoops(2, LoopType.Yoyo)
+                      .OnComplete(() => 
+                      {
+                          _enemyRenderer.color = Color.white;
+                      });
+    }
     #endregion
     /// <summary>
     /// 敵毎のアクションの処理を行うコルーチン
