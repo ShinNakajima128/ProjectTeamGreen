@@ -46,10 +46,12 @@ public class ItemData : ScriptableObject
 /// </summary>
 public enum ItemType
 {
+    /// <summary>設定なし</summary>
+    None,
     /// <summary>回復アイテム</summary>
     Heal,
-    /// <summary>パワーアップアイテム</summary>
-    PowerUp,
     /// <summary>経験値アイテム</summary>
-    EXP
+    EXP,
+    /// <summary>パワーアップアイテム</summary>
+    PowerUp    
 }

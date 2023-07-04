@@ -89,11 +89,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06393411b96ee704fa68c592c8b88903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _generateInterval: 2
   _items:
-  - ItemPrefab: {fileID: 768345823086110253, guid: 6a1d22319b220b24da7a2ef9faa43fde,
+  - ItemName: "\u56DE\u5FA9\u30A2\u30A4\u30C6\u30E0"
+    ItemPrefab: {fileID: 768345823086110253, guid: 6a1d22319b220b24da7a2ef9faa43fde,
       type: 3}
     Parent: {fileID: 6355326078942542571}
+    GenerateInterval: 3
+  - ItemName: "\u7D4C\u9A13\u5024\u30A2\u30A4\u30C6\u30E0"
+    ItemPrefab: {fileID: 4986574045778322860, guid: 1d603d29bc7b18b4da6fea504c5b8e54,
+      type: 3}
+    Parent: {fileID: 6355326079381132475}
+    GenerateInterval: 2
+  - ItemName: "\u30D1\u30EF\u30FC\u30A2\u30C3\u30D7\u30A2\u30A4\u30C6\u30E0"
+    ItemPrefab: {fileID: 212003974145673770, guid: 7c707a38549462d46a47ddbaa767ebfd,
+      type: 3}
+    Parent: {fileID: 6355326079381132475}
+    GenerateInterval: 5
 --- !u!1 &6355326079381132476
 GameObject:
   m_ObjectHideFlags: 0

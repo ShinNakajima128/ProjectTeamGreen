@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UniRx;
 using UniRx.Triggers;
+using DG.Tweening;
 
 /// <summary>
 /// プレイヤーの機能全般を持つコンポ―ネント
@@ -18,6 +19,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     public static PlayerController Instance { get; private set; }
     public float CurrentMaxHP => _health.CurrentMaxHP;
     public bool IsInvincible => _isInvincible;
+    public PlayerHealth Health => _health;
+    public PlayerStatus Status => _status;
     public Subject<float> ChangeAttackCoefficientSubject => _changeAttackCoefficientSubject;
     #endregion
 
@@ -32,6 +35,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     private SpriteRenderer _sr;
     private bool _isCanControl = false;
     private bool _isInvincible = false;
+    private Tween _currentTween;
     #endregion
 
     #region Constant
@@ -46,6 +50,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     #region unity methods
     private void Awake()
     {
+        Instance = this;
         _input = GetComponent<PlayerInput>();
         _move = GetComponent<PlayerMove>();
         _health = GetComponent<PlayerHealth>();
@@ -113,9 +118,21 @@ public class PlayerController : MonoBehaviour, IDamagable
     /// <summary>
     /// ダメージを受ける
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param name="amount">ダメージ量</param>
     public void Damage(float amount)
     {
+        Debug.Log("ダメージ");
+        //ダメージアニメーション
+        if (_currentTween == null)
+        {
+            _currentTween = _sr.DOColor(Color.red, 0.1f)
+                               .SetLoops(2, LoopType.Yoyo)
+                               .OnComplete(() =>
+                               {
+                                   _sr.color = Color.white;
+                                   _currentTween = null;
+                               });
+        }
         //ダメージを受けた後、プレイヤーのHPが無くなったら
         if (_health.Damage(amount))
         {

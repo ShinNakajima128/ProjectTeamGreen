@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 220521852631d0d4282eb723cc1c9fdd, type: 3}
   m_Name: Enemy_BreadData
   m_EditorClassIdentifier: 
+  _enemyType: 0
   _actionType: 1
-  _hp: 1
-  _attackAmount: 1
+  _hp: 3
+  _attackAmount: 0.1
   _approachDistance: 0.2
+  _dropItemType: 2

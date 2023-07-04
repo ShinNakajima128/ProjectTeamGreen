@@ -46,6 +46,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Start()
     {
+        //テスト生成
         _generator.OnEnemyGenerate(EnemyType.Wave1_Chase1);
         
         //討伐数が変化した時のイベント処理を登録

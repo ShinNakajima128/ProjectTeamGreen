@@ -13,8 +13,9 @@ public class EnemyData : ScriptableObject
     public EnemyType EnemyType => _enemyType;
     public EnemyActionType ActionType => _actionType;
     public int HP => _hp;
-    public int AttackAmount => _attackAmount;
+    public float AttackAmount => _attackAmount;
     public float ApproachDistance => _approachDistance;
+    public ItemType DropItemType => _dropItemType;
     #endregion
 
     #region serialize
@@ -33,11 +34,15 @@ public class EnemyData : ScriptableObject
 
     [Tooltip("攻撃力")]
     [SerializeField]
-    private int _attackAmount = 1;
+    private float _attackAmount = 1;
 
     [Tooltip("プレイヤーに接触するまでの距離")]
     [SerializeField]
     private float _approachDistance = 0.1f;
+
+    [Tooltip("ドロップするアイテムの種類")]
+    [SerializeField]
+    private ItemType _dropItemType = default;
     #endregion
 
     #region private

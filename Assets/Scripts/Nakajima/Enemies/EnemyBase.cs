@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
+using DG.Tweening;
 
 /// <summary>
 /// 敵の機能全般を管理するベースクラス。
@@ -41,6 +42,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     private bool _init = false;
     private IDamagable _target;
     private Coroutine _coroutine;
+    private Tween _currentTween;
     #endregion
 
     #region Constant
@@ -67,8 +69,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         _coroutine = StartCoroutine(OnActionCoroutine());
 
         //プレイヤーと接触した時の処理を登録する
-        this.OnCollisionEnter2DAsObservable()
-            .Where(x => x.gameObject.CompareTag(GameTag.Player))
+        this.OnTriggerStay2DAsObservable()
+            .Where(x => x.CompareTag(GameTag.Player))
             //一度接触していればGetComponentを行わないようにする
             .Select(x => _target ?? (_target = x.gameObject.GetComponent<IDamagable>()))
             .Subscribe(x =>
@@ -99,24 +101,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
             StopCoroutine(_coroutine);
             _coroutine = null;
         }
-    }
 
-    //protected virtual void OnTriggerEnter2D(Collider2D other)
-    //{
-    //    //プレイヤーにヒットした場合
-    //    if (other.CompareTag(GameTag.Player))
-    //    {
-    //        //インターフェースを通じてダメージ処理を実行
-    //        if (TryGetComponent(out IDamagable target))
-    //        {
-    //            //無敵状態ではない場合はダメージを与える
-    //            if (!target.IsInvincible)
-    //            {
-    //                target.Damage(_currentAttackAmount);
-    //            }
-    //        }
-    //    }
-    //}
+        _enemyRenderer.color = Color.white;
+        transform.localScale = Vector3.one;
+        _currentTween = null;
+    }
     #endregion
 
     #region public method
@@ -129,11 +118,13 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         _currentHP -= amount;
 
         Debug.Log(amount);
+        DamageAnimation();
         
         if (_currentHP <= 0)
         {
             //討伐数を加算
             EnemyManager.Instance.DefeatAmount.Value++;
+            ItemManager.Instance.GenerateItem(_enemyData.DropItemType, transform.position);
             gameObject.SetActive(false);
         }
 
@@ -156,6 +147,23 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         _currentAttackAmount = coefficient;
     }
 
+    private void DamageAnimation()
+    {
+        if (_currentTween == null)
+        {
+            _currentTween = transform.DOShakeScale(1.1f, 0.15f)
+                                     .SetEase(Ease.InBounce);
+
+            _enemyRenderer.DOColor(Color.red, 0.1f)
+                          .SetLoops(2, LoopType.Yoyo)
+                          .OnComplete(() =>
+                          {
+                              _enemyRenderer.color = Color.white;
+                              transform.localScale = Vector3.one;
+                              _currentTween = null;
+                          });
+        }
+    }
     #endregion
     /// <summary>
     /// 敵毎のアクションの処理を行うコルーチン

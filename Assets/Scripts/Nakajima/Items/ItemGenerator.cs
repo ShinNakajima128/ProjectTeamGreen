@@ -12,10 +12,6 @@ public class ItemGenerator : MonoBehaviour
     #endregion
 
     #region serialize
-    [Tooltip("次に生成するまでの間隔")]
-    [SerializeField]
-    private float _generateInterval = 1.0f;
-
     [Tooltip("各アイテム")]
     [SerializeField]
     private Item[] _items = default;
@@ -37,11 +33,6 @@ public class ItemGenerator : MonoBehaviour
     {
         Setup();
     }
-
-    private void Start()
-    {
-
-    }
     #endregion
 
     #region public method
@@ -52,6 +43,12 @@ public class ItemGenerator : MonoBehaviour
     /// <param name="pos">生成する位置</param>
     public void Generate(ItemType type, Vector2 pos)
     {
+        //アイテムが指定されていない場合は処理を行わない
+        if (type == ItemType.None)
+        {
+            return;
+        }
+
         //指定されたアイテムのオブジェクトデータを取得
         var item = _itemPoolDic.FirstOrDefault(x => x.Key == type).Value.Rent();
 
@@ -66,9 +63,9 @@ public class ItemGenerator : MonoBehaviour
     /// <summary>
     /// ランダムな位置にアイテムを生成する
     /// </summary>
-    public void RandoomGenerate()
+    public void RandoomGenerate(ItemType type)
     {
-        StartCoroutine(RandomGenerateCoroutine());
+        StartCoroutine(RandomGenerateCoroutine(type));
     }
     #endregion
 
@@ -83,10 +80,10 @@ public class ItemGenerator : MonoBehaviour
 
         for (int i = 0; i < _items.Length; i++)
         {
-            _itemPoolDic.Add((ItemType)i, new ObjectPool(_items[i].ItemPrefab.gameObject, 
-                                                        _items[i].ItemPrefab.ReserveAmount, 
-                                                        _items[i].ItemPrefab.ActivationLimit, 
-                                                        _items[i].Parent));
+            _itemPoolDic.Add((ItemType)(i + 1), new ObjectPool(_items[i].ItemPrefab.gameObject, 
+                                                               _items[i].ItemPrefab.ReserveAmount, 
+                                                               _items[i].ItemPrefab.ActivationLimit, 
+                                                               _items[i].Parent));
         }
     }
     #endregion
@@ -95,8 +92,9 @@ public class ItemGenerator : MonoBehaviour
     /// <summary>
     /// ランダムな位置にアイテムを生成するコルーチン
     /// </summary>
-    private IEnumerator RandomGenerateCoroutine()
+    private IEnumerator RandomGenerateCoroutine(ItemType type)
     {
+        var interval = new WaitForSeconds(_items.FirstOrDefault(x => x.ItemPrefab.ItemType == type).GenerateInterval);
         while (true)
         {
             float randomX = Random.Range(_playerTrans.position.x + 2, _playerTrans.position.x + 3.5f);
@@ -108,19 +106,26 @@ public class ItemGenerator : MonoBehaviour
             Vector2 generatePos = new Vector2(randomX, randomY);
 
             //テストとして、現状は回復アイテムのみを生成する
-            Generate(ItemType.Heal, generatePos);
-            yield return new WaitForSeconds(_generateInterval);
+            Generate(type, generatePos);
+            yield return interval;
         }
     }
     #endregion
 }
 
 /// <summary>
-/// アイテム
+/// 各アイテム情報
 /// </summary>
 [System.Serializable]
 class Item
 {
+    /// <summary>アイテム名</summary>
+    public string ItemName;
+    /// <summary>生成するアイテムのPrefab</summary>
     public ItemBase ItemPrefab;
+    /// <summary>アイテムの親オブジェクト</summary>
     public Transform Parent;
+    /// <summary>つぎに生成されるまでの間隔</summary>
+    [Range(0.1f, 10f)]
+    public float GenerateInterval;
 }
