@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 敵の弾
+/// </summary>
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class EnemyBullet : MonoBehaviour
 {
-    #region property
-    #endregion
-
     #region serialize
     [Tooltip("弾の速さ")]
     [SerializeField]
@@ -19,7 +21,7 @@ public class EnemyBullet : MonoBehaviour
     /// <summary>弾の持続時間</summary>
     private float _lifeTime = 5.0f;
     private Rigidbody2D _rb;
-    private Coroutine _currentCoroutine = default;
+    private Coroutine _currentCoroutine;
     #endregion
 
     #region unity methods
@@ -39,6 +41,17 @@ public class EnemyBullet : MonoBehaviour
         {
             StopCoroutine(_currentCoroutine);
             _currentCoroutine = null;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag(GameTag.Player))
+        {
+            var target = collision.GetComponent<IDamagable>();
+
+            target.Damage(_currentAttackAmount);
+            gameObject.SetActive(false);
         }
     }
     #endregion
@@ -74,5 +87,4 @@ public class EnemyBullet : MonoBehaviour
         gameObject.SetActive(false);
     }
     #endregion
-
 }
