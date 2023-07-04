@@ -58,7 +58,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         _currentAttackAmount = _enemyData.AttackAmount;
         _enemyRenderer = GetComponent<SpriteRenderer>();
         _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
-        _init = true;
 
         //テスト処理
         _isActionable = true;
@@ -66,6 +65,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
     protected virtual void Start()
     {
+        _init = true;
         _coroutine = StartCoroutine(OnActionCoroutine());
 
         //プレイヤーと接触した時の処理を登録する
