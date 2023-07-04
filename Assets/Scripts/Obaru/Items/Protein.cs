@@ -48,9 +48,8 @@ public class Protein : ItemBase
     public override void Use(PlayerController player)
     {
         Debug.Log($"{ItemType}を使用した");
-        Destroy(gameObject);
-
         player.PowerUp(_coefficient);
+        gameObject.SetActive(false);
     }
 
     /// <summary>

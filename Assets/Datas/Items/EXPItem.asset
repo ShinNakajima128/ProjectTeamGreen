@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: EXPItem
   m_EditorClassIdentifier: 
   _itemType: 2
+  _reserveAmount: 10
+  _activationLimit: 100

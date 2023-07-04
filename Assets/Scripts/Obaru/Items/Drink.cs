@@ -47,7 +47,6 @@ public class Drink : ItemBase
     public override void Use(PlayerController player)
     {
         Debug.Log($"{ItemType}を使用した");
-        //Destroy(gameObject);
 
         //回復量を計算
         float healAmount = player.CurrentMaxHP * _healRate;
