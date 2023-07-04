@@ -8,10 +8,6 @@ using UnityEngine;
 public class TurretEnemy : EnemyBase
 {
     #region serialize
-    [Tooltip("弾")]
-    [SerializeField]
-    private EnemyBullet _bullet = default;
-
     [Tooltip("攻撃間隔")]
     [SerializeField]
     private float _attackInterval = 3.0f;

@@ -11,10 +11,6 @@ using System.Linq;
 public class MuscleThrowSkill : SkillBase
 {
     #region serialize
-    [Tooltip("ダンベル（弾）")]
-    [SerializeField]
-    private Dumbbell _dumbbellPrefab = default;
-
     [Tooltip("スキルの攻撃間隔の初期値")]
     [SerializeField]
     private float _startAttackInterval = 1.0f;
