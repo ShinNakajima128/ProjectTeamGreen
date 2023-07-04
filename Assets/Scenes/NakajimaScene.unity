@@ -1714,7 +1714,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 1
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2660,7 +2660,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76cb7f0aa596d134986bb6fee08eb4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defeatTMP: {fileID: 1911889184}
 --- !u!114 &2041908004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2688,6 +2687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc8c402533341fe469ded75349bdff8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _defeatTMP: {fileID: 1911889184}
 --- !u!1 &2063788262
 GameObject:
   m_ObjectHideFlags: 0
@@ -2966,6 +2966,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6355326079338186947, guid: a3d91589466604d47844b47048a0124a,
+        type: 3}
+      propertyPath: _items.Array.data[0].GenerateInterval
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6355326079338186949, guid: a3d91589466604d47844b47048a0124a,
         type: 3}
       propertyPath: m_RootOrder
@@ -3035,6 +3040,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6401274250604127974, guid: bfc6947bd3d4b6f40aee31ad9f832e15,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6401274250604127981, guid: bfc6947bd3d4b6f40aee31ad9f832e15,
         type: 3}
       propertyPath: m_RootOrder
@@ -3181,13 +3191,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7715727244853495233, guid: 0ae88df2e2dcbbf4b898fbc8e534a9a8,
         type: 3}
+      propertyPath: _generateInterval
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715727244853495233, guid: 0ae88df2e2dcbbf4b898fbc8e534a9a8,
+        type: 3}
       propertyPath: _onceGenerateAmount
-      value: 5
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7715727244853495233, guid: 0ae88df2e2dcbbf4b898fbc8e534a9a8,
+        type: 3}
+      propertyPath: _enemies.Array.data[0].ReserveAmount
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7715727244853495233, guid: 0ae88df2e2dcbbf4b898fbc8e534a9a8,
         type: 3}
       propertyPath: _enemies.Array.data[0].ActivationLimit
-      value: 500
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7715727244853495239, guid: 0ae88df2e2dcbbf4b898fbc8e534a9a8,
         type: 3}

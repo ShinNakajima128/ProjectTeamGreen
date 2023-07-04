@@ -8,6 +8,8 @@ using TMPro;
 /// <summary>
 /// HUDの機能全般を管理するManagerクラス
 /// </summary>
+[RequireComponent(typeof(GameStatusUI))]
+[RequireComponent(typeof(PlayerStatusUI))]
 public class HUDManager : MonoBehaviour
 {
     #region property
@@ -15,12 +17,11 @@ public class HUDManager : MonoBehaviour
     #endregion
 
     #region serialize
-    [Tooltip("討伐数を表示するTMP")]
-    [SerializeField]
-    private TextMeshProUGUI _defeatTMP = default;
     #endregion
 
     #region private
+    GameStatusUI _gameStatus;
+    PlayerStatusUI _playerStatus;
     #endregion
 
     #region Constant
@@ -33,14 +34,13 @@ public class HUDManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _gameStatus = GetComponent<GameStatusUI>();
+        _playerStatus = GetComponent<PlayerStatusUI>();
     }
 
     private void Start()
     {
-        //討伐数が変化した時の処理を登録
-        EnemyManager.Instance.DefeatedEnemyAmountViewObserver
-                             .Subscribe(value => ViewDefeatedAmount(value))
-                             .AddTo(this);
+        
     }
     #endregion
 
@@ -48,13 +48,6 @@ public class HUDManager : MonoBehaviour
     #endregion
 
     #region private method
-    /// <summary>
-    /// 討伐数を表示する
-    /// </summary>
-    /// <param name="amount">討伐数</param>
-    private void ViewDefeatedAmount(uint amount)
-    {
-        _defeatTMP.text = $"{amount}";
-    }
+    
     #endregion
 }

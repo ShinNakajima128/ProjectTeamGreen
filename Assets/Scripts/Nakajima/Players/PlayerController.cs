@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UniRx;
 using UniRx.Triggers;
+using DG.Tweening;
 
 /// <summary>
 /// プレイヤーの機能全般を持つコンポ―ネント
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     private SpriteRenderer _sr;
     private bool _isCanControl = false;
     private bool _isInvincible = false;
+    private Tween _currentTween;
     #endregion
 
     #region Constant
@@ -116,9 +118,21 @@ public class PlayerController : MonoBehaviour, IDamagable
     /// <summary>
     /// ダメージを受ける
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param name="amount">ダメージ量</param>
     public void Damage(float amount)
     {
+        Debug.Log("ダメージ");
+        //ダメージアニメーション
+        if (_currentTween == null)
+        {
+            _currentTween = _sr.DOColor(Color.red, 0.1f)
+                               .SetLoops(2, LoopType.Yoyo)
+                               .OnComplete(() =>
+                               {
+                                   _sr.color = Color.white;
+                                   _currentTween = null;
+                               });
+        }
         //ダメージを受けた後、プレイヤーのHPが無くなったら
         if (_health.Damage(amount))
         {
