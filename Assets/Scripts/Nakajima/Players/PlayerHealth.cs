@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 /// <summary>
 /// プレイヤーのHP、ステータスを管理するコンポーネント
@@ -10,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
     #region property
     public float CurrentMaxHP => _currentMaxHP;
     public float CurrentHP => _currentHP;
+    public IObservable<float> ChangeHPObserver => _changeHPSubject;
     #endregion
 
     #region serialize
@@ -29,6 +32,7 @@ public class PlayerHealth : MonoBehaviour
     #endregion
 
     #region Event
+    private Subject<float> _changeHPSubject = new Subject<float>();
     #endregion
 
     #region unity methods
@@ -57,6 +61,7 @@ public class PlayerHealth : MonoBehaviour
         {
             _currentHP = _currentMaxHP;
         }
+        _changeHPSubject.OnNext(_currentHP / _currentMaxHP);
     }
 
     /// <summary>
@@ -67,6 +72,7 @@ public class PlayerHealth : MonoBehaviour
     public bool Damage(float amount)
     {
         _currentHP -= amount;
+        _changeHPSubject.OnNext(_currentHP / _currentMaxHP);
 
         //倒された場合はtrueを返す
         if (_currentHP <= 0)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
@@ -13,6 +14,7 @@ public class PlayerStatus : MonoBehaviour
     public ReactiveProperty<uint> CurrentPlayerLevel => _currentPlayerLevel;
     public ReactiveProperty<uint> CurrentExp => _currentExp;
     public ReactiveProperty<uint> CurrentRequireExp => _currentRequireExp;
+    public IObservable<float> GetEXPObserver => _getEXPSubject;
     #endregion
 
     #region serialize
@@ -40,6 +42,7 @@ public class PlayerStatus : MonoBehaviour
     #endregion
 
     #region Event
+    /// <summary>経験値を取得した時のSubject</summary>
     private Subject<float> _getEXPSubject = new Subject<float>();
     #endregion
 
@@ -79,6 +82,8 @@ public class PlayerStatus : MonoBehaviour
             _currentExp.Value = 0;
             _currentRequireExp.Value = (uint)(_currentRequireExp.Value * EXP_LEVERAGE);
         }
+        _getEXPSubject.OnNext((float)_currentExp.Value / _currentRequireExp.Value);
+        Debug.Log($"{_currentExp.Value} / {_currentRequireExp.Value}:{((float) _currentExp.Value / _currentRequireExp.Value) * 100}");
     }
     #endregion
 

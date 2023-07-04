@@ -43,10 +43,18 @@ public class PlayerStatusUI : MonoBehaviour
     }
 
     private void Start()
-    {
+    { 
+        //プレイヤーのHPの値が変化した時の処理を登録
+        PlayerController.Instance.Health.ChangeHPObserver
+                                        .Subscribe(amount => CurrentHPView(amount))
+                                        .AddTo(this);
         //レベルアップ時の処理を登録
         PlayerController.Instance.Status.CurrentPlayerLevel
                                         .Subscribe(amount => CurrentLevelView(amount))
+                                        .AddTo(this);
+        //経験値を取得した時の処理を登録
+        PlayerController.Instance.Status.GetEXPObserver
+                                        .Subscribe(amount => CurrentEXPView(amount))
                                         .AddTo(this);
     }
     #endregion
