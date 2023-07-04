@@ -18,7 +18,6 @@ public class Aura : MonoBehaviour
     #endregion
 
     #region private
-
     //現在のオーラのスケール
     private float _currentScale = 1.0f;
     #endregion
