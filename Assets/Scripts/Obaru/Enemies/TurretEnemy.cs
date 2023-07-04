@@ -19,6 +19,7 @@ public class TurretEnemy : EnemyBase
 
     #region private
     private bool _isFliped = false;
+    private bool _isCanShot = true;
     private EnemyBulletGenerater _generator;
     private Coroutine _flipCoroutine;
     #endregion
@@ -47,6 +48,16 @@ public class TurretEnemy : EnemyBase
         StopCoroutine(_flipCoroutine);
         _flipCoroutine = null;
     }
+
+    private void OnBecameVisible()
+    {
+        _isCanShot = true;
+    }
+
+    private void OnBecameInvisible()
+    {
+        _isCanShot = false;
+    }
     #endregion
 
     #region public method
@@ -63,15 +74,18 @@ public class TurretEnemy : EnemyBase
     {
         while (_isActionable)
         {
-            GameObject bulletObj = _generator.BulletPool.Rent();
-            if (bulletObj != null)
+            if (_isCanShot)
             {
-                var bullet = bulletObj.GetComponent<EnemyBullet>();
-                bullet.gameObject.SetActive(true);
-                bullet.transform.position = transform.position;
-                bullet.gameObject.transform.SetParent(null);
-                bullet.SetAttackAmount(_currentAttackAmount);
-                bullet.SetVelocity((_playerTrans.position - transform.position).normalized);
+                GameObject bulletObj = _generator.BulletPool.Rent();
+                if (bulletObj != null)
+                {
+                    var bullet = bulletObj.GetComponent<EnemyBullet>();
+                    bullet.gameObject.SetActive(true);
+                    bullet.transform.position = transform.position;
+                    bullet.gameObject.transform.SetParent(null);
+                    bullet.SetAttackAmount(_currentAttackAmount);
+                    bullet.SetVelocity((_playerTrans.position - transform.position).normalized);
+                }
             }
             yield return new WaitForSeconds(_attackInterval);
         }
