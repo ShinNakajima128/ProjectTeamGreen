@@ -131,4 +131,4 @@ MonoBehaviour:
   _limit: 100
   _bulletPrefab: {fileID: 5677147949440840018, guid: b77341ff9d8e4aa48ae6e622f9334804,
     type: 3}
-  _parent: {fileID: 0}
+  _parent: {fileID: 4864497291796245587, guid: 33cc875ab30458d468fde39e22419eba, type: 3}
