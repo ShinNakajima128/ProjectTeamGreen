@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-
 /// <summary>
 /// ナックルスキルを扱うオブジェクト
 /// </summary>
-
 [RequireComponent(typeof(KnucleGenerator))]
 
 public class MuscleKnuckleSkill : SkillBase
@@ -32,14 +30,15 @@ public class MuscleKnuckleSkill : SkillBase
     [Tooltip("スキルの攻撃間隔に対する係数を増やす値")]
     [SerializeField]
     private float _coefficientUpdate = 4.0f;
+
+    [Tooltip("スキルアップ時の攻撃に対する係数")]
+    [SerializeField]
+    private float _attackCoefficient = 2.0f;
     #endregion
 
     #region private
     /// <summary>現在のスキルの攻撃間隔</summary>
     private float _currentAttackInterval;
-
-    /// <summary>拳の生存時間</summary>
-    private float _lifeTime = 5.0f;
 
     //コンポーネント
     private KnucleGenerator _knucleGenerator;
@@ -83,6 +82,7 @@ public class MuscleKnuckleSkill : SkillBase
             return;
         }
         _currentSkillLebel++;
+        AttackUpSkill(_attackCoefficient);
         _currentAttackInterval /= _coefficient;
 
         Debug.Log($"レベルアップ!{_currentSkillLebel}に上がった！");

@@ -22,8 +22,11 @@ public class MuscleFairySkill : SkillBase
 
     [Tooltip("妖精が回転する速度に対する係数")]
     [SerializeField]
-    private float _coefficient = 1.3f;
+    private float _speedCoefficient = 1.3f;
 
+    [Tooltip("スキルアップ時の攻撃に対する係数")]
+    [SerializeField]
+    private float _attackCoefficient = 1.3f;
     #endregion
 
     #region private
@@ -78,7 +81,8 @@ public class MuscleFairySkill : SkillBase
             return;
         }
         _currentSkillLebel++;
-        _rotationSpeed *= _coefficient;
+        _rotationSpeed *= _speedCoefficient;
+        AttackUpSkill(_attackCoefficient);
         CreateNewFairy();
 
         Debug.Log($"レベルアップ!{_currentSkillLebel}にあがった!");

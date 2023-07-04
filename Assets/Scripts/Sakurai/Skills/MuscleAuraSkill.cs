@@ -20,10 +20,17 @@ public class MuscleAuraSkill : SkillBase
     [Tooltip("4~5レベルまでのオーラ")]
     [SerializeField]
     private Aura _highAuraPrefab = default;
+
+    [Tooltip("スキルアップ時の攻撃に対する係数")]
+    [SerializeField]
+    private float _attackCoefficient = 1.5f;
+
+    [Tooltip("オーラの見た目が変わった時(スキルレベル4)の攻撃に対する係数")]
+    [SerializeField]
+    private float _attackHighCoefficient = 3.0f;
     #endregion
 
     #region private
-
     /// <summary>スキルアップ時のスケールに対する数値</summary>
     private float _sumAmount = 1.0f;
 
@@ -72,14 +79,15 @@ public class MuscleAuraSkill : SkillBase
         
         if (_currentSkillLebel <= 3 || _currentSkillLebel == 5)
         {
+            AttackUpSkill(_attackCoefficient);
             _currentAura.SizeChange(_sumAmount);
         }
 
         if (_currentSkillLebel == 4)
         {
-           CreateNewAura(_highAuraPrefab);
+            AttackUpSkill(_attackHighCoefficient);
+            CreateNewAura(_highAuraPrefab);
         }
-
         Debug.Log($"レベルアップ!{_currentSkillLebel}にあがった!");
     }
 

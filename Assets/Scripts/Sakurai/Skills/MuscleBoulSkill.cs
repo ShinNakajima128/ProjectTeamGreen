@@ -17,12 +17,15 @@ public class MuscleBoulSkill : SkillBase
     [SerializeField]
     private Boul _boudPrefab = default;
 
+    [Tooltip("スキルアップ時の攻撃に対する係数")]
+    [SerializeField]
+    private float _attackCoefficient = 3.0f;
     #endregion
 
     #region private
 
-    /// <summary>スキルアップ時の速度に対する係数</summary>
-    private float _coefficient = 1.2f;
+    /// <summary>スキルアップ時のボールの速度に対する係数</summary>
+    private float _speedCoefficient = 1.2f;
 
     /// <summary>ボールを格納するリスト</summary>
     private List<Boul> _currentBoulAmount = new List<Boul>();
@@ -89,10 +92,11 @@ public class MuscleBoulSkill : SkillBase
             return;
         }
         _currentSkillLebel++;
+        AttackUpSkill(_attackCoefficient);
         CreateNewBoul();
         foreach (Boul boul in _currentBoulAmount)
         {
-            boul.MoveSpeedChange(_coefficient);
+            boul.MoveSpeedChange(_speedCoefficient);
         }
 
         Debug.Log($"レベルアップ!{_currentSkillLebel}にあがった!");
