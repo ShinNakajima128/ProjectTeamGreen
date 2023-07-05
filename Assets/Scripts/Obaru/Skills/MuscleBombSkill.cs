@@ -8,7 +8,7 @@ using System.Linq;
 /// </summary>
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(BombGenerator))]
-public class MuscleBomb : SkillBase
+public class MuscleBombSkill : SkillBase
 {
     #region serialize
     [Tooltip("スキルの攻撃間隔の初期値")]
@@ -134,17 +134,16 @@ public class MuscleBomb : SkillBase
             {
                 SetTarget();
 
-                //var dumbbell = Instantiate(_dumbbellPrefab, transform.position, transform.rotation);
-
                 GameObject skillObj = _generator.BombPool.Rent();
                 if (skillObj != null)
                 {
-                    var dumbbell = skillObj.GetComponent<Bomb>();
-                    dumbbell.gameObject.SetActive(true);
-                    dumbbell.transform.position = transform.position;
-                    dumbbell.gameObject.transform.SetParent(null);
-                    dumbbell.SetAttackAmount(_currentAttackAmount);
-                    dumbbell.SetVelocity(_targetDir);
+                    var bomb = skillObj.GetComponent<Bomb>();
+                    bomb.gameObject.SetActive(true);
+                    bomb.transform.position = transform.position;
+                    bomb.gameObject.transform.SetParent(null);
+                    bomb.SetAttackAmount(_currentAttackAmount);
+                    bomb.SetVelocity(_targetDir);
+                    bomb.GetCurrentLevel(_currentSkillLebel);
                 }
             }
             yield return new WaitForSeconds(_currentAttackInterval);
