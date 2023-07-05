@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
@@ -8,10 +9,10 @@ public class StageManager : MonoBehaviour
 {
     #region property
     public static StageManager Instance { get; private set; }
-    public Subject<bool> IsInGameSubject => _isInGameSubject;
-    public Subject<Unit> GameStartSubject => _gameStartSubject;
-    public Subject<Unit> GamePauseSubject => _gamePauseSubject;
-    public Subject<Unit> GameEndSubject => _gameEndSubject;
+    public IObservable<bool> IsInGameSubject => _isInGameSubject;
+    public IObservable<Unit> GameStartSubject => _gameStartSubject;
+    public IObservable<Unit> GamePauseSubject => _gamePauseSubject;
+    public IObservable<Unit> GameEndSubject => _gameEndSubject;
     #endregion
 
     #region serialize
@@ -24,9 +25,13 @@ public class StageManager : MonoBehaviour
     #endregion
 
     #region Event
+    /// <summary>インゲーム中かどうかを切り替えるSubject</summary>
     private Subject<bool> _isInGameSubject = new Subject<bool>();
+    /// <summary>ゲーム開始時のSubject</summary>
     private Subject<Unit> _gameStartSubject = new Subject<Unit>();
+    /// <summary>ゲーム中断時のSubject</summary>
     private Subject<Unit> _gamePauseSubject = new Subject<Unit>();
+    /// <summary>ゲーム終了時のSubject</summary>
     private Subject<Unit> _gameEndSubject = new Subject<Unit>();
     #endregion
 
@@ -44,6 +49,13 @@ public class StageManager : MonoBehaviour
     #endregion
 
     #region public method
+    /// <summary>
+    /// ゲームを終了する
+    /// </summary>
+    public void OnGameEnd()
+    {
+        _gameEndSubject.OnNext(Unit.Default);
+    }
     #endregion
 
     #region private method
