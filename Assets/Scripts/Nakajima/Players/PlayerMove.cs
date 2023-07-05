@@ -56,22 +56,22 @@ public class PlayerMove : MonoBehaviour
             .Subscribe(_ =>
             {
 
-                if (Input.touchCount > 0)
-                {
-                    Debug.Log("タッチ操作中");
+                //if (Input.touchCount > 0)
+                //{
+                //    Debug.Log("タッチ操作中");
 
-                    Touch touch = Input.GetTouch(0);
-                    float x = touch.deltaPosition.x;
-                    float y = touch.deltaPosition.y;
+                //    Touch touch = Input.GetTouch(0);
+                //    float x = touch.deltaPosition.x;
+                //    float y = touch.deltaPosition.y;
 
-                    var inputDir = new Vector2(x, y).normalized;
+                //    var inputDir = new Vector2(x, y).normalized;
 
-                    _currentDir = inputDir * _moveSpeed;
-                }
-                else
-                {
-                    _currentDir = Vector2.zero;
-                }
+                //    _currentDir = inputDir * _moveSpeed;
+                //}
+                //else
+                //{
+                //    _currentDir = Vector2.zero;
+                //}
 
                 //入力がない場合
                 if (_currentDir == Vector2.zero)
@@ -105,9 +105,7 @@ public class PlayerMove : MonoBehaviour
     /// <param name="dir">方向</param>
     public void SetDirection(Vector2 dir)
     {
-#if UNITY_EDITOR
         _currentDir = dir;
-#endif
     }
     #endregion
 
