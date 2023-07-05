@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 339422351405615600}
   - component: {fileID: 339422351405615599}
   - component: {fileID: 339422351405615598}
+  - component: {fileID: 5213105932463645463}
   m_Layer: 0
   m_Name: MiddleBossEnemy
   m_TagString: Untagged
@@ -25,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339422351405615597}
-  m_LocalRotation: {x: 0, y: 0, z: -0.13052624, w: 0.9914449}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.68, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &339422351405615599
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -95,7 +96,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: 9e6a5286e5eba462e8157caf4a63bc64, type: 2}
-  _moveSpeed: 3
-  _bulletPrefab: {fileID: 574240322101050831, guid: e86cd8c61ddde47309ebb267b227d621,
+  _moveSpeed: 5
+  _bulletAttackAmount: 3
+--- !u!114 &5213105932463645463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339422351405615597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51101cab3528886499bbe7306c6a536b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _reserveAmount: 10
+  _limit: 100
+  _bulletPrefab: {fileID: 2559206566088390570, guid: e86cd8c61ddde47309ebb267b227d621,
     type: 3}
-  _bulletSpeed: 5
+  _parent: {fileID: 8569212611494669667, guid: 6a7805f05d39c4489933211167f14abc, type: 3}
