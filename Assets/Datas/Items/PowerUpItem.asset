@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _itemType: 3
   _reserveAmount: 5
-  _activationLimit: 10
+  _activationLimit: 5
