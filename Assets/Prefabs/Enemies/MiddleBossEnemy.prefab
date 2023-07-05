@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 339422351405615599}
   - component: {fileID: 339422351405615598}
   - component: {fileID: 5213105932463645463}
+  - component: {fileID: 5463224429880162433}
   m_Layer: 0
   m_Name: MiddleBossEnemy
   m_TagString: Untagged
@@ -115,3 +116,19 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 2559206566088390570, guid: e86cd8c61ddde47309ebb267b227d621,
     type: 3}
   _parent: {fileID: 8569212611494669667, guid: 6a7805f05d39c4489933211167f14abc, type: 3}
+--- !u!70 &5463224429880162433
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339422351405615597}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.06, y: 0}
+  m_Size: {x: 1.04, y: 0.76}
+  m_Direction: 1
