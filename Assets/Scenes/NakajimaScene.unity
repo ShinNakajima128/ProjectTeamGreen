@@ -2969,7 +2969,7 @@ PrefabInstance:
     - target: {fileID: 6355326079338186947, guid: a3d91589466604d47844b47048a0124a,
         type: 3}
       propertyPath: _items.Array.data[0].GenerateInterval
-      value: 0.1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6355326079338186949, guid: a3d91589466604d47844b47048a0124a,
         type: 3}
