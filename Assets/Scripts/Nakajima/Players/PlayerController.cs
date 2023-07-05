@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (_health.Damage(amount))
         {
             //仮の処理
-            StageManager.Instance.GameEndSubject.OnNext(Unit.Default);
+            StageManager.Instance.OnGameEnd();
         }
         Debug.Log("Playerがダメージを受けた");
     }
