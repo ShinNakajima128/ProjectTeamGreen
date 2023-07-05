@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.InputSystem.EnhancedTouch;
-//using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 using UniRx;
 using UniRx.Triggers;
+using System.Linq;
 
 /// <summary>
 /// プレイヤーの移動処理を行うコンポーネント
@@ -14,6 +13,7 @@ public class PlayerMove : MonoBehaviour
 {
     #region property
     public ReactiveProperty<bool> IsFlipedProerty => _isFlipedProperty;
+    public bool DebugMode { get; set; } = false;
     #endregion
 
     #region serialize
@@ -28,6 +28,9 @@ public class PlayerMove : MonoBehaviour
     private bool _isCanMove = false;
     /// <summary>現在の移動方向</summary>
     private Vector2 _currentDir;
+    private Vector2 _currentInputDir;
+    private Vector2 _currentFirstTouchPoint = Vector2.zero;
+    private bool _isStartTouched = false;
     #endregion
 
     #region Constant
@@ -51,28 +54,36 @@ public class PlayerMove : MonoBehaviour
                              .Subscribe(value => ChangeIsCanMove(value))
                              .AddTo(this);
 
-        this.FixedUpdateAsObservable()
+        this.UpdateAsObservable()
             .Where(_ => _isCanMove) //操作可能な場合
             .Subscribe(_ =>
             {
+                if (!DebugMode)
+                {
+                    if (Input.touchCount > 0)
+                    {
+                        Touch currentTouch = Input.GetTouch(0);
 
-                //if (Input.touchCount > 0)
-                //{
-                //    Debug.Log("タッチ操作中");
+                        if (!_isStartTouched)
+                        {
+                            _currentFirstTouchPoint = currentTouch.position;
+                            _isStartTouched = true;
+                            Debug.Log($"{currentTouch.position}");
+                        }
+                        else
+                        {
+                            Vector2 currentPos = currentTouch.position;
+                            _currentInputDir = currentPos - _currentFirstTouchPoint;
 
-                //    Touch touch = Input.GetTouch(0);
-                //    float x = touch.deltaPosition.x;
-                //    float y = touch.deltaPosition.y;
-
-                //    var inputDir = new Vector2(x, y).normalized;
-
-                //    _currentDir = inputDir * _moveSpeed;
-                //}
-                //else
-                //{
-                //    _currentDir = Vector2.zero;
-                //}
-
+                            _currentDir = _currentInputDir.normalized * _moveSpeed;
+                        }
+                    }
+                    else
+                    {
+                        _isStartTouched = false;
+                        _currentDir = Vector2.zero;
+                    }
+                }
                 //入力がない場合
                 if (_currentDir == Vector2.zero)
                 {
@@ -96,16 +107,18 @@ public class PlayerMove : MonoBehaviour
             })
             .AddTo(this);
     }
-    #endregion
+#endregion
 
-    #region public method
+#region public method
     /// <summary>
     /// 入力された移動方向をセットする
     /// </summary>
     /// <param name="dir">方向</param>
     public void SetDirection(Vector2 dir)
     {
+#if UNITY_EDITOR
         _currentDir = dir;
+#endif
     }
     #endregion
 
@@ -118,5 +131,23 @@ public class PlayerMove : MonoBehaviour
     {
         _isCanMove = value;
     }
-    #endregion
+
+   
+
+    //private void OnFingerDown(Finger finger)
+    //{
+    //    _originTouchPoint = finger.screenPosition;
+    //    Debug.Log(_originTouchPoint);
+    //}
+
+    //private void OnFingerMove(Finger finger)
+    //{
+    //    Debug.Log(finger.screenPosition);
+    //}
+
+    //private void OnFingerUp(Finger finger)
+    //{
+    //    _originTouchPoint = Vector2.zero;
+    //}
+#endregion
 }
