@@ -1360,6 +1360,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUDManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4428365954292601890, guid: e5a1960b8cb184b46824fb74e1a32120,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4428365954341967776, guid: e5a1960b8cb184b46824fb74e1a32120,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -2053,26 +2058,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7715727244853495233, guid: 0ae88df2e2dcbbf4b898fbc8e534a9a8,
-        type: 3}
-      propertyPath: _generateInterval
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7715727244853495233, guid: 0ae88df2e2dcbbf4b898fbc8e534a9a8,
-        type: 3}
-      propertyPath: _onceGenerateAmount
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7715727244853495233, guid: 0ae88df2e2dcbbf4b898fbc8e534a9a8,
-        type: 3}
-      propertyPath: _enemies.Array.data[0].ReserveAmount
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7715727244853495233, guid: 0ae88df2e2dcbbf4b898fbc8e534a9a8,
-        type: 3}
-      propertyPath: _enemies.Array.data[0].ActivationLimit
-      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7715727244853495239, guid: 0ae88df2e2dcbbf4b898fbc8e534a9a8,
         type: 3}
