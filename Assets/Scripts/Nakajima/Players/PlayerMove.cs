@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using UnityEngine.InputSystem.EnhancedTouch;
+//using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 using UniRx;
 using UniRx.Triggers;
 
@@ -53,6 +55,24 @@ public class PlayerMove : MonoBehaviour
             .Where(_ => _isCanMove) //操作可能な場合
             .Subscribe(_ =>
             {
+
+                if (Input.touchCount > 0)
+                {
+                    Debug.Log("タッチ操作中");
+
+                    Touch touch = Input.GetTouch(0);
+                    float x = touch.deltaPosition.x;
+                    float y = touch.deltaPosition.y;
+
+                    var inputDir = new Vector2(x, y).normalized;
+
+                    _currentDir = inputDir * _moveSpeed;
+                }
+                else
+                {
+                    _currentDir = Vector2.zero;
+                }
+
                 //入力がない場合
                 if (_currentDir == Vector2.zero)
                 {
@@ -76,7 +96,6 @@ public class PlayerMove : MonoBehaviour
             })
             .AddTo(this);
     }
-
     #endregion
 
     #region public method
@@ -86,7 +105,9 @@ public class PlayerMove : MonoBehaviour
     /// <param name="dir">方向</param>
     public void SetDirection(Vector2 dir)
     {
+#if UNITY_EDITOR
         _currentDir = dir;
+#endif
     }
     #endregion
 
