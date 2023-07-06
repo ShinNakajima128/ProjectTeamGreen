@@ -35,6 +35,7 @@ public class MuscleBombSkill : SkillBase
     {
         base.Awake();
         _currentAttackInterval = _startAttackInterval;
+        _generator = GetComponent<BombGenerator>();
     }
 
     protected override void Start()

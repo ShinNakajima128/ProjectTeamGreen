@@ -20,14 +20,18 @@ public class Bomb : MonoBehaviour
     private float _currentAttackAmount = 0;
     /// <summary>スキル持続時間</summary>
     private float _lifeTime = 10.0f;
+    /// <summary>現在のスキルレベル</summary>
+    private int _currentSkillLevel = 1;
     private Rigidbody2D _rb;
     private Coroutine _inactiveCoroutine = default;
+    private BombExplosionGenerator _generator;
     #endregion
 
     #region unity methods
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _generator = GameObject.Find("MuscleBombSkill").GetComponent<BombExplosionGenerator>();
     }
 
     private void OnEnable()
@@ -43,15 +47,17 @@ public class Bomb : MonoBehaviour
             _inactiveCoroutine = null;
         }
 
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(GameTag.Enemy))
         {
-            var target = collision.GetComponent<IDamagable>();
+            //var target = collision.GetComponent<IDamagable>();
 
-            target.Damage(_currentAttackAmount);
+            //target.Damage(_currentAttackAmount);
+            SetExplosion();
             gameObject.SetActive(false);
         }
     }
@@ -74,6 +80,32 @@ public class Bomb : MonoBehaviour
     public void SetVelocity(Vector3 dir)
     {
         _rb.velocity = dir * _moveSpeed;
+    }
+
+    /// <summary>
+    /// 現在のスキルレベルを取得
+    /// </summary>
+    /// <param name="currentSkillLevel"></param>
+    public void GetCurrentLevel(int currentSkillLevel)
+    {
+        _currentSkillLevel = currentSkillLevel;
+    }
+
+    /// <summary>
+    /// 爆発をセット
+    /// </summary>
+    public void SetExplosion()
+    {
+        GameObject skillObj = _generator.ExplosionPool.Rent();
+        if (skillObj != null)
+        {
+            var explosion = skillObj.GetComponent<BombExplosion>();
+            explosion.gameObject.SetActive(true);
+            explosion.SetScale(_currentSkillLevel);
+            explosion.transform.position = transform.position;
+            explosion.gameObject.transform.SetParent(null);
+            explosion.SetAttackAmount(_currentAttackAmount);
+        }
     }
     #endregion
 

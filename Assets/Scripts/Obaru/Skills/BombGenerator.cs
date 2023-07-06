@@ -33,7 +33,6 @@ public class BombGenerator : MonoBehaviour
     private ObjectPool _bombPool;
     #endregion
 
-
     #region unity methods
     private void Awake()
     {
