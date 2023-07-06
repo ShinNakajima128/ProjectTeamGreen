@@ -54,6 +54,10 @@ public class SkillTest : MonoBehaviour
                 {
                     SkillManager.Instance.SetSkill(SkillType.Throw);
                 }
+                if (Input.GetKeyDown(KeyCode.L))
+                {
+                    SkillManager.Instance.SetSkill(SkillType.Bomb);
+                }
             })
             .AddTo(this);
     }

@@ -65,8 +65,7 @@ MonoBehaviour:
   _limit: 100
   _dumbbellPrefab: {fileID: 2358008532548021251, guid: d097588932ba2714996b0f536c92a754,
     type: 3}
-  _parent: {fileID: 0}
-  _generateInterval: 1
+  _parent: {fileID: 2405454970666547326}
 --- !u!114 &2405454970666547329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +79,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _skillData: {fileID: 11400000, guid: 05c7f270c956f4382af08eaba27defff, type: 2}
-  _dumbbellPrefab: {fileID: 2358008532548021251, guid: d097588932ba2714996b0f536c92a754,
-    type: 3}
   _startAttackInterval: 1
+  _coefficient: 1.2
