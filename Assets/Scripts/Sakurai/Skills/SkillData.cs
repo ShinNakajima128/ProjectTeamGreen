@@ -65,5 +65,6 @@ public enum SkillType
    Fairy,
    Knuckle,
    Boul,
-   Throw
+   Throw,
+   Bomb
 }
