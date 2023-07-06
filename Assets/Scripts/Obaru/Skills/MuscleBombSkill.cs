@@ -4,30 +4,30 @@ using UnityEngine;
 using System.Linq;
 
 /// <summary>
-/// 一番近い敵に攻撃するスキル
+/// 爆弾を投げるスキル
 /// </summary>
 [RequireComponent(typeof(CircleCollider2D))]
-[RequireComponent(typeof(DumbbellGenerator))]
-public class MuscleThrowSkill : SkillBase
+[RequireComponent(typeof(BombGenerator))]
+public class MuscleBombSkill : SkillBase
 {
     #region serialize
     [Tooltip("スキルの攻撃間隔の初期値")]
     [SerializeField]
-    private float _startAttackInterval = 1.0f;
+    private float _startAttackInterval = 3.0f;
 
     [Tooltip("スキルの攻撃間隔に対する係数")]
     [SerializeField]
-    private float _coefficient = 1.2f;
+    private float _coefficient = 1.1f;
     #endregion
 
     #region private
     /// <summary>現在のスキルの攻撃間隔</summary>
     private float _currentAttackInterval;
     /// <summary>弾を撃つ方向</summary>
-    private Vector3 _targetDir = Vector3.zero;
+    private Vector3 _targetDir;
     /// <summary>エネミーのTransformのリスト</summary>
     private List<Transform> _enemyList = new List<Transform>();
-    private DumbbellGenerator _generator;
+    private BombGenerator _generator;
     #endregion
 
     #region unity methods
@@ -35,12 +35,17 @@ public class MuscleThrowSkill : SkillBase
     {
         base.Awake();
         _currentAttackInterval = _startAttackInterval;
-        _generator = GetComponent<DumbbellGenerator>();
+        _generator = GetComponent<BombGenerator>();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.CompareTag(GameTag.Enemy))
+        if (other.CompareTag(GameTag.Enemy))
         {
             _enemyList.Add(other.GetComponent<Transform>());
         }
@@ -105,7 +110,7 @@ public class MuscleThrowSkill : SkillBase
         foreach (Transform enemyTransform in _enemyList)
         {
             float dist = Vector3.Distance(transform.position, enemyTransform.position);
-            if(dist < distance)
+            if (dist < distance)
             {
                 near = enemyTransform;
                 distance = dist;
@@ -114,6 +119,7 @@ public class MuscleThrowSkill : SkillBase
 
         _targetDir = (near.position - transform.position).normalized;
     }
+
     #endregion
 
     #region coroutine method
@@ -129,21 +135,21 @@ public class MuscleThrowSkill : SkillBase
             {
                 SetTarget();
 
-                //var dumbbell = Instantiate(_dumbbellPrefab, transform.position, transform.rotation);
-
-                GameObject skillObj = _generator.DumbbellPool.Rent();
+                GameObject skillObj = _generator.BombPool.Rent();
                 if (skillObj != null)
                 {
-                    var dumbbell = skillObj.GetComponent<Dumbbell>();
-                    dumbbell.gameObject.SetActive(true);
-                    dumbbell.SetShotPos(transform);
-                    dumbbell.gameObject.transform.SetParent(null);
-                    dumbbell.SetAttackAmount(_currentAttackAmount);
-                    dumbbell.SetVelocity(_targetDir);
+                    var bomb = skillObj.GetComponent<Bomb>();
+                    bomb.gameObject.SetActive(true);
+                    bomb.transform.position = transform.position;
+                    bomb.gameObject.transform.SetParent(null);
+                    bomb.SetAttackAmount(_currentAttackAmount);
+                    bomb.SetVelocity(_targetDir);
+                    bomb.GetCurrentLevel(_currentSkillLebel);
                 }
             }
             yield return new WaitForSeconds(_currentAttackInterval);
         }
     }
     #endregion
+
 }
