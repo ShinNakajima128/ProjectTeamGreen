@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     #endregion
 
     #region serialize
+    [SerializeField]
+    private bool _debugMode = false;
     #endregion
 
     #region private
@@ -56,6 +58,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         _health = GetComponent<PlayerHealth>();
         _status = GetComponent<PlayerStatus>();
         _sr = GetComponent<SpriteRenderer>();
+        _move.DebugMode = _debugMode;
     }
 
     private void Start()
