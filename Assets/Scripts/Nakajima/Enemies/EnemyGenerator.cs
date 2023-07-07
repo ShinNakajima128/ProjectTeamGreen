@@ -54,11 +54,6 @@ public class EnemyGenerator : MonoBehaviour
         //仮の処理
         _isInGame = true;
     }
-
-    private void Start()
-    {
-        
-    }
     #endregion
 
     #region public method
@@ -90,6 +85,24 @@ public class EnemyGenerator : MonoBehaviour
         {
             StopCoroutine(_generateCoroutineDic[type]);
             _generateCoroutineDic[type] = null;
+        }
+    }
+
+    public void BossGenerate(EnemyType bossType)
+    {
+        switch (bossType)
+        {
+            case EnemyType.Wave1_Boss:
+                break;
+            default:
+                Debug.LogError("ボスが指定されていません");
+                break;
+        }
+        var currentBoss = _enemyPoolDic[bossType].Rent();
+
+        if (currentBoss != null)
+        {
+            currentBoss.SetActive(true);
         }
     }
     #endregion

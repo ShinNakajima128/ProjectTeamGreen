@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,7 +25,11 @@ public class PlayerStatusUI : MonoBehaviour
 
     [Tooltip("現在のレベルを表示するTMP")]
     [SerializeField]
-    private TextMeshProUGUI _currentLevelTMP = default; 
+    private TextMeshProUGUI _currentLevelTMP = default;
+
+    [Tooltip("プレイヤーステータスのCanvasGroup")]
+    [SerializeField]
+    private CanvasGroup _playerStatusGroup = default;
     #endregion
 
     #region private
@@ -86,6 +91,14 @@ public class PlayerStatusUI : MonoBehaviour
     private void CurrentLevelView(uint currentLevel)
     {
         _currentLevelTMP.text = $"{currentLevel}";
+    }
+    /// <summary>
+    /// ゲームステータスの表示を切り替える
+    /// </summary>
+    /// <param name="value">ON(true)/OFF(false)</param>
+    public void ChangeActivePanelView(bool value)
+    {
+        _playerStatusGroup.alpha = Convert.ToInt32(value);
     }
     #endregion
 }

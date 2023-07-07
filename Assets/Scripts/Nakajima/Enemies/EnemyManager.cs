@@ -56,6 +56,11 @@ public class EnemyManager : MonoBehaviour
             _defeatedEnemyAmountViewSubject.OnNext(value);
         })
         .AddTo(this);
+
+        //指定された時間毎にボスを生成する処理を登録
+        TimeManager.Instance.BossEventObserver
+                            .Subscribe(value => BossGenerate(value))
+                            .AddTo(this);
     }
     #endregion
 
@@ -63,5 +68,9 @@ public class EnemyManager : MonoBehaviour
     #endregion
 
     #region private method
+    private void BossGenerate(EnemyType bossType)
+    {
+        _generator.BossGenerate(bossType);
+    }
     #endregion
 }
