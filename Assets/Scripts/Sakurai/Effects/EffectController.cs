@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 
-/// <summary>
-/// ゲーム全体を管理するManagerクラス
-/// </summary>
-public class GameManager : SingletonMonoBehaviour<GameManager>
+public class EffectController : MonoBehaviour
 {
     #region property
     #endregion
@@ -25,15 +24,15 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     #region unity methods
     private void Awake()
     {
-        if (Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        DontDestroyOnLoad(gameObject);
+
     }
 
     private void Start()
+    {
+
+    }
+
+    private void Update()
     {
 
     }
@@ -44,16 +43,4 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     #region private method
     #endregion
-}
-
-/// <summary>
-/// ゲームの状態
-/// </summary>
-public enum GameState
-{
-    Title,
-    StageSelect,
-    InGame,
-    GameEnd,
-    Result
 }
