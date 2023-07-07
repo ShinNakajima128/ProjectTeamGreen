@@ -46,8 +46,8 @@ public class StageManager : MonoBehaviour
 
     private async void Start()
     {
-        await UniTask.Yield();
-        _isInGameSubject.OnNext(true);
+        await UniTask.Delay(2000);
+        OnGameStart();
     }
     #endregion
 
