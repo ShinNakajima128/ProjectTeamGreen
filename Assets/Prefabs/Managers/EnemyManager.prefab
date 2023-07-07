@@ -131,12 +131,6 @@ MonoBehaviour:
     ReserveAmount: 10
     ActivationLimit: 100
     Parent: {fileID: 7715727245773274814}
-  - EnemyName: "\u30E2\u30D6\u6575:\u3068\u3046\u3082\u308D\u3053\u3057"
-    EnemyPrefab: {fileID: 89851852789018597, guid: 0cafac39690e3184bb72cc86700621c3,
-      type: 3}
-    ReserveAmount: 10
-    ActivationLimit: 100
-    Parent: {fileID: 86345398}
 --- !u!1 &7715727245773274813
 GameObject:
   m_ObjectHideFlags: 0
