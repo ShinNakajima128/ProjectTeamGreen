@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     public bool IsInvincible => _isInvincible;
     public PlayerHealth Health => _health;
     public PlayerStatus Status => _status;
-    public Subject<float> ChangeAttackCoefficientSubject => _changeAttackCoefficientSubject;
+    public IObservable<float> ChangeAttackCoefficientSubject => _changeAttackCoefficientSubject;
     #endregion
 
     #region serialize
@@ -73,15 +73,15 @@ public class PlayerController : MonoBehaviour, IDamagable
              .AddTo(this);
 
         //Update内で行う処理を登録
-        this.UpdateAsObservable()
-            .Subscribe(_ =>
-            {
-                //if (Input.GetKeyDown(KeyCode.Space))
-                //{
-                //    SkillManager.Instance.SetSkill(SkillType.Aura);
-                //}
-            })
-            .AddTo(this);
+        //this.UpdateAsObservable()
+        //    .Subscribe(_ =>
+        //    {
+        //        //if (Input.GetKeyDown(KeyCode.Space))
+        //        //{
+        //        //    SkillManager.Instance.SetSkill(SkillType.Aura);
+        //        //}
+        //    })
+        //    .AddTo(this);
     }
 
     private void OnEnable()
@@ -139,7 +139,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         //ダメージを受けた後、プレイヤーのHPが無くなったら
         if (_health.Damage(amount))
         {
-            //仮の処理
             StageManager.Instance.OnGameEnd();
         }
         Debug.Log("Playerがダメージを受けた");
