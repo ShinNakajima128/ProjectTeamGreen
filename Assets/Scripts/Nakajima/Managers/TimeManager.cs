@@ -1,16 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UniRx;
+using UniRx.Triggers;
+using Cysharp.Threading.Tasks;
 
 /// <summary>
-/// ゲーム全体を管理するManagerクラス
+/// 時間関連の機能を管理するManagerクラス
 /// </summary>
-public class GameManager : SingletonMonoBehaviour<GameManager>
+public class TimeManager : MonoBehaviour
 {
     #region property
+    public static TimeManager Instance { get; private set; }
     #endregion
 
     #region serialize
+    [Tooltip("制限時間(分)")]
+    [SerializeField]
+    private uint _limitTime = 15;
     #endregion
 
     #region private
@@ -25,12 +33,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     #region unity methods
     private void Awake()
     {
-        if (Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        DontDestroyOnLoad(gameObject);
+        Instance = this;
     }
 
     private void Start()
@@ -44,16 +47,4 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     #region private method
     #endregion
-}
-
-/// <summary>
-/// ゲームの状態
-/// </summary>
-public enum GameState
-{
-    Title,
-    StageSelect,
-    InGame,
-    GameEnd,
-    Result
 }
