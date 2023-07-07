@@ -7,6 +7,7 @@ using System.Linq;
 public class SkillInfo : MonoBehaviour
 {
     #region property
+    public SkillType ThisSkillType => _skillType;
     #endregion
 
     #region serialize
@@ -20,30 +21,32 @@ public class SkillInfo : MonoBehaviour
     #endregion
 
     #region private
-    private int _currentLevel = 1;
-    #endregion
-
-    #region Event
+    private int[] _currentLevel;
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
-        
+        RewriteCurrentLevelText();
+
+        gameObject.SetActive(false);
     }
 
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method
+
+    /// <summary>
+    /// テキストの更新
+    /// </summary>
+    public void RewriteCurrentLevelText()
+    {
+        _currentLevel = SkillManager.Instance.Skills
+                .Where(x => x.SkillType == _skillType)
+                .Select(x => x.CurrentSkillLevel).ToArray();
+
+        _currentLevelText.text = $"LV.{_currentLevel[0]}";
+    }
     #endregion
 
     #region private method
