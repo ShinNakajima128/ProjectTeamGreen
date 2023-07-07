@@ -122,6 +122,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         
         if (_currentHP <= 0)
         {
+            EffectManager.PlayEffect(EffectType.EnemyDied, transform.position);
             //討伐数を加算
             EnemyManager.Instance.DefeatAmount.Value++;
             ItemManager.Instance.GenerateItem(_enemyData.DropItemType, transform.position);
