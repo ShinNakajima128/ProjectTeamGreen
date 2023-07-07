@@ -8,6 +8,7 @@ public class SkillManager : MonoBehaviour
 {
     #region property
     public static SkillManager Instance { get; private set; }
+    public SkillBase[] Skills => _skills;
     #endregion
 
     #region serialize
