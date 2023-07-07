@@ -5,13 +5,16 @@ using UnityEngine;
 using UniRx;
 using Cysharp.Threading.Tasks;
 
+/// <summary>
+/// ステージの各イベントを管理するManagerクラス
+/// </summary>
 public class StageManager : MonoBehaviour
 {
     #region property
     public static StageManager Instance { get; private set; }
     public IObservable<bool> IsInGameSubject => _isInGameSubject;
     public IObservable<Unit> GameStartSubject => _gameStartSubject;
-    public IObservable<Unit> GamePauseSubject => _gamePauseSubject;
+    public IObservable<bool> GamePauseSubject => _gamePauseSubject;
     public IObservable<Unit> GameEndSubject => _gameEndSubject;
     #endregion
 
@@ -30,7 +33,7 @@ public class StageManager : MonoBehaviour
     /// <summary>ゲーム開始時のSubject</summary>
     private Subject<Unit> _gameStartSubject = new Subject<Unit>();
     /// <summary>ゲーム中断時のSubject</summary>
-    private Subject<Unit> _gamePauseSubject = new Subject<Unit>();
+    private Subject<bool> _gamePauseSubject = new Subject<bool>();
     /// <summary>ゲーム終了時のSubject</summary>
     private Subject<Unit> _gameEndSubject = new Subject<Unit>();
     #endregion
@@ -50,11 +53,30 @@ public class StageManager : MonoBehaviour
 
     #region public method
     /// <summary>
+    /// ゲームを開始する
+    /// </summary>
+    public void OnGameStart()
+    {
+        _gameStartSubject.OnNext(Unit.Default);
+        _isInGameSubject.OnNext(true);
+    }
+
+    /// <summary>
+    /// ゲームを中断する
+    /// </summary>
+    /// /// <param name="value">ポーズするかどうか</param>
+    public void OnGamePause(bool value)
+    {
+        _gamePauseSubject.OnNext(value);
+        _isInGameSubject.OnNext(value);
+    }
+    /// <summary>
     /// ゲームを終了する
     /// </summary>
     public void OnGameEnd()
     {
         _gameEndSubject.OnNext(Unit.Default);
+        _isInGameSubject.OnNext(false);
     }
     #endregion
 
