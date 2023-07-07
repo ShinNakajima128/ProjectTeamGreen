@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,9 @@ public class GameStatusUI : MonoBehaviour
     [Tooltip("討伐数を表示するTMP")]
     [SerializeField]
     private TextMeshProUGUI _defeatTMP = default;
+
+    [SerializeField]
+    private CanvasGroup _gameStatusGroup = default;
     #endregion
 
     #region private
@@ -44,6 +48,14 @@ public class GameStatusUI : MonoBehaviour
     #endregion
 
     #region public method
+    /// <summary>
+    /// ゲームステータスの表示を切り替える
+    /// </summary>
+    /// <param name="value">ON(true)/OFF(false)</param>
+    public void ChangeActivePanelView(bool value)
+    {
+        _gameStatusGroup.alpha = Convert.ToInt32(value);
+    }
     #endregion
 
     #region private method

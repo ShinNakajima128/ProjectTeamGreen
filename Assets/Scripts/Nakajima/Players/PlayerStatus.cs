@@ -29,11 +29,11 @@ public class PlayerStatus : MonoBehaviour
 
     #region private
     /// <summary>現在のプレイヤーのレベル。初期値は「1」</summary>
-    private ReactiveProperty<uint> _currentPlayerLevel = new ReactiveProperty<uint>(1);
+    private readonly ReactiveProperty<uint> _currentPlayerLevel = new ReactiveProperty<uint>(1);
     /// <summary>現在の経験値</summary>
-    private ReactiveProperty<uint> _currentExp = new ReactiveProperty<uint>();
+    private readonly ReactiveProperty<uint> _currentExp = new ReactiveProperty<uint>();
     /// <summary>現在のレベルアップに必要な経験値</summary>
-    private ReactiveProperty<uint> _currentRequireExp = new ReactiveProperty<uint>();
+    private readonly ReactiveProperty<uint> _currentRequireExp = new ReactiveProperty<uint>();
     #endregion
 
     #region Constant
@@ -50,11 +50,6 @@ public class PlayerStatus : MonoBehaviour
     private void Awake()
     {
         Setup();
-    }
-
-    private void Start()
-    {
-
     }
     #endregion
 

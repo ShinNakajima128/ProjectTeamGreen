@@ -33,14 +33,14 @@ public class HUDManager : MonoBehaviour
     #region unity methods
     private void Awake()
     {
-        Instance = this;
-        _gameStatus = GetComponent<GameStatusUI>();
-        _playerStatus = GetComponent<PlayerStatusUI>();
+        Setup();
     }
 
     private void Start()
     {
-        
+        StageManager.Instance.IsInGameSubject
+                             .Subscribe(value => ChangeHUDPanelActive(value))
+                             .AddTo(this);
     }
     #endregion
 
@@ -48,6 +48,27 @@ public class HUDManager : MonoBehaviour
     #endregion
 
     #region private method
-    
+    /// <summary>
+    /// HUDの表示非表示を切り替える
+    /// </summary>
+    /// <param name="value">ON(true)/OFF(false)</param>
+    private void ChangeHUDPanelActive(bool value)
+    {
+        _playerStatus.ChangeActivePanelView(value);
+        _gameStatus.ChangeActivePanelView(value);
+    }
+
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    private void Setup()
+    {
+        Instance = this;
+        _gameStatus = GetComponent<GameStatusUI>();
+        _playerStatus = GetComponent<PlayerStatusUI>();
+
+        _playerStatus.ChangeActivePanelView(false);
+        _gameStatus.ChangeActivePanelView(false);
+    }
     #endregion
 }
