@@ -20,6 +20,10 @@ public class SkillUpSelect : MonoBehaviour
     [SerializeField]
     List<Button> _skillSelectUIs = default;
 
+    [Tooltip("")]
+    [SerializeField]
+    private CanvasGroup _skillUpSelectGroup = default;
+
     #endregion
 
     #region private
@@ -46,6 +50,7 @@ public class SkillUpSelect : MonoBehaviour
             SkillType type = (SkillType)i;
             _skillSelectUIs[i].onClick.AddListener(() => OnSkill(type));
         }
+        _skillUpSelectGroup.alpha = 0;
     }
     #endregion
 
@@ -56,16 +61,14 @@ public class SkillUpSelect : MonoBehaviour
     /// </summary>
     public void ActivateRondomSkillUIs()
     {
-
         IEnumerable randomIndices = Enumerable.Range(0, _skillSelectUIs.Count)
-                                    .OrderBy(x => Random.value)
-                                    .Take(_activeAmount);
-
+                                              .OrderBy(x => Random.value)
+                                              .Take(_activeAmount);
         foreach (int index in randomIndices)
         {
             _skillSelectUIs[index].gameObject.SetActive(true);
         }
-
+        _skillUpSelectGroup.alpha = 1.0f;
         Time.timeScale = 0f;
     }
     #endregion
@@ -85,6 +88,7 @@ public class SkillUpSelect : MonoBehaviour
             skillUI.gameObject.SetActive(false); 
         }
 
+        _skillUpSelectGroup.alpha = 0;
         Time.timeScale = 1f;
     }
     #endregion
