@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossBullet : MonoBehaviour
+public class EffectManager : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

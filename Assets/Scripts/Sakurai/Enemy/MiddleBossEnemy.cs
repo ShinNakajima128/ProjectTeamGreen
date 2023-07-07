@@ -11,15 +11,11 @@ public class MiddleBossEnemy : BossEnemyBase
     [Header("変数")]
     [Tooltip("移動速度")]
     [SerializeField]
-    private float _moveSpeed = 3.0f;
-
-    [Tooltip("チョコ弾オブジェクト")]
-    [SerializeField]
-    private BossBullet _bulletPrefab = default;
+    private float _moveSpeed = 5.0f;
 
     [Tooltip("チョコ弾オブジェクトの速さ")]
     [SerializeField]
-    private float _bulletSpeed = 5.0f;
+    private float _bulletAttackAmount = 3.0f;
     #endregion
 
     #region private
@@ -30,7 +26,8 @@ public class MiddleBossEnemy : BossEnemyBase
     //プレハブの反転
     private bool _isFliped = false;
 
-    private Coroutine _currentBossCoroutine;
+    //弾のプール用のクラスを参照
+    EnemyBulletGenerater _generator;
     #endregion
 
     #region Constant
@@ -43,6 +40,7 @@ public class MiddleBossEnemy : BossEnemyBase
     protected override void Awake()
     {
         base.Awake();
+        _generator = GetComponent<EnemyBulletGenerater>();
     }
 
     protected override void Start()
@@ -66,6 +64,21 @@ public class MiddleBossEnemy : BossEnemyBase
     #endregion
 
     #region private method
+
+    private void EnemyFrip()
+    {
+        if (!_isFliped && transform.localPosition.x < _playerTrans.position.x)
+        {
+            _enemyRenderer.flipX = true;
+            _isFliped = true;
+        }
+        else if (_isFliped && transform.localPosition.x >= _playerTrans.position.x)
+        {
+            _enemyRenderer.flipX = false;
+            _isFliped = false;
+        }
+    }
+
     #endregion
 
     #region coroutine method
@@ -86,17 +99,14 @@ public class MiddleBossEnemy : BossEnemyBase
                     _currentState = BossState.Move;
                     break;
                 case BossState.Move:
-                    Debug.Log("aaa");
-                    _currentBossCoroutine = StartCoroutine(OnMoveCoroutine());
+                    yield return StartCoroutine(OnMoveCoroutine());
                     break;
                 case BossState.Attack:
-                    _currentBossCoroutine = StartCoroutine(OnAttackCoroutine());
+                    yield return StartCoroutine(OnAttackCoroutine());
                     break;
-
                 default:
                     break;
             }
-            yield return _currentBossCoroutine;
         }
     }
 
@@ -107,9 +117,11 @@ public class MiddleBossEnemy : BossEnemyBase
     private IEnumerator OnMoveCoroutine()
     {
         _waitTime = 2.0f;
+
         for (int i = 0; i < 3; i++)
         {
-            Debug.Log("OnMoveCoroutineスタート");
+            EnemyFrip();
+
             Vector2 targetPos = _playerTrans.position;
 
             while (Vector2.Distance(transform.localPosition, targetPos) > 0.01f)
@@ -117,7 +129,6 @@ public class MiddleBossEnemy : BossEnemyBase
                 transform.localPosition = Vector2.MoveTowards(transform.localPosition, targetPos, _moveSpeed * Time.deltaTime);
                 yield return null;
             }
-
             yield return new WaitForSeconds(_waitTime);
         }
         _currentState = BossState.Attack;
@@ -131,14 +142,22 @@ public class MiddleBossEnemy : BossEnemyBase
     {
         Debug.Log("OnAttackCoroutineスタート");
         _waitTime = 0.5f;
+        EnemyFrip();
         for (int i = 0; i < 3; i++)
         {
-            BossBullet chocoBullet = Instantiate(_bulletPrefab, transform.position,Quaternion.identity);
-            Vector2 direction = (_playerTrans.position - transform.position).normalized;
-            chocoBullet.GetComponent<Rigidbody2D>().velocity = direction * _bulletSpeed;
-            yield return new WaitForSeconds(_waitTime);
-        }
+            GameObject bulletObj = _generator.BulletPool.Rent();
 
+            if (bulletObj != null)
+            {
+                EnemyBullet bullet = bulletObj.GetComponent<EnemyBullet>();
+                bullet.gameObject.SetActive(true);
+                bullet.transform.position = transform.position;
+                bullet.SetAttackAmount(_bulletAttackAmount);
+                bullet.SetVelocity((_playerTrans.position - transform.position).normalized);
+                yield return new WaitForSeconds(_waitTime);
+            }
+           
+        }
         _currentState = BossState.Idle;
     }
 
