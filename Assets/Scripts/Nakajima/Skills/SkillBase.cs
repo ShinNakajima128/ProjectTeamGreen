@@ -10,6 +10,7 @@ public abstract class SkillBase : MonoBehaviour
     #region property
     public SkillType SkillType => _skillData.SkillType;
     public bool IsSkillActived => _isSkillActived;
+    public int CurrentSkillLevel => _currentSkillLebel;
     #endregion
 
     #region serialize
