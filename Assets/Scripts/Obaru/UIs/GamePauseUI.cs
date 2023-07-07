@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GamePauseUI : MonoBehaviour
 {
@@ -9,8 +10,17 @@ public class GamePauseUI : MonoBehaviour
     #endregion
 
     #region serialize
+    [Tooltip("ポーズ画面をまとめたパネル")]
     [SerializeField]
-    private GameObject _restartButton = default;
+    private CanvasGroup _panel = default;
+
+    [Tooltip("Continueボタン")]
+    [SerializeField]
+    private Button _continueButton = default;
+
+    [Tooltip("スキル情報")]
+    [SerializeField]
+    private GameObject[] _skillInfos = default;
     #endregion
 
     #region private
@@ -26,7 +36,7 @@ public class GamePauseUI : MonoBehaviour
     private void Start()
     {
         _pauseButton.onClick.AddListener(() => GamePause());
-        _restartButton.GetComponent<Button>().onClick.AddListener(() => PauseEnd());
+        _continueButton.onClick.AddListener(() => PauseEnd());
     }
     #endregion
 
@@ -41,14 +51,28 @@ public class GamePauseUI : MonoBehaviour
     {
         Debug.Log("Pause");
         Time.timeScale = 0;
-        _restartButton.GetComponent<CanvasGroup>().alpha = 1;
+        _panel.alpha = 1;
     }
 
+    /// <summary>
+    /// 一時停止を解除する
+    /// </summary>
     private void PauseEnd()
     {
-        Debug.Log("Restart");
+        Debug.Log("Continue");
         Time.timeScale = 1;
-        _restartButton.GetComponent<CanvasGroup>().alpha = 0;
+        _panel.alpha = 0;
+    }
+
+    /// <summary>
+    /// 現在アクティブのスキル
+    /// </summary>
+    private void CurrentAktiveSkill()
+    {
+        var activeSkill = SkillManager.Instance.Skills
+            .Where(x => x.IsSkillActived)
+            .Select(x => x.SkillType)
+            .ToList();
     }
     #endregion
 }
