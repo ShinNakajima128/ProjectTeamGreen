@@ -2942,13 +2942,13 @@ MonoBehaviour:
   _limitTime: 15
   _bossEvents:
   - EventName: Wave1_Boss
-    InvokeTime: 2
-    BossType: 3
-  - EventName: Wave2_Boss
     InvokeTime: 30
     BossType: 3
+  - EventName: Wave2_Boss
+    InvokeTime: 90
+    BossType: 3
   - EventName: Wave3_Boss
-    InvokeTime: 60
+    InvokeTime: 150
     BossType: 3
   _limitTimeTMP: {fileID: 1364316902}
 --- !u!114 &1060715736
