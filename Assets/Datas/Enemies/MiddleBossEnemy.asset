@@ -17,3 +17,4 @@ MonoBehaviour:
   _hp: 10
   _attackAmount: 1
   _approachDistance: 0.1
+  _dropItemType: 4
