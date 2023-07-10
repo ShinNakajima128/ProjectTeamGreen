@@ -43,12 +43,6 @@ public class StageManager : MonoBehaviour
     {
         Instance = this;
     }
-
-    private async void Start()
-    {
-        await UniTask.Delay(2000);
-        OnGameStart();
-    }
     #endregion
 
     #region public method

@@ -68,6 +68,7 @@ public class HUDManager : MonoBehaviour
         Instance = this;
         _gameStatus = GetComponent<GameStatusUI>();
         _playerStatus = GetComponent<PlayerStatusUI>();
+        _title = GetComponent<TitleUI>();
 
         _playerStatus.ChangeActivePanelView(false);
         _gameStatus.ChangeActivePanelView(false);
