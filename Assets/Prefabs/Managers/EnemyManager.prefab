@@ -132,6 +132,12 @@ MonoBehaviour:
     ReserveAmount: 10
     ActivationLimit: 100
     Parent: {fileID: 7715727245773274814}
+  - EnemyName: Wave1:Boss
+    EnemyPrefab: {fileID: 339422351405615598, guid: 50948e0dd58d44966b01bc6698d3af69,
+      type: 3}
+    ReserveAmount: 1
+    ActivationLimit: 1
+    Parent: {fileID: 675572856}
 --- !u!1 &7715727245773274813
 GameObject:
   m_ObjectHideFlags: 0
