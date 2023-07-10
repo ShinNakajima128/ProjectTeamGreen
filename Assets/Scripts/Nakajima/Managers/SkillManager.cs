@@ -37,7 +37,7 @@ public class SkillManager : MonoBehaviour
     private void Start()
     {
         //ゲーム終了時に実行する処理を登録
-        StageManager.Instance.GameEndSubject
+        StageManager.Instance.GameEndObserver
                              .Subscribe(_ => InActiveAllSkill())
                              .AddTo(this);
     }

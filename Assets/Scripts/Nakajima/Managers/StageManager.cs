@@ -12,10 +12,10 @@ public class StageManager : MonoBehaviour
 {
     #region property
     public static StageManager Instance { get; private set; }
-    public IObservable<bool> IsInGameSubject => _isInGameSubject;
-    public IObservable<Unit> GameStartSubject => _gameStartSubject;
-    public IObservable<bool> GamePauseSubject => _gamePauseSubject;
-    public IObservable<Unit> GameEndSubject => _gameEndSubject;
+    public IObservable<bool> IsInGameObserver => _isInGameSubject;
+    public IObservable<Unit> GameStartObserver => _gameStartSubject;
+    public IObservable<bool> GamePauseObserver => _gamePauseSubject;
+    public IObservable<Unit> GameEndObserver => _gameEndSubject;
     #endregion
 
     #region serialize
