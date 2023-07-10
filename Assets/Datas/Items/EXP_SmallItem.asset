@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ab61a7c4b555d7439fbdeed6498698e, type: 3}
-  m_Name: PowerUpItem
+  m_Name: EXP_SmallItem
   m_EditorClassIdentifier: 
-  _itemType: 5
-  _reserveAmount: 5
-  _activationLimit: 5
+  _itemType: 2
+  _reserveAmount: 10
+  _activationLimit: 100
