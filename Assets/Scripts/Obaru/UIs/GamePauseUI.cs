@@ -9,9 +9,6 @@ using System.Linq;
 /// </summary>
 public class GamePauseUI : MonoBehaviour
 {
-    #region property
-    #endregion
-
     #region serialize
     [Tooltip("ポーズ画面をまとめたパネル")]
     [SerializeField]
@@ -41,19 +38,16 @@ public class GamePauseUI : MonoBehaviour
     private void Start()
     {
         //ボタン押下時の処理を設定
-        _pauseButton.onClick.AddListener(() => GamePause());
+        _pauseButton.onClick.AddListener(() => PauseGame());
         _continueButton.onClick.AddListener(() => PauseEnd());
     }
-    #endregion
-
-    #region public method
     #endregion
 
     #region private method
     /// <summary>
     /// 一時停止
     /// </summary>
-    private void GamePause()
+    private void PauseGame()
     {
         //ポーズ中ならreturn
         if (_isPause) return;

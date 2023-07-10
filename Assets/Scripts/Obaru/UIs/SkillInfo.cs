@@ -31,7 +31,6 @@ public class SkillInfo : MonoBehaviour
 
         gameObject.SetActive(false);
     }
-
     #endregion
 
     #region public method
@@ -47,8 +46,5 @@ public class SkillInfo : MonoBehaviour
 
         _currentLevelText.text = $"LV.{_currentLevel[0]}";
     }
-    #endregion
-
-    #region private method
     #endregion
 }
