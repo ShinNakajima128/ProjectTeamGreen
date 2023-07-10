@@ -40,12 +40,12 @@ public class MiddleBossEnemy : BossEnemyBase
     protected override void Awake()
     {
         base.Awake();
-        _generator = GetComponent<EnemyBulletGenerater>();
     }
 
     protected override void Start()
     {
         base.Start();
+        _generator = EnemyManager.Instance.PoolGenerator;
     }
 
     protected override void OnEnable()

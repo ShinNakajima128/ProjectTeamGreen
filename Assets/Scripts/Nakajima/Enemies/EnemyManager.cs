@@ -17,9 +17,15 @@ public class EnemyManager : MonoBehaviour
     /// 討伐数を表示する処理の購読のみ可能なプロパティ
     /// </summary>
     public IObservable<uint> DefeatedEnemyAmountViewObserver => _defeatedEnemyAmountViewSubject;
+
+    public EnemyBulletGenerater PoolGenerator => _poolGenerator;
     #endregion
 
     #region serialize
+    [Header("変数")]
+    [Tooltip("バレットをプールするオブジェクト")]
+    [SerializeField]
+    private EnemyBulletGenerater _poolGenerator;
     #endregion
 
     #region private
@@ -61,6 +67,7 @@ public class EnemyManager : MonoBehaviour
         TimeManager.Instance.BossEventObserver
                             .Subscribe(value => BossGenerate(value))
                             .AddTo(this);
+   
     }
     #endregion
 
