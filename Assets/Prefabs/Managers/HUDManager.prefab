@@ -2492,10 +2492,10 @@ MonoBehaviour:
     InvokeTime: 2
     BossType: 3
   - EventName: Wave2_Boss
-    InvokeTime: 5
+    InvokeTime: 30
     BossType: 3
   - EventName: Wave3_Boss
-    InvokeTime: 10
+    InvokeTime: 60
     BossType: 3
   _limitTimeTMP: {fileID: 1364316902}
 --- !u!1 &4428365954337781733
