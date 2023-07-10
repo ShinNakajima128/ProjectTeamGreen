@@ -16,19 +16,19 @@ public class TurretEnemy : EnemyBase
     #region private
     private bool _isFliped = false;
     private bool _isCanShot = true;
-    private EnemyBulletGenerater _generator;
     private Coroutine _flipCoroutine;
+    private EnemyBulletGenerater _generator;
     #endregion
 
     #region unity methods
     protected override void Awake()
     {
         base.Awake();
-        _generator = GetComponent<EnemyBulletGenerater>();
     }
 
     protected override void Start()
     {
+        _generator = EnemyManager.Instance.TurretPoolGenerator;
         base.Start();
     }
 

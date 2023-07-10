@@ -18,14 +18,20 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     public IObservable<uint> DefeatedEnemyAmountViewObserver => _defeatedEnemyAmountViewSubject;
 
-    public EnemyBulletGenerater PoolGenerator => _poolGenerator;
+    public EnemyBulletGenerater MiddleBossPoolGenerator => _middleBossPoolGenerator;
+
+    public EnemyBulletGenerater TurretPoolGenerator => _turretPoolGenerator;
     #endregion
 
     #region serialize
     [Header("変数")]
-    [Tooltip("バレットをプールするオブジェクト")]
+    [Tooltip("中ボスのバレットをプールするオブジェクト")]
     [SerializeField]
-    private EnemyBulletGenerater _poolGenerator;
+    private EnemyBulletGenerater _middleBossPoolGenerator;
+
+    [Tooltip("タレットのバレットをプールするオブジェクト")]
+    [SerializeField]
+    private EnemyBulletGenerater _turretPoolGenerator;
     #endregion
 
     #region private

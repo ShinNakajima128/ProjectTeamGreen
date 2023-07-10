@@ -45,7 +45,7 @@ public class MiddleBossEnemy : BossEnemyBase
     protected override void Start()
     {
         base.Start();
-        _generator = EnemyManager.Instance.PoolGenerator;
+        _generator = EnemyManager.Instance.MiddleBossPoolGenerator;
     }
 
     protected override void OnEnable()
