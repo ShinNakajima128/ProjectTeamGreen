@@ -2409,6 +2409,7 @@ GameObject:
   - component: {fileID: 4428365954292601888}
   - component: {fileID: 4428365954292601894}
   - component: {fileID: 4428365954292601895}
+  - component: {fileID: 965614424}
   m_Layer: 0
   m_Name: HUDManager
   m_TagString: Untagged
@@ -2473,6 +2474,30 @@ MonoBehaviour:
   _bulkFillArea: {fileID: 4428365953422148216}
   _currentLevelTMP: {fileID: 4428365954337781739}
   _playerStatusGroup: {fileID: 1120817005}
+--- !u!114 &965614424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4428365954292601890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c57f01a7099724a47841b9f1b46e34d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _limitTime: 15
+  _bossEvents:
+  - EventName: Wave1_Boss
+    InvokeTime: 2
+    BossType: 3
+  - EventName: Wave2_Boss
+    InvokeTime: 5
+    BossType: 3
+  - EventName: Wave3_Boss
+    InvokeTime: 10
+    BossType: 3
+  _limitTimeTMP: {fileID: 1364316902}
 --- !u!1 &4428365954337781733
 GameObject:
   m_ObjectHideFlags: 0
