@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 89851852789018599}
   - component: {fileID: 2963208215781162200}
   - component: {fileID: 89851852789018597}
-  - component: {fileID: 9159128945052823344}
   m_Layer: 9
   m_Name: TurretEnemy
   m_TagString: Enemy
@@ -27,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89851852789018598}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.85, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -113,22 +112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: 0ffb0152f6c4b1a4495271e13364853e, type: 2}
-  _bullet: {fileID: 5677147949440840018, guid: b77341ff9d8e4aa48ae6e622f9334804, type: 3}
   _attackInterval: 3
---- !u!114 &9159128945052823344
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 89851852789018598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51101cab3528886499bbe7306c6a536b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _reserveAmount: 10
-  _limit: 100
-  _bulletPrefab: {fileID: 5677147949440840018, guid: b77341ff9d8e4aa48ae6e622f9334804,
+  _generator: {fileID: 4104120986323239745, guid: 33cc875ab30458d468fde39e22419eba,
     type: 3}
-  _parent: {fileID: 4864497291796245587, guid: 33cc875ab30458d468fde39e22419eba, type: 3}
