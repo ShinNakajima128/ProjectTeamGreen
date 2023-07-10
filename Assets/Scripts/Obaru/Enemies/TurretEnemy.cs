@@ -28,8 +28,8 @@ public class TurretEnemy : EnemyBase
 
     protected override void Start()
     {
-        base.Start();
         _generator = EnemyManager.Instance.TurretPoolGenerator;
+        base.Start();
     }
 
     protected override void OnEnable()
