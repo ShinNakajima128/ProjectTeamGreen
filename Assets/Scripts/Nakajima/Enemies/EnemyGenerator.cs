@@ -112,7 +112,7 @@ public class EnemyGenerator : MonoBehaviour
     {
         for (int i = 0; i < _enemies.Length; i++)
         {
-            _enemyPoolDic.Add((EnemyType)i, new ObjectPool(_enemies[i].EnemyPrefab.gameObject,
+            _enemyPoolDic.Add(_enemies[i].EnemyPrefab.EnemyType, new ObjectPool(_enemies[i].EnemyPrefab.gameObject,
                                                            _enemies[i].ReserveAmount,
                                                            _enemies[i].ActivationLimit,
                                                            _enemies[i].Parent));
