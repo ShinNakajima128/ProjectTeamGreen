@@ -50,7 +50,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Start()
     {
-        StageManager.Instance.IsInGameSubject
+        StageManager.Instance.IsInGameObserver
                              .Subscribe(value => ChangeIsCanMove(value))
                              .AddTo(this);
 

@@ -36,6 +36,7 @@ public class TurretEnemy : EnemyBase
     {
         base.OnEnable();
         _flipCoroutine = StartCoroutine(FlipCoroutine());
+        _isCanShot = false;
     }
 
     protected override void OnDisable()

@@ -127,11 +127,11 @@ MonoBehaviour:
   _generatePointAbsValue: {x: 4, y: 6}
   _onceGenerateAmount: 3
   _enemies:
-  - EnemyName: "\u30E2\u30D6\u6575:\u98DF\u30D1\u30F3"
+  - EnemyName: "\u30E2\u30D6\u6575(\u79FB\u52D5):\u98DF\u30D1\u30F3"
     EnemyPrefab: {fileID: 5019117841591959538, guid: 4262d63fbd01da4449dce013d5f4c5ac,
       type: 3}
     ReserveAmount: 10
-    ActivationLimit: 100
+    ActivationLimit: 50
     Parent: {fileID: 7715727245773274814}
   - EnemyName: Wave1:Boss
     EnemyPrefab: {fileID: 339422351405615598, guid: 50948e0dd58d44966b01bc6698d3af69,
@@ -139,6 +139,12 @@ MonoBehaviour:
     ReserveAmount: 1
     ActivationLimit: 1
     Parent: {fileID: 675572856}
+  - EnemyName: "\u30E2\u30D6\u6575(\u56FA\u5B9A)\uFF1A\u30C8\u30A6\u30E2\u30ED\u30B3\u30B7"
+    EnemyPrefab: {fileID: 89851852789018597, guid: 0cafac39690e3184bb72cc86700621c3,
+      type: 3}
+    ReserveAmount: 5
+    ActivationLimit: 5
+    Parent: {fileID: 86345398}
 --- !u!1 &7715727245773274813
 GameObject:
   m_ObjectHideFlags: 0

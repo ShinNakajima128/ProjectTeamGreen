@@ -10,6 +10,7 @@ using TMPro;
 /// </summary>
 [RequireComponent(typeof(GameStatusUI))]
 [RequireComponent(typeof(PlayerStatusUI))]
+[RequireComponent(typeof(TitleUI))]
 public class HUDManager : MonoBehaviour
 {
     #region property
@@ -22,6 +23,7 @@ public class HUDManager : MonoBehaviour
     #region private
     GameStatusUI _gameStatus;
     PlayerStatusUI _playerStatus;
+    TitleUI _title;
     #endregion
 
     #region Constant
@@ -38,7 +40,7 @@ public class HUDManager : MonoBehaviour
 
     private void Start()
     {
-        StageManager.Instance.IsInGameSubject
+        StageManager.Instance.IsInGameObserver
                              .Subscribe(value => ChangeHUDPanelActive(value))
                              .AddTo(this);
     }
@@ -66,9 +68,17 @@ public class HUDManager : MonoBehaviour
         Instance = this;
         _gameStatus = GetComponent<GameStatusUI>();
         _playerStatus = GetComponent<PlayerStatusUI>();
+        _title = GetComponent<TitleUI>();
 
         _playerStatus.ChangeActivePanelView(false);
         _gameStatus.ChangeActivePanelView(false);
+
+        _title.PressStartButtonObserver
+              .Subscribe(_ =>
+              {
+                  StageManager.Instance.OnGameStart();
+              })
+              .AddTo(this);
     }
     #endregion
 }

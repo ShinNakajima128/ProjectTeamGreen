@@ -95,13 +95,23 @@ MonoBehaviour:
       type: 3}
     Parent: {fileID: 6355326078942542571}
     GenerateInterval: 3
-  - ItemName: "\u7D4C\u9A13\u5024\u30A2\u30A4\u30C6\u30E0"
+  - ItemName: "\u30D1\u30EF\u30FC\u30A2\u30C3\u30D7\u30A2\u30A4\u30C6\u30E0"
+    ItemPrefab: {fileID: 212003974145673770, guid: 7c707a38549462d46a47ddbaa767ebfd,
+      type: 3}
+    Parent: {fileID: 6355326080161253818}
+    GenerateInterval: 5
+  - ItemName: "\u7D4C\u9A13\u5024\uFF08\u5C0F\uFF09"
     ItemPrefab: {fileID: 4986574045778322860, guid: 1d603d29bc7b18b4da6fea504c5b8e54,
       type: 3}
     Parent: {fileID: 6355326079381132475}
-    GenerateInterval: 2
-  - ItemName: "\u30D1\u30EF\u30FC\u30A2\u30C3\u30D7\u30A2\u30A4\u30C6\u30E0"
-    ItemPrefab: {fileID: 212003974145673770, guid: 7c707a38549462d46a47ddbaa767ebfd,
+    GenerateInterval: 5
+  - ItemName: "\u7D4C\u9A13\u5024\uFF08\u4E2D\uFF09"
+    ItemPrefab: {fileID: 4986574045778322860, guid: 63cb78f5347f3fc4392506c3b3a19a36,
+      type: 3}
+    Parent: {fileID: 6355326079381132475}
+    GenerateInterval: 5
+  - ItemName: "\u7D4C\u9A13\u5024\uFF08\u5927\uFF09"
+    ItemPrefab: {fileID: 4986574045778322860, guid: d01cf6fed938b4c4aad25f6faa45c4a4,
       type: 3}
     Parent: {fileID: 6355326079381132475}
     GenerateInterval: 5

@@ -50,8 +50,12 @@ public enum ItemType
     None,
     /// <summary>回復アイテム</summary>
     Heal,
-    /// <summary>経験値アイテム</summary>
-    EXP,
+    /// <summary>経験値（小）</summary>
+    EXP_small,
+    /// <summary>経験値（中）</summary>
+    EXP_middle,
+    /// <summary>経験値（大）</summary>
+    EXP_Large,
     /// <summary>パワーアップアイテム</summary>
     PowerUp    
 }
