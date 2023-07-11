@@ -11,8 +11,6 @@ using UnityEngine;
 
 public class Knuckle : MonoBehaviour
 {
-    #region property
-    #endregion
 
     #region serialize
     [Header("変数")]
@@ -55,7 +53,7 @@ public class Knuckle : MonoBehaviour
 
     private void OnEnable()
     {
-       _currentCoroutine = StartCoroutine(InactiveCoroutine());
+       _currentCoroutine = StartCoroutine(InActiveCoroutine());
     }
 
     private void OnDisable()
@@ -71,12 +69,15 @@ public class Knuckle : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //当たったのがエネミーだった場合
         if (collision.CompareTag(GameTag.Enemy))
         {
+            //インターフェースを取得
             var target = collision.GetComponent<IDamagable>();
 
             if (target != null)
             {
+                //現在の攻撃力分ダメージを与える。
                 target.Damage(_currentAttackAmount);
             }
         }
@@ -98,6 +99,7 @@ public class Knuckle : MonoBehaviour
     /// </summary>
     public void RondomFourDirection()
     {
+        //十字方向のランダムの値を持たせる。
         int dirType = UnityEngine.Random.Range(0, 4);
 
         switch (dirType)
@@ -124,6 +126,7 @@ public class Knuckle : MonoBehaviour
     /// </summary>
     public void RondomEightDirection()
     {
+        //８方向にランダムの値に持たせる
         int dirType = UnityEngine.Random.Range(0, 8);
 
         switch (dirType)
@@ -156,15 +159,14 @@ public class Knuckle : MonoBehaviour
                 break;
         }
     }
-
     #endregion
 
     #region private method
-    #endregion
-
-    private IEnumerator InactiveCoroutine()
+    private IEnumerator InActiveCoroutine()
     {
         yield return new WaitForSeconds(_lifeTime);
         gameObject.SetActive(false);
     }
+    #endregion
+
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ナックルをPool機能
+/// ナックルのプール機能
 /// </summary>
 public class KnucleGenerator : MonoBehaviour
 {
@@ -13,15 +13,15 @@ public class KnucleGenerator : MonoBehaviour
 
     #region serialize
     [Header("変数")]
-    [Tooltip("")]
+    [Tooltip("初期の段階で持たせるプール数")]
     [SerializeField]
     private uint _reserveAmount = 10;
 
-    [Tooltip("")]
+    [Tooltip("プールの最大値")]
     [SerializeField]
     private uint _limit = 100;
 
-    [Tooltip("")]
+    [Tooltip("ナックルプレハブ")]
     [SerializeField]
     private Knuckle _knucklePrefab = default;
 
@@ -46,12 +46,6 @@ public class KnucleGenerator : MonoBehaviour
         _knucklePool = new ObjectPool(_knucklePrefab.gameObject, _reserveAmount, _limit, _parent);
     }
 
-    #endregion
-
-    #region public method
-    #endregion
-
-    #region private method
     #endregion
 
 }
