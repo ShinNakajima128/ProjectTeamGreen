@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-
-/// <summary>
-/// ナックルスキルを扱うオブジェクト
-/// </summary>
 [RequireComponent(typeof(KnucleGenerator))]
 
+/// <summary>
+/// ナックルを扱うスキル機能
+/// </summary>
 public class MuscleKnuckleSkill : SkillBase
 {
     #region property
@@ -40,20 +40,16 @@ public class MuscleKnuckleSkill : SkillBase
     /// <summary>現在のスキルの攻撃間隔</summary>
     private float _currentAttackInterval;
 
-    //コンポーネント
+    /// <summary>ナックルプール用のコンポーネント</summary>
     private KnucleGenerator _knucleGenerator;
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
     #endregion
 
     #region unity methods
     protected override void Awake()
     {
         base.Awake();
+
+        //攻撃の間隔の初期値を代入
         _currentAttackInterval = _startAttackInterval;
 
         _knucleGenerator = GetComponent<KnucleGenerator>();
@@ -70,6 +66,7 @@ public class MuscleKnuckleSkill : SkillBase
         _isSkillActived = true;
         StartCoroutine(SkillActionCoroutine());
     }
+
     /// <summary>
     /// スキルをレベルアップする
     /// </summary>
@@ -81,12 +78,17 @@ public class MuscleKnuckleSkill : SkillBase
             Debug.Log($"{SkillType}はレベル上限です");
             return;
         }
+
+        //レベルアップ
         _currentSkillLebel++;
         AttackUpSkill(_attackCoefficient);
+
+        //攻撃間隔を縮める
         _currentAttackInterval /= _coefficient;
 
         Debug.Log($"レベルアップ!{_currentSkillLebel}に上がった！");
     }
+
     // <summary>
     /// スキルの攻撃力を上げる
     /// </summary>
@@ -96,9 +98,6 @@ public class MuscleKnuckleSkill : SkillBase
         //現在のスキル攻撃力に係数を掛け合わせる
         _currentAttackAmount *= coefficient;
     }
-    #endregion
-
-    #region private method
     #endregion
 
     #region coroutine method
@@ -121,16 +120,8 @@ public class MuscleKnuckleSkill : SkillBase
                 knuckle.gameObject.SetActive(true);
                 knuckle.SetAttackAmount(_currentAttackAmount);
 
-                if (_currentSkillLebel >= 3)
-                {
-                    knuckle.RandomDirection = knuckle.RondomEightDirection;
-                    _coefficient = _coefficientUpdate;
-                }
-                else
-                {
-                    knuckle.RandomDirection = knuckle.RondomFourDirection;
-                }
-
+                //レベル3までは生成方向を4方向。
+                knuckle.RandomDirection = (_currentSkillLebel < 4) ? new Action(knuckle.RondomFourDirection) : new Action(knuckle.RondomEightDirection);
                 knuckle.RandomDirection.Invoke();
             }
 

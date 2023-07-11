@@ -31,9 +31,6 @@ public class Knuckle : MonoBehaviour
     private Coroutine _currentCoroutine;
     #endregion
 
-    #region Constant
-    #endregion
-
     #region Event
     /// <summary>スキル機能変更用のデリゲート</summary>
     public Action RandomDirection { get; set; }
