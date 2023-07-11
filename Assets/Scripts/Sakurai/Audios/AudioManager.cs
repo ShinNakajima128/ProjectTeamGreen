@@ -14,8 +14,19 @@ public enum BGMType
 }
 public enum SEType
 {
-    Heal,
-    Transition
+    Damage_Player, //Hit06-1
+    Dead_Player,   //Hit06-6
+    Damage_Enemy,  //Motion-Grab01-1
+    Dead_Enemy,    //Motion-Pop20-1
+    Heal,          //ゲージ回復1
+    PowerUp,       //ゲージ回復2
+    Transition,    //シーン切り替え2,
+    GetSkill_1,    //パワーアップ
+    GetSkill_2,    //パワーチャージ
+    GetSkill_3,    //ロケットランチャー
+    GetSkill_4,    //決定ボタンを押す10
+    BecomeBoss_1,  //文字表示の衝撃音1
+    BecomeBoss_2   //文字表示の衝撃音3
 }
 
 

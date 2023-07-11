@@ -10,6 +10,9 @@ public class AudioTest : MonoBehaviour
     #region serialize
     [SerializeField]
     private BGMType _testBgm = default;
+
+    [SerializeField]
+    private SEType _testSe = default;
     #endregion
 
     #region private
@@ -33,6 +36,19 @@ public class AudioTest : MonoBehaviour
         _init = true;
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            AudioManager.PlaySE(_testSe);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            AudioManager.PlayBGM(_testBgm);
+        }
+    }
+    /*
     //インスペクターの内容が変更された時に呼び出し(エディター上のみでアプリケーションでは実行されない)
     private void OnValidate()
     {
@@ -41,6 +57,7 @@ public class AudioTest : MonoBehaviour
             AudioManager.PlayBGM(_testBgm);
         }
     }
+    */
     #endregion
 
     #region public method
