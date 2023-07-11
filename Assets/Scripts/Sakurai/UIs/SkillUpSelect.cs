@@ -51,6 +51,8 @@ public class SkillUpSelect : MonoBehaviour
             _skillSelectUIs[i].onClick.AddListener(() => OnSkill(type));
         }
         _skillUpSelectGroup.alpha = 0;
+        _skillUpSelectGroup.interactable = false;
+        _skillUpSelectGroup.blocksRaycasts = false;
     }
     #endregion
 
@@ -69,6 +71,8 @@ public class SkillUpSelect : MonoBehaviour
             _skillSelectUIs[index].gameObject.SetActive(true);
         }
         _skillUpSelectGroup.alpha = 1.0f;
+        _skillUpSelectGroup.interactable = true;
+        _skillUpSelectGroup.blocksRaycasts = true;
         Time.timeScale = 0f;
     }
     #endregion
@@ -89,6 +93,8 @@ public class SkillUpSelect : MonoBehaviour
         }
 
         _skillUpSelectGroup.alpha = 0;
+        _skillUpSelectGroup.interactable = false;
+        _skillUpSelectGroup.blocksRaycasts = false;
         Time.timeScale = 1f;
     }
     #endregion
