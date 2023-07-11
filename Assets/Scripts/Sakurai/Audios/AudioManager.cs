@@ -8,11 +8,14 @@ using UnityEngine.Audio;
 
 public enum BGMType
 {
-    Stage1,
+    Title,
+    InGame,
+    Result
 }
 public enum SEType
 {
-    Tap,
+    Heal,
+    Transition
 }
 
 
@@ -24,7 +27,6 @@ public class AudioManager : MonoBehaviour
     public int CurrentSEVolume { get; set; } = 5;
 
     public static AudioManager Instance {get; private set;}
-
     #endregion
 
     #region serialize
@@ -267,6 +269,7 @@ public class AudioManager : MonoBehaviour
         _bgmSource.clip = afterBgm.Clip; //BGMの入れ替え
         _bgmSource.loop = loopType;
         _bgmSource.Play();
+        currentVol *= afterBgm.Volume;
 
         //音量を基に戻す
         while(_bgmSource.volume < currentVol)
@@ -312,13 +315,13 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     /// <param name="type">BGMの種類</param>
     /// <returns>指定したBGM</returns>
-    static BGM GetBGM(BGMType type)
+    private static BGM GetBGM(BGMType type)
     {
         var bgm = Instance._bgmList.FirstOrDefault(b => b.BGMType == type);
         return bgm;
     }
 
-    static SE GetSE(SEType type)
+    private static SE GetSE(SEType type)
     {
         var se = Instance._seList.FirstOrDefault(s => s.SEType == type);
         return se;
