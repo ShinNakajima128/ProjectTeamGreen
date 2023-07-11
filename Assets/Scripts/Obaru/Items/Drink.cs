@@ -23,20 +23,6 @@ public class Drink : ItemBase
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method
@@ -52,6 +38,7 @@ public class Drink : ItemBase
         float healAmount = player.CurrentMaxHP * _healRate;
 
         player.Heal(healAmount);
+        AudioManager.PlaySE(SEType.Heal);
         gameObject.SetActive(false);
     }
 

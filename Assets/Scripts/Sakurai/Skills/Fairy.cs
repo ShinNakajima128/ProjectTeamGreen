@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CircleCollider2D))]
+
 /// <summary>
 /// フェアリーコンポーネント
 /// </summary>
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CircleCollider2D))]
 public class Fairy : MonoBehaviour
 {
     #region property
@@ -32,13 +33,15 @@ public class Fairy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //タグがEnemyならダメージを与える
+        //当たったのがエネミーだった場合
         if (collision.CompareTag(GameTag.Enemy))
         {
-           var target = collision.GetComponent<IDamagable>();
+            //インターフェースを取得
+            var target = collision.GetComponent<IDamagable>();
 
             if (target != null)
             {
+                //現在の攻撃力分ダメージを与える。
                 target.Damage(_currentAttackAmount);
             }
         }
