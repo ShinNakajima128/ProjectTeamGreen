@@ -43,6 +43,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     private IDamagable _target;
     private Coroutine _coroutine;
     private Tween _currentTween;
+    private DamageTextGenerator _generator;
     #endregion
 
     #region Constant
@@ -67,6 +68,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     {
         _init = true;
         _coroutine = StartCoroutine(OnActionCoroutine());
+        _generator = DamageTextManager.Instance.TextGenerator;
 
         //プレイヤーと接触した時の処理を登録する
         this.OnTriggerStay2DAsObservable()
@@ -119,6 +121,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
         Debug.Log(amount);
         DamageAnimation();
+        DamageTextGenerate(amount);
         
         if (_currentHP <= 0)
         {
@@ -163,6 +166,17 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
                               transform.localScale = Vector3.one;
                               _currentTween = null;
                           });
+        }
+    }
+
+    private void DamageTextGenerate(float amount)
+    {
+        GameObject textObj = _generator.DamageTextPool.Rent();
+        if (textObj != null)
+        {
+            var damageText = textObj.GetComponent<DamageText>();
+            damageText.gameObject.SetActive(true);
+            damageText.SetDamageText(transform, amount);
         }
     }
     #endregion
