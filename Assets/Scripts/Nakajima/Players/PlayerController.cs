@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void Start()
     {
-        StageManager.Instance.IsInGameSubject
+        StageManager.Instance.IsInGameObserver
                              .Subscribe(value => ChangeIsCanControl(value))
                              .AddTo(this);
         

@@ -80,7 +80,7 @@ public class ItemGenerator : MonoBehaviour
 
         for (int i = 0; i < _items.Length; i++)
         {
-            _itemPoolDic.Add((ItemType)(i + 1), new ObjectPool(_items[i].ItemPrefab.gameObject, 
+            _itemPoolDic.Add(_items[i].ItemPrefab.ItemType, new ObjectPool(_items[i].ItemPrefab.gameObject, 
                                                                _items[i].ItemPrefab.ReserveAmount, 
                                                                _items[i].ItemPrefab.ActivationLimit, 
                                                                _items[i].Parent));

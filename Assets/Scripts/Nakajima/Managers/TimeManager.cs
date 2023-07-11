@@ -53,7 +53,7 @@ public class TimeManager : MonoBehaviour
 
     private void Start()
     {
-        StageManager.Instance.GameStartSubject
+        StageManager.Instance.GameStartObserver
                              .Subscribe(_ => OnLimitAndEventTimer())
                              .AddTo(this);
 
