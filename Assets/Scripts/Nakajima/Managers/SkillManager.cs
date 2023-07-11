@@ -104,7 +104,7 @@ public class SkillManager : MonoBehaviour
     /// </summary>
     private async UniTask OnStartSkillSelectAsync(CancellationToken token)
     {
-        await UniTask.Delay(500, cancellationToken: token);
+        await UniTask.Delay(1000, cancellationToken: token);
 
         HUDManager.Instance.SkillUpSelect.ActivateRondomSkillUIs();
     }
