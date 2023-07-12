@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 跳ね返るボールを扱うオブジェクト
+/// 跳ね返るボールを扱うスキル機能
 /// </summary>
 public class MuscleBoulSkill : SkillBase
 {
@@ -23,7 +23,6 @@ public class MuscleBoulSkill : SkillBase
     #endregion
 
     #region private
-
     /// <summary>スキルアップ時のボールの速度に対する係数</summary>
     private float _speedCoefficient = 1.2f;
 
@@ -46,7 +45,7 @@ public class MuscleBoulSkill : SkillBase
 
     protected override void Start()
     {
-        //ゲーム開始時は子オブジェクトを非アクティブ
+        //ゲーム開始時は跳ね返る壁を非アクティブ
         if (!_isSkillActived)
         {
             childActive(false);
@@ -64,6 +63,8 @@ public class MuscleBoulSkill : SkillBase
     {
         Debug.Log($"{SkillType}スキル発動");
         _isSkillActived = true;
+
+        //跳ね返る壁をアクティブにする。
         childActive(true);
 
         //メインカメラの位置を取得。
@@ -91,9 +92,13 @@ public class MuscleBoulSkill : SkillBase
 
             return;
         }
+
+        //レベルアップ
         _currentSkillLebel++;
         AttackUpSkill(_attackCoefficient);
         CreateNewBoul();
+
+        //レベルアップしたら全ボールをスピードアップ
         foreach (Boul boul in _currentBoulAmount)
         {
             boul.MoveSpeedChange(_speedCoefficient);
@@ -105,7 +110,7 @@ public class MuscleBoulSkill : SkillBase
     /// <summary>
     /// スキルの攻撃力を上げる
     /// </summary>
-    /// <param name="coefficient"></param>
+    /// <param name="coefficient">攻撃力に対する係数</param>
     public override void AttackUpSkill(float coefficient)
     {
         _currentAttackAmount *= coefficient;
@@ -127,7 +132,7 @@ public class MuscleBoulSkill : SkillBase
     /// <summary>
     /// 子オブジェクトはスキル発動中のみアクティブ状態
     /// </summary>
-    /// <param name="">SetActiveの変数</param>
+    /// <param name="">アクティブにするかどうか</param>
     private void childActive(bool change)
     {
         foreach (Transform child in transform)
@@ -138,10 +143,6 @@ public class MuscleBoulSkill : SkillBase
     #endregion
 
     #region coroutine method
-    /// <summary>
-    /// スキル発動中の処理
-    /// </summary>
-    /// <returns></returns>
     protected override IEnumerator SkillActionCoroutine()
     {
         yield return null;

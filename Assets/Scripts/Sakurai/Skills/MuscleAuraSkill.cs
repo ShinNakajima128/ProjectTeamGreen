@@ -2,22 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 /// <summary>
-/// オーラを扱うオブジェクト
+/// オーラを扱うスキル機能
 /// </summary>
 public class MuscleAuraSkill : SkillBase
 {
-    #region property
-    #endregion
-
     #region serialize
     [Header("変数")]
     [Tooltip("1~3レベルまでのオーラ")]
     [SerializeField]
     private Aura _auraPrefab = default;
 
-    [Tooltip("4~5レベルまでのオーラ")]
+    [Tooltip("4レベルからのオーラ")]
     [SerializeField]
     private Aura _highAuraPrefab = default;
 
@@ -38,12 +34,6 @@ public class MuscleAuraSkill : SkillBase
     Aura _currentAura = default;
     #endregion
 
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
     #region unity methods
     protected override void Awake()
     {
@@ -52,9 +42,8 @@ public class MuscleAuraSkill : SkillBase
     #endregion
 
     #region public method
-
     /// <summary>
-    /// スキル発動時のアクション
+    /// スキル発動時にオーラを生成
     /// </summary>
     public override void OnSkillAction()
     {
@@ -75,14 +64,18 @@ public class MuscleAuraSkill : SkillBase
 
             return;
         }
+
+        //レベルアップ
         _currentSkillLebel++;
-        
+
+        //3レベルまでと5レベルになった際はサイズを変更。
         if (_currentSkillLebel <= 3 || _currentSkillLebel == 5)
         {
             AttackUpSkill(_attackCoefficient);
             _currentAura.SizeChange(_sumAmount);
         }
 
+        //4レベルになったらオーラを変更
         if (_currentSkillLebel == 4)
         {
             AttackUpSkill(_attackHighCoefficient);
@@ -106,9 +99,10 @@ public class MuscleAuraSkill : SkillBase
     /// <summary>
     /// オーラを生成する
     /// </summary>
-    /// <param name="aura">3レベルまではAura。4レベルからHighAura</param>
+    /// <param name="aura">3レベルまでは通常オーラ。4レベルから強オーラ</param>
     private void CreateNewAura(Aura aura)
     {
+        //_currentAuraがあれば非アクティブにして新たにauraを生成。
         if (_currentAura != null)
         {
             _currentAura.gameObject.SetActive(false);

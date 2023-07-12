@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 妖精スキルを扱うオブジェクト
+/// 妖精を扱うスキル機能
 /// </summary>
 public class MuscleFairySkill : SkillBase
 {
@@ -113,12 +113,23 @@ public class MuscleFairySkill : SkillBase
     /// </summary>
     private void CreateNewFairy()
     {
-        Fairy newFairy = Instantiate(_fairyPrefab,transform);
-        newFairy.SetAttackAmount(_currentAttackAmount);
-        _currentFairyAmount.Add(newFairy);
+        //生成数は1度目のみ2体
+        int instanceCount = _currentSkillLebel == 1 ? 2 : 1;
 
+        for (int i = 0; i < instanceCount; i++)
+        {
+            Fairy newFairy = Instantiate(_fairyPrefab, transform);
+            newFairy.SetAttackAmount(_currentAttackAmount);
+            _currentFairyAmount.Add(newFairy);
+        }
+      
+        //間隔が均等になるように360から現在の生成数を割る
         float angleStep = 360.0f / _currentFairyAmount.Count;
+
+        //一度生成位置をリセット
         _currentFairyAngles.Clear();
+
+        //floatの値更新。
         for (int i = 0; i < _currentFairyAmount.Count; i++)
         {
             _currentFairyAngles.Add(angleStep * i);
@@ -138,9 +149,16 @@ public class MuscleFairySkill : SkillBase
         {
             for (int i = 0; i < _currentFairyAmount.Count; i++)
             {
+                //１体ずつの角度を常に更新
                 _currentFairyAngles[i] += _rotationSpeed * Time.deltaTime;
+
+                //更新した角度を常にかけあわせて位置を更新
                 Vector2 fairyPosition = new Vector2(Mathf.Cos(_currentFairyAngles[i] * Mathf.Deg2Rad), Mathf.Sin(_currentFairyAngles[i] * Mathf.Deg2Rad));
+
+                //プレイヤーからの半径
                 fairyPosition *= _fairyRadius;
+
+                //それぞれの妖精のポジションを更新
                 _currentFairyAmount[i].transform.localPosition = fairyPosition;
             }
             yield return null;
