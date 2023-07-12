@@ -20,14 +20,19 @@ public class Dumbbell : MonoBehaviour
     private float _currentAttackAmount = 0;
     /// <summary>スキル持続時間</summary>
     private float _lifeTime = 5.0f;
+    /// <summary>Rigidbody2Dコンポーネント格納用</summary>
     private Rigidbody2D _rb;
+    /// <summary>コルーチン格納用</summary>
     private Coroutine _currentCoroutine = default;
+    /// <summary>親のTransform格納用</summary>
+    private Transform _parent;
     #endregion
 
     #region unity methods
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _parent = transform.parent;
     }
 
     private void OnEnable()
@@ -42,17 +47,17 @@ public class Dumbbell : MonoBehaviour
             StopCoroutine(_currentCoroutine);
             _currentCoroutine = null;
         }
-
-        transform.localPosition = Vector3.zero;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(GameTag.Enemy))
         {
+            //敵にダメージを与える
             var target = collision.GetComponent<IDamagable>();
-
             target.Damage(_currentAttackAmount);
+            //親を設定しなおしてから非アクティブ化
+            transform.SetParent(_parent);
             gameObject.SetActive(false);
         }
     }
@@ -75,15 +80,6 @@ public class Dumbbell : MonoBehaviour
     public void SetVelocity(Vector3 dir)
     {
         _rb.velocity = dir * _moveSpeed;
-    }
-
-    /// <summary>
-    /// 弾の発射位置を設定
-    /// </summary>
-    /// <param name="parent"></param>
-    public void SetShotPos(Transform parent)
-    {
-        transform.position = parent.position;
     }
     #endregion
 

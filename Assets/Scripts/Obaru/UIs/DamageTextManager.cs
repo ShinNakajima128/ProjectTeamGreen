@@ -14,6 +14,7 @@ public class DamageTextManager : MonoBehaviour
     #endregion
 
     #region private
+    /// <summary>ダメージテキスト生成コンポーネント</summary>
     private DamageTextGenerator _generator;
     #endregion
 

@@ -18,6 +18,10 @@ public class MuscleBombSkill : SkillBase
     [Tooltip("スキルの攻撃間隔に対する係数")]
     [SerializeField]
     private float _coefficient = 1.1f;
+
+    [Tooltip("スキルの攻撃力に対する係数")]
+    [SerializeField]
+    private float _attackCoefficient = 1.2f;
     #endregion
 
     #region private
@@ -27,6 +31,7 @@ public class MuscleBombSkill : SkillBase
     private Vector3 _targetDir;
     /// <summary>エネミーのTransformのリスト</summary>
     private List<Transform> _enemyList = new List<Transform>();
+    /// <summary>ボム生成コンポーネント格納用</summary>
     private BombGenerator _generator;
     #endregion
 
@@ -73,7 +78,10 @@ public class MuscleBombSkill : SkillBase
             return;
         }
         _currentSkillLebel++;
+        //攻撃間隔を係数で割って短縮
         _currentAttackInterval /= _coefficient;
+        //攻撃力アップ
+        AttackUpSkill(_attackCoefficient);
 
         Debug.Log($"レベルアップ!{_currentSkillLebel}に上がった！");
     }
@@ -104,22 +112,25 @@ public class MuscleBombSkill : SkillBase
     /// </summary>
     private void SetTarget()
     {
+        //一番近い敵のTransform
         Transform near = _enemyList.First();
-        float distance = 9999;
+        //現状一番近い敵との距離
+        float distance = float.MaxValue;
 
         foreach (Transform enemyTransform in _enemyList)
         {
+            //敵との距離を測る
             float dist = Vector3.Distance(transform.position, enemyTransform.position);
+            //今測った距離のほうが近ければ
             if (dist < distance)
             {
                 near = enemyTransform;
                 distance = dist;
             }
         }
-
+        //一番近い敵への単位ベクトル
         _targetDir = (near.position - transform.position).normalized;
     }
-
     #endregion
 
     #region coroutine method
@@ -129,25 +140,37 @@ public class MuscleBombSkill : SkillBase
     /// <returns></returns>
     protected override IEnumerator SkillActionCoroutine()
     {
+        //スキルがアクティブなら
         while (_isSkillActived)
         {
             //enemyListはnullではなく要素数は1以上
             if (_enemyList?.Count > 0)
             {
+                //一番近い敵を探す
                 SetTarget();
 
+                //使うボムのオブジェクトを取得
                 GameObject skillObj = _generator.BombPool.Rent();
+                //ボムがnullでなければ
                 if (skillObj != null)
                 {
+                    //使うボムのコンポーネント取得
                     var bomb = skillObj.GetComponent<Bomb>();
+                    //ボムのオブジェクトをアクティブ化
                     bomb.gameObject.SetActive(true);
+                    //ボムをスキルの位置に移動
                     bomb.transform.position = transform.position;
+                    //親子関係を解除
                     bomb.gameObject.transform.SetParent(null);
+                    //攻撃力を設定
                     bomb.SetAttackAmount(_currentAttackAmount);
+                    //velocityを設定
                     bomb.SetVelocity(_targetDir);
+                    //スキルレベルを取得
                     bomb.GetCurrentLevel(_currentSkillLebel);
                 }
             }
+            //攻撃間隔分待つ
             yield return new WaitForSeconds(_currentAttackInterval);
         }
     }

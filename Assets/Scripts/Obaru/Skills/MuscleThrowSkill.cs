@@ -18,6 +18,10 @@ public class MuscleThrowSkill : SkillBase
     [Tooltip("スキルの攻撃間隔に対する係数")]
     [SerializeField]
     private float _coefficient = 1.2f;
+
+    [Tooltip("スキルの攻撃力に対する係数")]
+    [SerializeField]
+    private float _attackCoefficient = 1.2f;
     #endregion
 
     #region private
@@ -27,6 +31,7 @@ public class MuscleThrowSkill : SkillBase
     private Vector3 _targetDir = Vector3.zero;
     /// <summary>エネミーのTransformのリスト</summary>
     private List<Transform> _enemyList = new List<Transform>();
+    /// <summary>ダンベル生成コンポーネント格納用</summary>
     private DumbbellGenerator _generator;
     #endregion
 
@@ -68,7 +73,10 @@ public class MuscleThrowSkill : SkillBase
             return;
         }
         _currentSkillLebel++;
+        //攻撃間隔を係数で割って短縮
         _currentAttackInterval /= _coefficient;
+        //攻撃力をアップ
+        AttackUpSkill(_attackCoefficient);
 
         Debug.Log($"レベルアップ!{_currentSkillLebel}に上がった！");
     }
@@ -99,19 +107,23 @@ public class MuscleThrowSkill : SkillBase
     /// </summary>
     private void SetTarget()
     {
+        //一番近い敵のTransform
         Transform near = _enemyList.First();
-        float distance = 9999;
+        //現状一番近い敵との距離
+        float distance = float.MaxValue;
 
+        //範囲内の敵とプレイヤーの距離を調べる
         foreach (Transform enemyTransform in _enemyList)
         {
             float dist = Vector3.Distance(transform.position, enemyTransform.position);
+            //今調べた距離のほうが近いなら
             if(dist < distance)
             {
                 near = enemyTransform;
                 distance = dist;
             }
         }
-
+        //一番近い敵への単位ベクトル
         _targetDir = (near.position - transform.position).normalized;
     }
     #endregion
@@ -123,26 +135,35 @@ public class MuscleThrowSkill : SkillBase
     /// <returns></returns>
     protected override IEnumerator SkillActionCoroutine()
     {
+        //スキルがアクティブなら
         while (_isSkillActived)
         {
             //enemyListはnullではなく要素数は1以上
             if (_enemyList?.Count > 0)
             {
+                //一番近い敵を探す
                 SetTarget();
 
-                //var dumbbell = Instantiate(_dumbbellPrefab, transform.position, transform.rotation);
-
+                //使うダンベルを取得
                 GameObject skillObj = _generator.DumbbellPool.Rent();
+                //ダンベルがnullでないなら
                 if (skillObj != null)
                 {
+                    //使用するダンベルのコンポーネントを取得
                     var dumbbell = skillObj.GetComponent<Dumbbell>();
+                    //オブジェクトをアクティブ化
                     dumbbell.gameObject.SetActive(true);
-                    dumbbell.SetShotPos(transform);
+                    //ダンベルの位置をスキルの位置に
+                    dumbbell.transform.position = transform.position;
+                    //親子関係を解除
                     dumbbell.gameObject.transform.SetParent(null);
+                    //攻撃力を設定
                     dumbbell.SetAttackAmount(_currentAttackAmount);
+                    //verocityを設定
                     dumbbell.SetVelocity(_targetDir);
                 }
             }
+            //攻撃間隔分待つ
             yield return new WaitForSeconds(_currentAttackInterval);
         }
     }
