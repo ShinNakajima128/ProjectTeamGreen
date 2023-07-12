@@ -30,12 +30,6 @@ public class MiddleBossEnemy : BossEnemyBase
     EnemyBulletGenerater _generator;
     #endregion
 
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
     #region unity methods
     protected override void Awake()
     {
@@ -60,18 +54,17 @@ public class MiddleBossEnemy : BossEnemyBase
     }
     #endregion
 
-    #region public method
-    #endregion
-
     #region private method
 
     private void EnemyFrip()
     {
+        //エネミーよりプレイヤーのx軸が大きい場合はエネミーを右向きにする
         if (!_isFliped && transform.localPosition.x < _playerTrans.position.x)
         {
             _enemyRenderer.flipX = true;
             _isFliped = true;
         }
+        //プレイヤーのxの値は小さい場合は左向きにする
         else if (_isFliped && transform.localPosition.x >= _playerTrans.position.x)
         {
             _enemyRenderer.flipX = false;
@@ -93,14 +86,18 @@ public class MiddleBossEnemy : BossEnemyBase
         {
             switch(_currentState)
             {
+                //アイドルステート
                 case BossState.Idle:
                     _waitTime = 3.0f;
                     yield return new WaitForSeconds(_waitTime);
                     _currentState = BossState.Move;
                     break;
+
+                //ムーブステート
                 case BossState.Move:
                     yield return StartCoroutine(OnMoveCoroutine());
                     break;
+                //攻撃ステート
                 case BossState.Attack:
                     yield return StartCoroutine(OnAttackCoroutine());
                     break;
@@ -118,12 +115,14 @@ public class MiddleBossEnemy : BossEnemyBase
     {
         _waitTime = 2.0f;
 
+        //追いかける処理を3回繰り返す。
         for (int i = 0; i < 3; i++)
         {
             EnemyFrip();
 
             Vector2 targetPos = _playerTrans.position;
 
+             //プレイヤーとの距離が0.01以上であれば追いかける。
             while (Vector2.Distance(transform.localPosition, targetPos) > 0.01f)
             {
                 transform.localPosition = Vector2.MoveTowards(transform.localPosition, targetPos, _moveSpeed * Time.deltaTime);
@@ -145,14 +144,20 @@ public class MiddleBossEnemy : BossEnemyBase
         EnemyFrip();
         for (int i = 0; i < 3; i++)
         {
+            //プールからオブジェクトを取り出す。
             GameObject bulletObj = _generator.BulletPool.Rent();
 
             if (bulletObj != null)
             {
                 EnemyBullet bullet = bulletObj.GetComponent<EnemyBullet>();
+
+                //バレットをアクティブにする。
                 bullet.gameObject.SetActive(true);
+                //バレットのポジションをエネミーの位置に設定。
                 bullet.transform.position = transform.position;
+                //バレットに攻撃力を持たせる。
                 bullet.SetAttackAmount(_bulletAttackAmount);
+                //バレットに速度を持たせる。
                 bullet.SetVelocity((_playerTrans.position - transform.position).normalized);
                 yield return new WaitForSeconds(_waitTime);
             }
