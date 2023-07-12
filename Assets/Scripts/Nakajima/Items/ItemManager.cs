@@ -36,8 +36,13 @@ public class ItemManager : MonoBehaviour
 
     private void Start()
     {
-        _generator.RandoomGenerate(ItemType.Heal);
-        //_generator.RandoomGenerate(ItemType.EXP);
+        //仮の生成処理。敵や破壊可能オブジェクト等が用意された場合は改めて処理を記述予定
+        StageManager.Instance.GameStartObserver
+                             .Subscribe(_ =>
+                             {
+                                 _generator.RandoomGenerate(ItemType.Heal);
+                             })
+                             .AddTo(this);
     }
     #endregion
 

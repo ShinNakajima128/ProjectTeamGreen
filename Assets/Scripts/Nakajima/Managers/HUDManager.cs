@@ -11,19 +11,24 @@ using TMPro;
 [RequireComponent(typeof(GameStatusUI))]
 [RequireComponent(typeof(PlayerStatusUI))]
 [RequireComponent(typeof(TitleUI))]
+[RequireComponent(typeof(GamePauseUI))]
+[RequireComponent(typeof(SkillUpSelect))]
 public class HUDManager : MonoBehaviour
 {
     #region property
     public static HUDManager Instance { get; private set; }
+    public SkillUpSelect SkillUpSelect => _skillUpSelect;
     #endregion
 
     #region serialize
     #endregion
 
     #region private
-    GameStatusUI _gameStatus;
-    PlayerStatusUI _playerStatus;
-    TitleUI _title;
+    private GameStatusUI _gameStatus;
+    private PlayerStatusUI _playerStatus;
+    private TitleUI _title;
+    private GamePauseUI _gamePause;
+    private SkillUpSelect _skillUpSelect;
     #endregion
 
     #region Constant
@@ -69,6 +74,8 @@ public class HUDManager : MonoBehaviour
         _gameStatus = GetComponent<GameStatusUI>();
         _playerStatus = GetComponent<PlayerStatusUI>();
         _title = GetComponent<TitleUI>();
+        _gamePause = GetComponent<GamePauseUI>();
+        _skillUpSelect = GetComponent<SkillUpSelect>();
 
         _playerStatus.ChangeActivePanelView(false);
         _gameStatus.ChangeActivePanelView(false);

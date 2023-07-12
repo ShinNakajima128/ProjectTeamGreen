@@ -8,12 +8,14 @@ using UnityEngine;
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
     #region property
+    public GameState CurrentState => _currentState;
     #endregion
 
     #region serialize
     #endregion
 
     #region private
+    private GameState _currentState = default;
     #endregion
 
     #region Constant
@@ -35,11 +37,19 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
-
+        FadeManager.Fade(FadeType.In);
     }
     #endregion
 
     #region public method
+    /// <summary>
+    /// 現在のゲームの状況を変更する
+    /// </summary>
+    /// <param name="newState">次のゲームの状況</param>
+    public static void ChangeGameState(GameState newState)
+    {
+        Instance._currentState = newState;
+    }
     #endregion
 
     #region private method
@@ -54,6 +64,5 @@ public enum GameState
     Title,
     StageSelect,
     InGame,
-    GameEnd,
     Result
 }

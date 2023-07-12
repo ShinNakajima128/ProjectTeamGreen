@@ -18,6 +18,9 @@ public class GamePauseUI : MonoBehaviour
     [SerializeField]
     private Button _continueButton = default;
 
+    [SerializeField]
+    private Button _pauseButton = default;
+
     [Tooltip("スキル情報")]
     [SerializeField]
     private SkillInfo[] _skillInfos = default;
@@ -25,15 +28,15 @@ public class GamePauseUI : MonoBehaviour
 
     #region private
     private bool _isPause = false;
-    private Button _pauseButton;
+    //private Button _pauseButton;
     private List<SkillType> _activeSkill;
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-        _pauseButton = GetComponent<Button>();
-    }
+    //private void Awake()
+    //{
+    //    _pauseButton = GetComponent<Button>();
+    //}
 
     private void Start()
     {
@@ -57,6 +60,7 @@ public class GamePauseUI : MonoBehaviour
 
         //ポーズ画面を表示
         _panel.alpha = 1;
+        _panel.interactable = true;
 
         ActiveSkill();
         _isPause = true;
@@ -75,6 +79,7 @@ public class GamePauseUI : MonoBehaviour
         
         //ポーズ画面を非表示
         _panel.alpha = 0;
+        _panel.interactable = false;
         _isPause = false;
     }
 

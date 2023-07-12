@@ -1,9 +1,14 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using Cysharp.Threading.Tasks;
 
+/// <summary>
+/// スキル全般の管理を行うManagerクラス
+/// </summary>
 public class SkillManager : MonoBehaviour
 {
     #region property
@@ -36,6 +41,16 @@ public class SkillManager : MonoBehaviour
 
     private void Start()
     {
+        StageManager.Instance.GameStartObserver
+                             .Subscribe(_ =>
+                             {
+                                 //「Forget()」は「StartCoroutine()」と類似しているが、
+                                 //書かないと動作しない「StartCoroutine()」とは違い、
+                                 //「Forget()」無しでも動作する。(ただし警告が表示されるので、書く方が無難)
+                                 OnStartSkillSelectAsync(this.GetCancellationTokenOnDestroy()).Forget();
+                             })
+                             .AddTo(this);
+
         //ゲーム終了時に実行する処理を登録
         StageManager.Instance.GameEndObserver
                              .Subscribe(_ => InActiveAllSkill())
@@ -81,5 +96,17 @@ public class SkillManager : MonoBehaviour
     #endregion
 
     #region private method
+    #endregion
+
+    #region UniTask method
+    /// <summary>
+    /// ゲーム開始時にランダムなスキルを獲得する画面を表示する
+    /// </summary>
+    private async UniTask OnStartSkillSelectAsync(CancellationToken token)
+    {
+        await UniTask.Delay(1000, cancellationToken: token);
+
+        HUDManager.Instance.SkillUpSelect.ActivateRondomSkillUIs();
+    }
     #endregion
 }

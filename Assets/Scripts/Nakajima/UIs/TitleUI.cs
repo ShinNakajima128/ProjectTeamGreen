@@ -70,8 +70,12 @@ public class TitleUI : MonoBehaviour
     /// </summary>
     private void PressStartButton()
     {
-        _titlePanel.SetActive(false);
-        _pressStartButtonSubject.OnNext(Unit.Default);
+        FadeManager.Fade(FadeType.Out, () =>
+        {
+            FadeManager.Fade(FadeType.In);
+            _titlePanel.SetActive(false);
+            _pressStartButtonSubject.OnNext(Unit.Default);
+        });
     }
     #endregion
 }
