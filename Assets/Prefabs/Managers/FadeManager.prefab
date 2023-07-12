@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fadeTime: 2
-  _effectMaterial: {fileID: 2100000, guid: aa8168aa1df6f48d794b933943007a25, type: 2}
+  _effectMaterial: {fileID: 2100000, guid: 89882bf302ef6984da837633795e6f43, type: 2}
