@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
@@ -12,7 +13,7 @@ using System.Linq;
 public class PlayerMove : MonoBehaviour
 {
     #region property
-    public ReactiveProperty<bool> IsFlipedProerty => _isFlipedProperty;
+    public IObservable<bool> IsFlipedProerty => _isFlipedProperty;
     public bool DebugMode { get; set; } = false;
     #endregion
 
@@ -51,10 +52,11 @@ public class PlayerMove : MonoBehaviour
     private void Start()
     {
         StageManager.Instance.IsInGameObserver
-                             .Subscribe(value => ChangeIsCanMove(value))
-                             .AddTo(this);
+                             .TakeUntilDestroy(this)
+                             .Subscribe(value => ChangeIsCanMove(value));
 
         this.UpdateAsObservable()
+            .TakeUntilDestroy(this)
             .Where(_ => _isCanMove) //操作可能な場合
             .Subscribe(_ =>
             {
@@ -104,12 +106,11 @@ public class PlayerMove : MonoBehaviour
                     _isFlipedProperty.Value = false;
                     Debug.Log("左向き");
                 }
-            })
-            .AddTo(this);
+            });
     }
-#endregion
+    #endregion
 
-#region public method
+    #region public method
     /// <summary>
     /// 入力された移動方向をセットする
     /// </summary>
@@ -132,7 +133,7 @@ public class PlayerMove : MonoBehaviour
         _isCanMove = value;
     }
 
-   
+
 
     //private void OnFingerDown(Finger finger)
     //{
@@ -149,5 +150,5 @@ public class PlayerMove : MonoBehaviour
     //{
     //    _originTouchPoint = Vector2.zero;
     //}
-#endregion
+    #endregion
 }

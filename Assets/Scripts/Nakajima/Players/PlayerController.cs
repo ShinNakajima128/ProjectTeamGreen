@@ -63,25 +63,15 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void Start()
     {
+        //ゲームが開始/終了された時の処理を登録
         StageManager.Instance.IsInGameObserver
-                             .Subscribe(value => ChangeIsCanControl(value))
-                             .AddTo(this);
+                             .TakeUntilDestroy(this)
+                             .Subscribe(value => ChangeIsCanControl(value));
         
         //プレイヤーの画像を右向きか左向きか切り替える機能を登録
         _move.IsFlipedProerty
-             .Subscribe(value => FlipSprite(value))
-             .AddTo(this);
-
-        //Update内で行う処理を登録
-        //this.UpdateAsObservable()
-        //    .Subscribe(_ =>
-        //    {
-        //        //if (Input.GetKeyDown(KeyCode.Space))
-        //        //{
-        //        //    SkillManager.Instance.SetSkill(SkillType.Aura);
-        //        //}
-        //    })
-        //    .AddTo(this);
+             .TakeUntilDestroy(this)
+             .Subscribe(value => FlipSprite(value));
     }
 
     private void OnEnable()

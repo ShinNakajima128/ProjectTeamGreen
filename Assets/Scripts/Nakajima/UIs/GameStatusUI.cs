@@ -42,8 +42,8 @@ public class GameStatusUI : MonoBehaviour
     {
         //討伐数が変化した時の処理を登録
         EnemyManager.Instance.DefeatedEnemyAmountViewObserver
-                             .Subscribe(value => ViewDefeatedAmount(value))
-                             .AddTo(this);
+                             .TakeUntilDestroy(this)
+                             .Subscribe(value => ViewDefeatedAmount(value));
     }
     #endregion
 

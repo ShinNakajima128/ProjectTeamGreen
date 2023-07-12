@@ -53,16 +53,17 @@ public class TimeManager : MonoBehaviour
 
     private void Start()
     {
+        //ゲーム開始時の処理を登録
         StageManager.Instance.GameStartObserver
-                             .Subscribe(_ => OnLimitAndEventTimer())
-                             .AddTo(this);
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => OnLimitAndEventTimer());
 
-        _currentLimitTime.Subscribe(value => 
+        _currentLimitTime.TakeUntilDestroy(this)
+                         .Subscribe(value => 
                          {
                              _limitTimeTMP.text = $"{value / 60:00} : {(value % 60):00}";
                              
-                         })
-                         .AddTo(this);
+                         });
     }
     #endregion
 
@@ -77,17 +78,17 @@ public class TimeManager : MonoBehaviour
     {
         //指定された時間毎にイベントを発行するタイマーを起動
         var s = _bossEvents.Select(e => Observable.Timer(TimeSpan.FromSeconds(e.InvokeTime)))
-                                     .Merge();
+                           .Merge();
         
         uint currentBossEventIndex = 0;
 
         //ボスイベント発光の処理を登録
-        s.Subscribe(_ =>
-        {
-            _bossEventSubject.OnNext(_bossEvents[currentBossEventIndex].BossType);
-            currentBossEventIndex++;
-        })
-        .AddTo(this);
+        s.TakeUntilDestroy(this)
+         .Subscribe(_ =>
+         {
+             _bossEventSubject.OnNext(_bossEvents[currentBossEventIndex].BossType);
+             currentBossEventIndex++;
+         });
 
         StartCoroutine(OnLimitTimerCoroutine());
     }

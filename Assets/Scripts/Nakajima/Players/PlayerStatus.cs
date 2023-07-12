@@ -11,9 +11,9 @@ public class PlayerStatus : MonoBehaviour
 {
     #region property
     public float SkillAttackCoefficient => _skillAttackCoefficient;
-    public ReactiveProperty<uint> CurrentPlayerLevel => _currentPlayerLevel;
-    public ReactiveProperty<uint> CurrentExp => _currentExp;
-    public ReactiveProperty<uint> CurrentRequireExp => _currentRequireExp;
+    public IObservable<uint> CurrentPlayerLevel => _currentPlayerLevel;
+    public IObservable<uint> CurrentExp => _currentExp;
+    public IObservable<uint> CurrentRequireExp => _currentRequireExp;
     public IObservable<float> GetEXPObserver => _getEXPSubject;
     #endregion
 
@@ -71,6 +71,7 @@ public class PlayerStatus : MonoBehaviour
     {
         _currentExp.Value += value;
 
+        //経験値が現在の必要値を超えた場合
         if (_currentExp.Value >= _currentRequireExp.Value)
         {
             _currentPlayerLevel.Value++;

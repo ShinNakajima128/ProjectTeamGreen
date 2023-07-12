@@ -42,19 +42,19 @@ public class SkillManager : MonoBehaviour
     private void Start()
     {
         StageManager.Instance.GameStartObserver
+                             .TakeUntilDestroy(this)
                              .Subscribe(_ =>
                              {
                                  //「Forget()」は「StartCoroutine()」と類似しているが、
                                  //書かないと動作しない「StartCoroutine()」とは違い、
                                  //「Forget()」無しでも動作する。(ただし警告が表示されるので、書く方が無難)
                                  OnStartSkillSelectAsync(this.GetCancellationTokenOnDestroy()).Forget();
-                             })
-                             .AddTo(this);
+                             });
 
         //ゲーム終了時に実行する処理を登録
         StageManager.Instance.GameEndObserver
-                             .Subscribe(_ => InActiveAllSkill())
-                             .AddTo(this);
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => InActiveAllSkill());
     }
     #endregion
 
