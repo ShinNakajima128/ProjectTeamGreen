@@ -8,9 +8,9 @@ using UnityEngine.Audio;
 
 public enum BGMType
 {
-    Title,
-    InGame,
-    Result
+    Title,         //タイトル画面
+    InGame,        //インゲーム
+    Result         //リザルト画面
 }
 public enum SEType
 {
