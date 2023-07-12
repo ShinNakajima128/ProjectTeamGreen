@@ -60,26 +60,26 @@ public class EnemyManager : MonoBehaviour
     {
         //テスト生成
         StageManager.Instance.GameStartObserver
+                    .TakeUntilDestroy(this)
                     .Subscribe(_ =>
                     {
                         _generator.OnEnemyGenerate(EnemyType.Wave1_Chase1);
                         _generator.OnEnemyGenerate(EnemyType.Wave1_Point1);
-                    })
-                    .AddTo(this);
+                    });
         
         
         //討伐数が変化した時のイベント処理を登録
         _defeatAmountProperty
+        .TakeUntilDestroy(this)
         .Subscribe(value =>
         {
             _defeatedEnemyAmountViewSubject.OnNext(value);
-        })
-        .AddTo(this);
+        });
 
         //指定された時間毎にボスを生成する処理を登録
         TimeManager.Instance.BossEventObserver
-                            .Subscribe(value => BossGenerate(value))
-                            .AddTo(this);
+                            .TakeUntilDestroy(this)
+                            .Subscribe(value => BossGenerate(value));
    
     }
     #endregion

@@ -42,25 +42,21 @@ public class PlayerStatusUI : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Awake()
-    {
-        
-    }
-
     private void Start()
     { 
         //プレイヤーのHPの値が変化した時の処理を登録
         PlayerController.Instance.Health.ChangeHPObserver
-                                        .Subscribe(amount => CurrentHPView(amount))
-                                        .AddTo(this);
+                                        .TakeUntilDestroy(this)
+                                        .Subscribe(amount => CurrentHPView(amount));
         //レベルアップ時の処理を登録
         PlayerController.Instance.Status.CurrentPlayerLevel
-                                        .Subscribe(amount => CurrentLevelView(amount))
-                                        .AddTo(this);
+                                        .TakeUntilDestroy(this)
+                                        .Subscribe(amount => CurrentLevelView(amount));
+
         //経験値を取得した時の処理を登録
         PlayerController.Instance.Status.GetEXPObserver
-                                        .Subscribe(amount => CurrentEXPView(amount))
-                                        .AddTo(this);
+                                        .TakeUntilDestroy(this)
+                                        .Subscribe(amount => CurrentEXPView(amount));
     }
     #endregion
 

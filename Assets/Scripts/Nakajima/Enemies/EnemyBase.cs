@@ -72,6 +72,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
         //プレイヤーと接触した時の処理を登録する
         this.OnTriggerStay2DAsObservable()
+            .TakeUntilDestroy(this)
             .Where(x => x.CompareTag(GameTag.Player))
             //一度接触していればGetComponentを行わないようにする
             .Select(x => _target ?? (_target = x.gameObject.GetComponent<IDamagable>()))
@@ -82,8 +83,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
                 {
                     x.Damage(_currentAttackAmount);
                 }
-            })
-            .AddTo(this);
+            });
     }
 
     protected virtual void OnEnable()

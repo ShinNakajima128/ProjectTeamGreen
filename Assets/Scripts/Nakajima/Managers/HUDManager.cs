@@ -80,12 +80,13 @@ public class HUDManager : MonoBehaviour
         _playerStatus.ChangeActivePanelView(false);
         _gameStatus.ChangeActivePanelView(false);
 
+        //タイトル画面のスタートボタンを押した時の処理を登録
         _title.PressStartButtonObserver
+              .TakeUntilDestroy(this)
               .Subscribe(_ =>
               {
                   StageManager.Instance.OnGameStart();
-              })
-              .AddTo(this);
+              });
     }
     #endregion
 }
