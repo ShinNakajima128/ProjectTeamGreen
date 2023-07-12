@@ -51,9 +51,11 @@ ExportedObj/
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
+*.FadeMaterial.mat.meta
 
 # Unity3D generated file on crash reports
 sysinfo.txt
+FadeMaterial.mat
 
 # Builds
 *.apk
