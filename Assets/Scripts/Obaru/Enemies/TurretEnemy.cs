@@ -57,6 +57,7 @@ public class TurretEnemy : EnemyBase
     }
     #endregion
 
+    #region Coroutine method
     /// <summary>
     /// 敵ごとの行動処理を行うコルーチン
     /// </summary>
@@ -106,4 +107,5 @@ public class TurretEnemy : EnemyBase
             yield return null;
         }
     }
+    #endregion
 }
