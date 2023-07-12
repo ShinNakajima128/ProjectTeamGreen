@@ -4,6 +4,9 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 
+/// <summary>
+/// ポーズ画面中に表示するスキルの情報
+/// </summary>
 public class SkillInfo : MonoBehaviour
 {
     #region property
@@ -34,7 +37,6 @@ public class SkillInfo : MonoBehaviour
     #endregion
 
     #region public method
-
     /// <summary>
     /// テキストの更新
     /// </summary>

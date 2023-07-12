@@ -60,7 +60,8 @@ public class BombExplosion : MonoBehaviour
     /// </summary>
     public void SetScale(int currentLevel)
     {
-        for(int i = 0; i < currentLevel; i++)
+        //スキルレベル分係数をかける
+        for(int i = 1; i < currentLevel; i++)
         {
             _currentScale *= _scaleCoefficient;
         }

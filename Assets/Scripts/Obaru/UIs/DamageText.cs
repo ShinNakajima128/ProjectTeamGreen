@@ -8,24 +8,20 @@ using TMPro;
 /// </summary>
 public class DamageText : MonoBehaviour
 {
-    #region property
-    #endregion
-
     #region serialize
+    [Tooltip("生存時間")]
     [SerializeField]
     private float _lifeTime = 0.3f;
+
+    [Tooltip("上昇スピード")]
+    [SerializeField]
+    private float _riseSpeed = 0.01f;
     #endregion
 
     #region private
     private TextMeshProUGUI _damageText;
     private Coroutine _displayCoroutine;
     private Coroutine _riseCoroutine;
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
     #endregion
 
     #region unity methods
@@ -36,7 +32,7 @@ public class DamageText : MonoBehaviour
 
     private void OnEnable()
     {
-        _displayCoroutine = StartCoroutine(DisplayText());
+        _displayCoroutine = StartCoroutine(InactiveText());
     }
 
     private void OnDisable()
@@ -71,25 +67,28 @@ public class DamageText : MonoBehaviour
     }
     #endregion
 
-    #region private method
-    #endregion
-
+    #region coroutine method
     /// <summary>
-    /// テキストの表示時間
+    /// 一定時間待ってオブジェクトをを非アクティブに
     /// </summary>
     /// <returns></returns>
-    private IEnumerator DisplayText()
+    private IEnumerator InactiveText()
     {
         yield return new WaitForSeconds(_lifeTime);
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// 表示されたテキストが上に移動
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator TextRise()
     {
         while (true)
         {
-            transform.Translate(Vector2.up * 0.01f);
+            transform.Translate(Vector2.up * _riseSpeed);
             yield return null;
         }
     }
+    #endregion
 }

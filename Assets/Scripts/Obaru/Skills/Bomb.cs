@@ -13,13 +13,15 @@ public class Bomb : MonoBehaviour
     [Tooltip("飛ぶ速さ")]
     [SerializeField]
     private float _moveSpeed = 1.5f;
+
+    [Tooltip("スキルの生存時間")]
+    [SerializeField]
+    private float _lifeTime = 5.0f;
     #endregion
 
     #region private
     /// <summary>現在の攻撃力</summary>
     private float _currentAttackAmount = 0;
-    /// <summary>スキル持続時間</summary>
-    private float _lifeTime = 10.0f;
     /// <summary>現在のスキルレベル</summary>
     private int _currentSkillLevel = 1;
     private Rigidbody2D _rb;
@@ -111,12 +113,13 @@ public class Bomb : MonoBehaviour
 
     #region Coroutine method
     /// <summary>
-    /// 一定時間後に非アクティブ化
+    /// 一定時間後に爆発して非アクティブ化
     /// </summary>
     /// <returns></returns>
     private IEnumerator InactiveCoroutine()
     {
         yield return new WaitForSeconds(_lifeTime);
+        SetExplosion();
         gameObject.SetActive(false);
     }
     #endregion

@@ -57,12 +57,6 @@ public class TurretEnemy : EnemyBase
     }
     #endregion
 
-    #region public method
-    #endregion
-
-    #region private method
-    #endregion
-
     /// <summary>
     /// 敵ごとの行動処理を行うコルーチン
     /// </summary>
