@@ -131,6 +131,7 @@ public class MuscleBombSkill : SkillBase
     {
         while (_isSkillActived)
         {
+            //enemyListはnullではなく要素数は1以上
             if (_enemyList?.Count > 0)
             {
                 SetTarget();
