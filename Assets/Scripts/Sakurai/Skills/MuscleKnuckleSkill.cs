@@ -121,6 +121,8 @@ public class MuscleKnuckleSkill : SkillBase
                 knuckle.SetAttackAmount(_currentAttackAmount);
 
                 //レベル3までは生成方向を4方向。
+
+                //これは使いどころではない。関数に変更する。
                 knuckle.RandomDirection = (_currentSkillLebel < 4) ? new Action(knuckle.RondomFourDirection) : new Action(knuckle.RondomEightDirection);
                 knuckle.RandomDirection.Invoke();
             }

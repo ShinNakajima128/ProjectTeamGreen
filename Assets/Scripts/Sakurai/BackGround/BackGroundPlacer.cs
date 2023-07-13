@@ -16,16 +16,14 @@ public class BackGroundPlacer : MonoBehaviour
     [SerializeField]
     private float _tileSize = 16f;
 
-    [Tooltip("プレイヤーの位置取得")]
-    [SerializeField]
-    private GameObject _player;
-
     [Tooltip("背景用のプレハブ")]
     [SerializeField]
     private GameObject _tilePrefab;
     #endregion
 
     #region private
+    //プレイヤーの位置取得用
+    private GameObject _player;
 
     //タイルの配列
     private GameObject[,] _tiles;
@@ -36,10 +34,15 @@ public class BackGroundPlacer : MonoBehaviour
 
     #region Constant
     /// <summary>縦3枚,横3枚のサイズ</summary>
-    private const int GRID_SIZE = 3; 
+    private const int GRID_SIZE = 3;
     #endregion
 
     #region unity methods
+
+    private void Awake()
+    {
+        _player = GameObject.FindGameObjectWithTag(GameTag.Player); 
+    }
     void Start()
     {
         _tiles = new GameObject[GRID_SIZE, GRID_SIZE];
@@ -154,11 +157,14 @@ public class BackGroundPlacer : MonoBehaviour
         {
             _tiles[0, i].transform.position += new Vector3(0, -3f * _tileSize, 0);
 
+            (_tiles[0, i], _tiles[1, i]) = (_tiles[1, i], _tiles[0, i]);
+            (_tiles[1, i], _tiles[2, i]) = (_tiles[2, i], _tiles[1, i]);
+
             //タイルの位置を配列内で更新
-            temp = _tiles[0, i];
-            _tiles[0, i] = _tiles[1, i];
-            _tiles[1, i] = _tiles[2, i];
-            _tiles[2, i] = temp;
+            //temp = _tiles[0, i];
+            //_tiles[0, i] = _tiles[1, i];
+            //_tiles[1, i] = _tiles[2, i];
+            //_tiles[2, i] = temp;
         }
     }
   

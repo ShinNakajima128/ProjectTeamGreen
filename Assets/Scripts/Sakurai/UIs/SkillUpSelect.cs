@@ -83,7 +83,6 @@ public class SkillUpSelect : MonoBehaviour
     #endregion
 
     #region private method
-
     /// <summary>
     /// OnClickしたときの処理
     /// </summary>
