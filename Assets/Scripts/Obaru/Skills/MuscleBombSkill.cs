@@ -32,7 +32,7 @@ public class MuscleBombSkill : SkillBase
     /// <summary>エネミーのTransformのリスト</summary>
     private List<Transform> _enemyList = new List<Transform>();
     /// <summary>ボム生成コンポーネント格納用</summary>
-    private BombGenerator _generator;
+    private BombGenerator _bombGenerator;
     #endregion
 
     #region unity methods
@@ -40,7 +40,7 @@ public class MuscleBombSkill : SkillBase
     {
         base.Awake();
         _currentAttackInterval = _startAttackInterval;
-        _generator = GetComponent<BombGenerator>();
+        _bombGenerator = GetComponent<BombGenerator>();
     }
 
     protected override void Start()
@@ -150,7 +150,7 @@ public class MuscleBombSkill : SkillBase
                 SetTarget();
 
                 //使うボムのオブジェクトを取得
-                GameObject skillObj = _generator.BombPool.Rent();
+                GameObject skillObj = _bombGenerator.BombPool.Rent();
                 //ボムがnullでなければ
                 if (skillObj != null)
                 {
