@@ -17,6 +17,14 @@ public class DamageText : MonoBehaviour
     [Tooltip("上昇値")]
     [SerializeField]
     private float _riseAmount = 0.5f;
+
+    [Tooltip("文字が黄色になる値")]
+    [SerializeField]
+    private float _yellowBorder = 3f;
+
+    [Tooltip("文字が赤になる値")]
+    [SerializeField]
+    private float _redBorder = 5f;
     #endregion
 
     #region private
@@ -57,6 +65,20 @@ public class DamageText : MonoBehaviour
     /// <param name="amount"></param>
     public void SetDamageText(Transform target, float amount)
     {
+        //ダメージによって色を変える
+        if(amount >= _redBorder)
+        {
+            _damageText.color = Color.red;
+        }
+        else if(amount >= _yellowBorder)
+        {
+            _damageText.color = Color.yellow;
+        }
+        else
+        {
+            _damageText.color = Color.white;
+        }
+
         _damageText.text = amount.ToString();
         transform.position = target.position;
         TextRise();

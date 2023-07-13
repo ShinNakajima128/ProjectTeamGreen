@@ -147,4 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lifeTime: 1
-  _riseSpeed: 0.01
+  _riseAmount: 0.5
+  _yellowBorder: 2
+  _redBorder: 3
