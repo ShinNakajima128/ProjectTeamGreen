@@ -18,11 +18,21 @@ public class Aura : MonoBehaviour
     #region private
     /// <summary>現在のオーラの大きさ</summary>
     private float _currentScale = 1.0f;
+    private bool _isCanAttack = false;
     #endregion
 
     #region unity methods
+    private void OnEnable()
+    {
+        StartCoroutine(DamageIntervalCoroutine());
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (!_isCanAttack)
+        {
+            return;
+        }
+
         //当たったのがエネミーの場合
         if (collision.CompareTag(GameTag.Enemy))
         {
@@ -60,4 +70,23 @@ public class Aura : MonoBehaviour
     }
     #endregion
 
+    #region coroutine method
+    /// <summary>
+    /// ダメージを与える間隔を調整するコルーチン
+    /// </summary>
+    private IEnumerator DamageIntervalCoroutine()
+    {
+        while (gameObject.activeSelf)
+        {
+            yield return new WaitForSeconds(0.2f);
+
+            _isCanAttack = true;
+
+            yield return null;
+            yield return null;
+
+            _isCanAttack = false;
+        }
+    }
+    #endregion
 }
