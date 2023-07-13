@@ -2,27 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 回復アイテム
+/// </summary>
 public class Drink : ItemBase
 {
-    #region property
-    #endregion
-
     #region serialize
     [Tooltip("回復割合")]
     [SerializeField]
     private float _healRate = 0.3f;
-    #endregion
-
-    #region private
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
-    #region unity methods
     #endregion
 
     #region public method
@@ -53,8 +41,5 @@ public class Drink : ItemBase
         gameObject.transform.localPosition = Vector2.zero;
         gameObject.SetActive(false);
     }
-    #endregion
-
-    #region private method
     #endregion
 }

@@ -4,10 +4,13 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 
+/// <summary>
+/// ポーズ画面中に表示するスキルの情報
+/// </summary>
 public class SkillInfo : MonoBehaviour
 {
     #region property
-    public SkillType ThisSkillType => _skillType;
+    public SkillType SkillType => _skillType;
     #endregion
 
     #region serialize
@@ -21,7 +24,8 @@ public class SkillInfo : MonoBehaviour
     #endregion
 
     #region private
-    private int[] _currentLevel;
+    /// <summary>現在のレベル</summary>
+    private int _currentLevel;
     #endregion
 
     #region unity methods
@@ -34,17 +38,17 @@ public class SkillInfo : MonoBehaviour
     #endregion
 
     #region public method
-
     /// <summary>
     /// テキストの更新
     /// </summary>
     public void RewriteCurrentLevelText()
     {
+        //現在のスキルレベルを取得
         _currentLevel = SkillManager.Instance.Skills
-                .Where(x => x.SkillType == _skillType)
-                .Select(x => x.CurrentSkillLevel).ToArray();
+                                    .FirstOrDefault(x => x.SkillType == _skillType)
+                                    .CurrentSkillLevel;
 
-        _currentLevelText.text = $"LV.{_currentLevel[0]}";
+        _currentLevelText.text = $"LV.{_currentLevel}";
     }
     #endregion
 }

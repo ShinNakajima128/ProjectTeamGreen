@@ -13,17 +13,9 @@ public class DamageTextManager : MonoBehaviour
     public DamageTextGenerator TextGenerator => _generator;
     #endregion
 
-    #region serialize
-    #endregion
-
     #region private
+    /// <summary>ダメージテキスト生成コンポーネント</summary>
     private DamageTextGenerator _generator;
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
     #endregion
 
     #region unity methods
@@ -32,11 +24,5 @@ public class DamageTextManager : MonoBehaviour
         Instance = this;
         _generator = GetComponent<DamageTextGenerator>();
     }
-    #endregion
-
-    #region public method
-    #endregion
-
-    #region private method
     #endregion
 }

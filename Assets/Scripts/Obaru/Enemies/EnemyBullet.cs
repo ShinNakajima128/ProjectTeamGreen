@@ -20,14 +20,19 @@ public class EnemyBullet : MonoBehaviour
     private float _currentAttackAmount = 0;
     /// <summary>弾の持続時間</summary>
     private float _lifeTime = 5.0f;
+    /// <summary>Rigidbody2Dコンポーネント格納用</summary>
     private Rigidbody2D _rb;
+    /// <summary>コルーチン格納用</summary>
     private Coroutine _currentCoroutine;
+    /// <summary>親のTransform格納用</summary>
+    private Transform _parent;
     #endregion
 
     #region unity methods
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _parent = transform.parent;
     }
 
     private void OnEnable()
@@ -48,9 +53,11 @@ public class EnemyBullet : MonoBehaviour
     {
         if (collision.CompareTag(GameTag.Player))
         {
+            //プレイヤーにダメージを与える
             var target = collision.GetComponent<IDamagable>();
-
             target.Damage(_currentAttackAmount);
+            //親を設定しなおして非アクティブ化
+            transform.SetParent(_parent);
             gameObject.SetActive(false);
         }
     }
@@ -83,7 +90,10 @@ public class EnemyBullet : MonoBehaviour
     /// <returns></returns>
     private IEnumerator InactiveCoroutine()
     {
+        //生存時間分待つ
         yield return new WaitForSeconds(_lifeTime);
+        //親を設定しなおして非アクティブ化
+        transform.SetParent(_parent);
         gameObject.SetActive(false);
     }
     #endregion

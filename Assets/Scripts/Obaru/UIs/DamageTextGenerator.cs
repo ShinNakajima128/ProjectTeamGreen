@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// ダメージテキストオブジェクトの生成
+/// </summary>
 public class DamageTextGenerator : MonoBehaviour
 {
     #region property

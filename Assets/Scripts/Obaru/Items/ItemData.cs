@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// アイテムデータ
+/// </summary>
 [CreateAssetMenu(menuName ="MyScriptable/ItemData")]
 public class ItemData : ScriptableObject
 {
@@ -17,27 +20,13 @@ public class ItemData : ScriptableObject
     [SerializeField]
     private ItemType _itemType = default;
 
+    [Tooltip("初期数")]
     [SerializeField]
     private uint _reserveAmount = 5;
 
     [Tooltip("フィールドに生成される限度数")]
     [SerializeField]
     private uint _activationLimit = 10;
-    #endregion
-
-    #region private
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
-    #region public method
-    #endregion
-
-    #region private method
     #endregion
 }
 
