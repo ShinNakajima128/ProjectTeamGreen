@@ -32,7 +32,7 @@ public class MuscleThrowSkill : SkillBase
     /// <summary>エネミーのTransformのリスト</summary>
     private List<Transform> _enemyList = new List<Transform>();
     /// <summary>ダンベル生成コンポーネント格納用</summary>
-    private DumbbellGenerator _generator;
+    private DumbbellGenerator _dumbbellGenerator;
     #endregion
 
     #region unity methods
@@ -40,7 +40,7 @@ public class MuscleThrowSkill : SkillBase
     {
         base.Awake();
         _currentAttackInterval = _startAttackInterval;
-        _generator = GetComponent<DumbbellGenerator>();
+        _dumbbellGenerator = GetComponent<DumbbellGenerator>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -145,7 +145,7 @@ public class MuscleThrowSkill : SkillBase
                 SetTarget();
 
                 //使うダンベルを取得
-                GameObject skillObj = _generator.DumbbellPool.Rent();
+                GameObject skillObj = _dumbbellGenerator.DumbbellPool.Rent();
                 //ダンベルがnullでないなら
                 if (skillObj != null)
                 {

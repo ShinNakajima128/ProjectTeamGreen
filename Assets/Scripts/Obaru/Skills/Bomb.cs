@@ -29,7 +29,7 @@ public class Bomb : MonoBehaviour
     /// <summary>コルーチン格納用</summary>
     private Coroutine _inactiveCoroutine = default;
     /// <summary>爆発生成コンポーネント格納用</summary>
-    private BombExplosionGenerator _generator;
+    private BombExplosionGenerator _bombExplosionGenerator;
     /// <summary>親のTransform</summary>
     private Transform _parent;
     #endregion
@@ -38,7 +38,7 @@ public class Bomb : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _generator = transform.parent.gameObject.GetComponent<BombExplosionGenerator>();
+        _bombExplosionGenerator = transform.parent.gameObject.GetComponent<BombExplosionGenerator>();
         _parent = transform.parent;
     }
 
@@ -103,7 +103,7 @@ public class Bomb : MonoBehaviour
     public void SetExplosion()
     {
         //使う爆発のオブジェクトを取得
-        GameObject skillObj = _generator.ExplosionPool.Rent();
+        GameObject skillObj = _bombExplosionGenerator.ExplosionPool.Rent();
         //爆発がnullでなければ
         if (skillObj != null)
         {

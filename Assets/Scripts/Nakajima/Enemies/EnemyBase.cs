@@ -68,7 +68,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     {
         _init = true;
         _coroutine = StartCoroutine(OnActionCoroutine());
-        _generator = DamageTextManager.Instance.TextGenerator;
+        _damageTextGenerator = DamageTextManager.Instance.TextGenerator;
 
         //プレイヤーと接触した時の処理を登録する
         this.OnTriggerStay2DAsObservable()
@@ -171,7 +171,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
     private void DamageTextGenerate(float amount)
     {
-        GameObject textObj = _generator.DamageTextPool.Rent();
+        GameObject textObj = _damageTextGenerator.DamageTextPool.Rent();
         if (textObj != null)
         {
             var damageText = textObj.GetComponent<DamageText>();
