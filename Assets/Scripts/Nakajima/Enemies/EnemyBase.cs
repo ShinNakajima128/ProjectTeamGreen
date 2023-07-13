@@ -43,7 +43,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     private IDamagable _target;
     private Coroutine _coroutine;
     private Tween _currentTween;
-    private DamageTextGenerator _generator;
+    private DamageTextGenerator _damageTextGenerator;
     #endregion
 
     #region Constant
