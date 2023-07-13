@@ -14,9 +14,25 @@ public class DamageText : MonoBehaviour
     [SerializeField]
     private float _lifeTime = 0.3f;
 
-    [Tooltip("上昇値")]
+    [Tooltip("上方に移動する値")]
     [SerializeField]
     private float _riseAmount = 0.5f;
+
+    [Tooltip("文字の色が変わる1段階目")]
+    [SerializeField]
+    private float _middleBorder = 3f;
+
+    [Tooltip("文字の色が変わる２段階目")]
+    [SerializeField]
+    private float _highBorder = 5f;
+
+    [Tooltip("１段階目の文字色")]
+    [SerializeField]
+    private Color _middleColor = default;
+
+    [Tooltip("２段階目の文字色")]
+    [SerializeField]
+    private Color _highColor = default;
     #endregion
 
     #region private
@@ -57,7 +73,21 @@ public class DamageText : MonoBehaviour
     /// <param name="amount"></param>
     public void SetDamageText(Transform target, float amount)
     {
-        _damageText.text = amount.ToString();
+        //ダメージによって色を変える
+        if(amount >= _highBorder)
+        {
+            _damageText.color = _highColor;
+        }
+        else if(amount >= _middleBorder)
+        {
+            _damageText.color = _middleColor;
+        }
+        else
+        {
+            _damageText.color = Color.white;
+        }
+
+        _damageText.text = amount.ToString("f1");
         transform.position = target.position;
         TextRise();
     }
