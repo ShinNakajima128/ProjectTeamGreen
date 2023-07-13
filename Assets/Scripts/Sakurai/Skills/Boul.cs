@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -44,14 +46,16 @@ public class Boul : MonoBehaviour
 
         //ボール生成時は360度ランダムに発射。
         _rb.velocity = direction * _moveSpeed;
+
+        this.UpdateAsObservable()
+            .TakeUntilDestroy(this)
+            .Subscribe(_ =>
+            {
+                //弾の速度を一定に保つ。
+                _rb.velocity = _rb.velocity.normalized * _moveSpeed;
+            });
     }
 
-    private void Update()
-    {
-        //弾の速度を一定に保つ。
-        _rb.velocity = _rb.velocity.normalized * _moveSpeed;
-    }
-    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //当たったのがエネミーの場合

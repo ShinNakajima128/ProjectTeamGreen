@@ -7,18 +7,11 @@ using UnityEngine;
 /// </summary>
 public class BackGroundPlacer : MonoBehaviour
 { 
-    #region property
-    #endregion
-
     #region serialize
     [Header("変数")]
     [Tooltip("タイルのサイズ")]
     [SerializeField]
     private float _tileSize = 16f;
-
-    [Tooltip("プレイヤーの位置取得")]
-    [SerializeField]
-    private GameObject _player;
 
     [Tooltip("背景用のプレハブ")]
     [SerializeField]
@@ -26,6 +19,8 @@ public class BackGroundPlacer : MonoBehaviour
     #endregion
 
     #region private
+    //プレイヤーの位置取得用
+    private GameObject _player;
 
     //タイルの配列
     private GameObject[,] _tiles;
@@ -36,12 +31,17 @@ public class BackGroundPlacer : MonoBehaviour
 
     #region Constant
     /// <summary>縦3枚,横3枚のサイズ</summary>
-    private const int GRID_SIZE = 3; 
+    private const int GRID_SIZE = 3;
     #endregion
 
     #region unity methods
+    private void Awake()
+    {
+        _player = GameObject.FindGameObjectWithTag(GameTag.Player); 
+    }
     void Start()
     {
+        //配置する背景の個数を設定。
         _tiles = new GameObject[GRID_SIZE, GRID_SIZE];
         _lastPlayerPos = _player.transform.position;
 
@@ -60,9 +60,7 @@ public class BackGroundPlacer : MonoBehaviour
                 tile.transform.position = new Vector3((j - 1) * _tileSize, (1 - i) * _tileSize, 0);
             }
         }
-
     }
-
 
     void Update()
     {
@@ -84,7 +82,6 @@ public class BackGroundPlacer : MonoBehaviour
             }
             _lastPlayerPos.x = playerPos.x;
         }
-
         // プレイヤーが一定の距離だけ移動したかを確認。y方向に指定の距離動いた場合。
         if (Mathf.Abs(playerPos.y - _lastPlayerPos.y) > _tileSize)
         {
@@ -103,79 +100,56 @@ public class BackGroundPlacer : MonoBehaviour
     }
     #endregion
 
-    #region public method
-    #endregion
-
     #region private method
-
     //タイルを左にシフト
     private void ShiftTilesLeft()
     {
-        //タイルを一時保存用の変数。
-        GameObject temp;
-
         for (int i = 0; i < 3; i++)
         {
             //一番右のタイルを一番左側に移動。
             _tiles[i, 2].transform.position += new Vector3(-3f * _tileSize, 0, 0);
 
-            // タイルを上書きされないように保存タイルを一時保持しておくためのオブジェクト
-            temp = _tiles[i, 2];
-
-            //配列の中身を全て更新
-            _tiles[i, 2] = _tiles[i, 1];
-            _tiles[i, 1] = _tiles[i, 0];
-            _tiles[i, 0] = temp;
+            (_tiles[i, 0], _tiles[i, 1]) = (_tiles[i, 1], _tiles[i, 0]);
+            (_tiles[i, 1], _tiles[i, 2]) = (_tiles[i, 2], _tiles[i, 1]);
         }
     }
 
     // タイルを右にシフト
     private void ShiftTilesRight()
     {
-        GameObject temp;
-
         for (int i = 0; i < 3; i++)
         {
             _tiles[i, 0].transform.position += new Vector3(3.0f * _tileSize, 0, 0);
 
-            temp = _tiles[i, 0];
-            _tiles[i, 0] = _tiles[i, 1];
-            _tiles[i, 1] = _tiles[i, 2];
-            _tiles[i, 2] = temp;
+            //配列の中身を入れ替え
+            (_tiles[i, 0], _tiles[i, 1]) = (_tiles[i, 1], _tiles[i, 0]);
+            (_tiles[i, 1], _tiles[i, 2]) = (_tiles[i, 2], _tiles[i, 1]);
         }
     }
 
     // タイルを下にシフト
     private void ShiftTilesDown()
     {
-        GameObject temp;
-
         for (int i = 0; i < 3; i++)
         {
             _tiles[0, i].transform.position += new Vector3(0, -3f * _tileSize, 0);
 
-            //タイルの位置を配列内で更新
-            temp = _tiles[0, i];
-            _tiles[0, i] = _tiles[1, i];
-            _tiles[1, i] = _tiles[2, i];
-            _tiles[2, i] = temp;
+            //配列の中身を入れ替え
+            (_tiles[0, i], _tiles[1, i]) = (_tiles[1, i], _tiles[0, i]);
+            (_tiles[1, i], _tiles[2, i]) = (_tiles[2, i], _tiles[1, i]);
         }
     }
   
     // タイルを上にシフト
     private void ShiftTilesUp()
     {
-        GameObject temp;
-
         for (int i = 0; i < 3; i++)
         {
             _tiles[2, i].transform.position += new Vector3(0, 3f * _tileSize, 0);
 
-            //タイルの位置を配列内で更新
-            temp = _tiles[2, i];
-            _tiles[2, i] = _tiles[1, i];
-            _tiles[1, i] = _tiles[0, i];
-            _tiles[0, i] = temp; 
+            //配列の中身を入れ替え
+            (_tiles[2, i], _tiles[1, i]) = (_tiles[1, i], _tiles[2, i]);
+            (_tiles[1, i], _tiles[0, i]) = (_tiles[0, i], _tiles[1, i]);
         }
     }
     #endregion

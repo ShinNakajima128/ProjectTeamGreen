@@ -13,7 +13,7 @@ public class MiddleBossEnemy : BossEnemyBase
     [SerializeField]
     private float _moveSpeed = 5.0f;
 
-    [Tooltip("チョコ弾オブジェクトの速さ")]
+    [Tooltip("弾オブジェクトの速さ")]
     [SerializeField]
     private float _bulletAttackAmount = 3.0f;
     #endregion
@@ -45,7 +45,6 @@ public class MiddleBossEnemy : BossEnemyBase
     protected override void OnEnable()
     {
         base.OnEnable();
-        Debug.Log("onEnable");
     }
 
     protected override void OnDisable()
@@ -55,7 +54,6 @@ public class MiddleBossEnemy : BossEnemyBase
     #endregion
 
     #region private method
-
     private void EnemyFrip()
     {
         //エネミーよりプレイヤーのx軸が大きい場合はエネミーを右向きにする
@@ -71,11 +69,9 @@ public class MiddleBossEnemy : BossEnemyBase
             _isFliped = false;
         }
     }
-
     #endregion
 
     #region coroutine method
-
     /// <summary>
     /// エネミーの挙動を制御するステートマシン
     /// </summary>
@@ -161,11 +157,8 @@ public class MiddleBossEnemy : BossEnemyBase
                 bullet.SetVelocity((_playerTrans.position - transform.position).normalized);
                 yield return new WaitForSeconds(_waitTime);
             }
-           
         }
         _currentState = BossState.Idle;
     }
-
-
     #endregion
 }

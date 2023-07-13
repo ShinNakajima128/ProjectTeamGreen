@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 各ボスが継承する基底クラス
+/// </summary>
 public abstract class BossEnemyBase : EnemyBase
 {
 
@@ -25,25 +28,6 @@ public abstract class BossEnemyBase : EnemyBase
     #endregion
 
     #region unity methods
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-    }
     #endregion
 
     #region public method
@@ -53,10 +37,7 @@ public abstract class BossEnemyBase : EnemyBase
     #endregion
 
     #region coroutine method
-    protected override IEnumerator OnActionCoroutine()
-    {
-        yield return null;
-    }
+
     #endregion
 
 }

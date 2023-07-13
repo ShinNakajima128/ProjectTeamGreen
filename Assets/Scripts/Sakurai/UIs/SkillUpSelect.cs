@@ -17,7 +17,7 @@ public class SkillUpSelect : MonoBehaviour
     [SerializeField]
     List<Button> _skillSelectUIs = default;
 
-    [Tooltip("")]
+    [Tooltip("スキル獲得画面グループ")]
     [SerializeField]
     private CanvasGroup _skillUpSelectGroup = default;
     #endregion
@@ -41,11 +41,10 @@ public class SkillUpSelect : MonoBehaviour
                                         .TakeUntilDestroy(this)
                                         .Skip(1)
                                         .Subscribe(_ => ActivateRondomSkillUIs());
-                                        
-        
+                                                
         for (int i = 0; i < _skillSelectUIs.Count; i++)
         {
-            //????
+            //Enumにキャスト
             SkillType type = (SkillType)i;
 
             //クリックしたらUIにスキルを登録する。
@@ -58,14 +57,19 @@ public class SkillUpSelect : MonoBehaviour
     #endregion
 
     #region public method
-
     /// <summary>
     /// スキルアップした時にUIをランダムで表示させる
     /// </summary>
     public void ActivateRondomSkillUIs()
-    {
+    {        
+        int[] maxSkillIndices = SkillManager.Instance.Skills.Select((item,index) => new {Item = item , Index = index})  //Skillsの第一引数が要素、第二が要素のインデックス番号。
+                                                            .Where(x => x.Item.CurrentSkillLevel >= 5)  //第一引数のカレントレベルを調べる。
+                                                            .Select(c =>c.Index )　　//カレントレベル5以上のスキルの要素数を取得。
+                                                            .ToArray();　　　　
+
         //UIの数分を見てそこからOrderByでランダムの値を3つだけ値を取得する。
         IEnumerable randomIndices = Enumerable.Range(0, _skillSelectUIs.Count)
+                                              .Except(maxSkillIndices)
                                               .OrderBy(x => Random.value)
                                               .Take(_activeAmount);
         //ランダムで取得したUIをアクティブにする。
@@ -83,7 +87,6 @@ public class SkillUpSelect : MonoBehaviour
     #endregion
 
     #region private method
-
     /// <summary>
     /// OnClickしたときの処理
     /// </summary>

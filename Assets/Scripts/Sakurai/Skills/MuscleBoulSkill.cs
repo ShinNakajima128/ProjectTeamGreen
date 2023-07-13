@@ -7,10 +7,6 @@ using UnityEngine;
 /// </summary>
 public class MuscleBoulSkill : SkillBase
 {
-
-    #region property
-    #endregion
-
     #region serialize
     [Header("変数")]
     [Tooltip("跳ね返るボール")]
@@ -48,14 +44,13 @@ public class MuscleBoulSkill : SkillBase
         //ゲーム開始時は跳ね返る壁を非アクティブ
         if (!_isSkillActived)
         {
-            childActive(false);
+            ChildActive(false);
         }
     }
 
     #endregion
 
     #region public method
-
     /// <summary>
     /// スキル発動時のアクション
     /// </summary>
@@ -65,7 +60,7 @@ public class MuscleBoulSkill : SkillBase
         _isSkillActived = true;
 
         //跳ね返る壁をアクティブにする。
-        childActive(true);
+        ChildActive(true);
 
         //メインカメラの位置を取得。
         Transform mainCameraTransform = Camera.main.transform;
@@ -133,7 +128,7 @@ public class MuscleBoulSkill : SkillBase
     /// 子オブジェクトはスキル発動中のみアクティブ状態
     /// </summary>
     /// <param name="">アクティブにするかどうか</param>
-    private void childActive(bool change)
+    private void ChildActive(bool change)
     {
         foreach (Transform child in transform)
         {
@@ -143,6 +138,9 @@ public class MuscleBoulSkill : SkillBase
     #endregion
 
     #region coroutine method
+    /// <summary>
+    /// スキルのアクションで行うコルーチン(ボールスキルでは使用しない)
+    /// </summary>
     protected override IEnumerator SkillActionCoroutine()
     {
         yield return null;
