@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Fairy
   m_EditorClassIdentifier: 
   _skillType: 1
-  _attackAmount: 1
+  _attackAmount: 5
   _correctionvalue: 1

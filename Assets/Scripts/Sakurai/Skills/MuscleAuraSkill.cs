@@ -50,6 +50,7 @@ public class MuscleAuraSkill : SkillBase
         Debug.Log($"{SkillType}スキル発動");
         _isSkillActived = true;
         CreateNewAura(_auraPrefab);
+        _currentAura.SetAttackAmount(_currentAttackAmount);
     }
 
     /// <summary>
@@ -73,6 +74,7 @@ public class MuscleAuraSkill : SkillBase
         {
             AttackUpSkill(_attackCoefficient);
             _currentAura.SizeChange(_sumAmount);
+            
         }
 
         //4レベルになったらオーラを変更
@@ -81,6 +83,8 @@ public class MuscleAuraSkill : SkillBase
             AttackUpSkill(_attackHighCoefficient);
             CreateNewAura(_highAuraPrefab);
         }
+
+        _currentAura.SetAttackAmount(_currentAttackAmount);
         Debug.Log($"レベルアップ!{_currentSkillLebel}にあがった!");
     }
 
@@ -107,7 +111,6 @@ public class MuscleAuraSkill : SkillBase
             _currentAura.gameObject.SetActive(false);
         }
         _currentAura = Instantiate(aura, transform);
-        _currentAura.SetAttackAmount(_currentAttackAmount);
     }
     #endregion
 
