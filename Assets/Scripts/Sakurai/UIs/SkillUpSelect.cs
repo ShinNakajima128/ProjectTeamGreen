@@ -17,6 +17,10 @@ public class SkillUpSelect : MonoBehaviour
     [SerializeField]
     List<Button> _skillSelectUIs = default;
 
+    [Tooltip("回復ボタン")]
+    [SerializeField]
+    private Button _healUI = default;
+
     [Tooltip("スキル獲得画面グループ")]
     [SerializeField]
     private CanvasGroup _skillUpSelectGroup = default;
@@ -39,7 +43,7 @@ public class SkillUpSelect : MonoBehaviour
         //プレイヤーのレベルが変更されたら、UI表示の処理を行う(ゲームスタート時の1回はスキップ)
         PlayerController.Instance.Status.CurrentPlayerLevel
                                         .TakeUntilDestroy(this)
-                                        .Skip(1)
+                                        .Skip(2)
                                         .Subscribe(_ => ActivateRondomSkillUIs());
                                                 
         for (int i = 0; i < _skillSelectUIs.Count; i++)
@@ -50,9 +54,7 @@ public class SkillUpSelect : MonoBehaviour
             //クリックしたらUIにスキルを登録する。
             _skillSelectUIs[i].onClick.AddListener(() => OnSkill(type));
         }
-        _skillUpSelectGroup.alpha = 0;
-        _skillUpSelectGroup.interactable = false;
-        _skillUpSelectGroup.blocksRaycasts = false;
+        CanvasGroupChange(0, false);
     }
     #endregion
 
@@ -61,28 +63,37 @@ public class SkillUpSelect : MonoBehaviour
     /// スキルアップした時にUIをランダムで表示させる
     /// </summary>
     public void ActivateRondomSkillUIs()
-    {        
+    {
         int[] maxSkillIndices = SkillManager.Instance.Skills.Select((item,index) => new {Item = item , Index = index})  //Skillsの第一引数が要素、第二が要素のインデックス番号。
                                                             .Where(x => x.Item.CurrentSkillLevel >= 5)  //第一引数のカレントレベルを調べる。
                                                             .Select(c =>c.Index )　　//カレントレベル5以上のスキルの要素数を取得。
-                                                            .ToArray();　　　　
-
-        //UIの数分を見てそこからOrderByでランダムの値を3つだけ値を取得する。
-        IEnumerable randomIndices = Enumerable.Range(0, _skillSelectUIs.Count)
-                                              .Except(maxSkillIndices)
-                                              .OrderBy(x => Random.value)
-                                              .Take(_activeAmount);
-        //ランダムで取得したUIをアクティブにする。
-        foreach (int index in randomIndices)
+                                                            .ToArray();
+        if (maxSkillIndices.Length == _skillSelectUIs.Count)
         {
-            _skillSelectUIs[index].gameObject.SetActive(true);
-        }
-        _skillUpSelectGroup.alpha = 1.0f;
-        _skillUpSelectGroup.interactable = true;
-        _skillUpSelectGroup.blocksRaycasts = true;
+            _healUI.gameObject.SetActive(true);
 
-        //ゲーム画面を止める。
-        Time.timeScale = 0f;
+            CanvasGroupChange(1, true);
+
+            return;
+
+        }
+        else
+        {
+            //UIの数分を見てそこからOrderByでランダムの値を3つだけ値を取得する。
+            IEnumerable randomIndices = Enumerable.Range(0, _skillSelectUIs.Count)
+                                                  .Except(maxSkillIndices)
+                                                  .OrderBy(x => Random.value)
+                                                  .Take(_activeAmount);
+            //ランダムで取得したUIをアクティブにする。
+            foreach (int index in randomIndices)
+            {
+                _skillSelectUIs[index].gameObject.SetActive(true);
+            }
+            CanvasGroupChange(1, true);
+
+            //ゲーム画面を止める。
+            Time.timeScale = 0f;
+        }
     }
     #endregion
 
@@ -101,13 +112,18 @@ public class SkillUpSelect : MonoBehaviour
         {
             skillUI.gameObject.SetActive(false); 
         }
-        
-        _skillUpSelectGroup.alpha = 0;
-        _skillUpSelectGroup.interactable = false;
-        _skillUpSelectGroup.blocksRaycasts = false;
+
+        CanvasGroupChange(0, false);
 
         //ゲーム画面を再開
         Time.timeScale = 1f;
+    }
+
+    private void CanvasGroupChange(int alphaAmount, bool change) 
+    {
+        _skillUpSelectGroup.alpha = alphaAmount;
+        _skillUpSelectGroup.interactable = change;
+        _skillUpSelectGroup.blocksRaycasts = change;
     }
     #endregion
 }

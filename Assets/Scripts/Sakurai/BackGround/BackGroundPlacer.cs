@@ -109,8 +109,8 @@ public class BackGroundPlacer : MonoBehaviour
             //一番右のタイルを一番左側に移動。
             _tiles[i, 2].transform.position += new Vector3(-3f * _tileSize, 0, 0);
 
-            (_tiles[i, 0], _tiles[i, 1]) = (_tiles[i, 1], _tiles[i, 0]);
-            (_tiles[i, 1], _tiles[i, 2]) = (_tiles[i, 2], _tiles[i, 1]);
+            (_tiles[i, 2], _tiles[i, 1]) = (_tiles[i, 1], _tiles[i, 2]);
+            (_tiles[i, 1], _tiles[i, 0]) = (_tiles[i, 0], _tiles[i, 1]);
         }
     }
 
