@@ -25,7 +25,7 @@ public class KnucleGenerator : MonoBehaviour
     [SerializeField]
     private Knuckle _knucklePrefab = default;
 
-    [Tooltip("")]
+    [Tooltip("親オブジェクト")]
     [SerializeField]
     private Transform _parent = default;
     #endregion
@@ -45,7 +45,5 @@ public class KnucleGenerator : MonoBehaviour
     {
         _knucklePool = new ObjectPool(_knucklePrefab.gameObject, _reserveAmount, _limit, _parent);
     }
-
     #endregion
-
 }

@@ -11,7 +11,6 @@ using UnityEngine;
 
 public class Knuckle : MonoBehaviour
 {
-
     #region serialize
     [Header("変数")]
     [Tooltip("拳が動く速さ")]
@@ -40,12 +39,6 @@ public class Knuckle : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-    }
-
-    private void Start()
-    {
-        //2秒後にゲームオブジェクトは削除
-        //Destroy(this.gameObject, _lifeTime);
     }
 
     private void OnEnable()

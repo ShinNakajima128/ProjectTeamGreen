@@ -121,27 +121,27 @@ MonoBehaviour:
     SEType: 6
     Clip: {fileID: 8300000, guid: 570ce82e25326a5499116081646e5a6d, type: 3}
     Volume: 0.1
-  - SEName: "\u30B9\u30AD\u30EB\u7372\u5F97"
+  - SEName: "\u30B9\u30AD\u30EB\u7372\u5F971"
     SEType: 7
     Clip: {fileID: 8300000, guid: d6ced0fc83f195844ad9094dc29b9a3a, type: 3}
     Volume: 0.05
-  - SEName: ???
+  - SEName: "\u30B9\u30AD\u30EB\u7372\u5F972"
     SEType: 8
     Clip: {fileID: 8300000, guid: ab00f1df39384904fa5c6d46d282fbce, type: 3}
     Volume: 0.1
-  - SEName: ???
+  - SEName: "\u30B9\u30AD\u30EB\u7372\u5F973"
     SEType: 9
     Clip: {fileID: 8300000, guid: 45f33ca779b6c0440ad6cc5552bf055d, type: 3}
     Volume: 0.1
-  - SEName: ???
+  - SEName: "\u30B9\u30AD\u30EB\u7372\u5F974"
     SEType: 10
     Clip: {fileID: 8300000, guid: 80e89fd8796790f4fa7f25cbf5e88ed7, type: 3}
     Volume: 0.2
-  - SEName: ???
+  - SEName: "\u6575\u306E\u8972\u6483\u97F31"
     SEType: 11
     Clip: {fileID: 8300000, guid: d15dd53bfb83c084398b5b50a3348f28, type: 3}
     Volume: 0.1
-  - SEName: ???
+  - SEName: "\u6575\u306E\u8972\u6483\u97F32"
     SEType: 12
     Clip: {fileID: 8300000, guid: 9411c70f2f5e32f4fbfe8d3bf025babb, type: 3}
     Volume: 0.2

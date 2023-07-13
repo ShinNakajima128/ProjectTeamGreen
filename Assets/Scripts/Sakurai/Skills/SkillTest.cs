@@ -31,6 +31,7 @@ public class SkillTest : MonoBehaviour
     {
         //Update内で行う処理を登録
         this.UpdateAsObservable()
+            .TakeUntilDestroy(this)
             .Subscribe(_ =>
             {
                 
@@ -58,13 +59,7 @@ public class SkillTest : MonoBehaviour
                 {
                     SkillManager.Instance.SetSkill(SkillType.Bomb);
                 }
-            })
-            .AddTo(this);
-    }
-
-    private void Update()
-    {
-
+            });
     }
     #endregion
 

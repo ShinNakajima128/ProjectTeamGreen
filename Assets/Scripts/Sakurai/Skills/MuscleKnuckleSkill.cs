@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[RequireComponent(typeof(KnucleGenerator))]
-
 /// <summary>
 /// ナックルを扱うスキル機能
 /// </summary>
+[RequireComponent(typeof(KnucleGenerator))]
 public class MuscleKnuckleSkill : SkillBase
 {
     #region property
@@ -109,27 +108,23 @@ public class MuscleKnuckleSkill : SkillBase
     {
         while (_isSkillActived)
         {
-            //Knuckle knuckle = Instantiate(_knucklePrefab, transform.position, transform.rotation);
             GameObject sklObj = _knucleGenerator.KnucklePool.Rent();
 
             if (sklObj != null)
             {
                 Knuckle knuckle = sklObj.GetComponent<Knuckle>();
 
-                knuckle.transform.position = transform.position;  //追加
+                knuckle.transform.position = transform.position;  
                 knuckle.gameObject.SetActive(true);
                 knuckle.SetAttackAmount(_currentAttackAmount);
 
-                //レベル3までは生成方向を4方向。
+                //これは使いどころではない。関数に変更する。
                 knuckle.RandomDirection = (_currentSkillLebel < 4) ? new Action(knuckle.RondomFourDirection) : new Action(knuckle.RondomEightDirection);
                 knuckle.RandomDirection.Invoke();
             }
 
              yield return new WaitForSeconds(_currentAttackInterval);
         }
-
-        //コルーチンを使用使用しない場合は以下を記述する
-        //yield return null;
     }
     #endregion
 }
