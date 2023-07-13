@@ -35,6 +35,7 @@ public class ItemTest : MonoBehaviour
     private void Start()
     {
         this.UpdateAsObservable()
+            .TakeUntilDestroy(this)
             .Subscribe(_ =>
             {
                 //Debug.Log($"HP:{_health.CurrentHP}");
@@ -42,13 +43,7 @@ public class ItemTest : MonoBehaviour
                 {
                     _player.Damage(10);
                 }
-            })
-            .AddTo(this);
-    }
-
-    private void Update()
-    {
-
+            });
     }
     #endregion
 

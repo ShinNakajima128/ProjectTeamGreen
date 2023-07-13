@@ -59,10 +59,10 @@ public class TitleUI : MonoBehaviour
 
         //スタートボタンが押された時の処理を登録
         _startButton.OnClickAsObservable()
+                    .TakeUntilDestroy(this)
                     //連打防止処理。一度押されてから「5」秒経つまでは次の処理を実行しない
                     .ThrottleFirst(TimeSpan.FromMilliseconds(5000))
-                    .Subscribe(_ =>PressStartButton())
-                    .AddTo(this);
+                    .Subscribe(_ =>PressStartButton());
     }
 
     /// <summary>

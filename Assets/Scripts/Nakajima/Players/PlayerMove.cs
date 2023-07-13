@@ -132,23 +132,5 @@ public class PlayerMove : MonoBehaviour
     {
         _isCanMove = value;
     }
-
-
-
-    //private void OnFingerDown(Finger finger)
-    //{
-    //    _originTouchPoint = finger.screenPosition;
-    //    Debug.Log(_originTouchPoint);
-    //}
-
-    //private void OnFingerMove(Finger finger)
-    //{
-    //    Debug.Log(finger.screenPosition);
-    //}
-
-    //private void OnFingerUp(Finger finger)
-    //{
-    //    _originTouchPoint = Vector2.zero;
-    //}
     #endregion
 }

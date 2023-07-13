@@ -33,6 +33,7 @@ public class EffectController : MonoBehaviour
     {
         //エフェクトが再生しているか確認する処理の登録
         this.UpdateAsObservable()
+            .TakeUntilDestroy(this)
             .Subscribe(_ =>
             {
                 foreach (var particle in _particles)
@@ -43,8 +44,7 @@ public class EffectController : MonoBehaviour
                     }
                 }
                 gameObject.SetActive(false);
-            })
-            .AddTo(this);
+            });
     }
     #endregion
 
