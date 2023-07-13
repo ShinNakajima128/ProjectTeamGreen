@@ -2,45 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 経験値アイテム
+/// </summary>
 public class EXP : ItemBase
 {
-    #region property
-    #endregion
-
     #region serialize
     [Tooltip("経験値")]
     [SerializeField]
     private uint _expValue = 1;
     #endregion
 
-    #region private
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
-    #region unity methods
-    private void Awake()
-    {
-
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
-    #endregion
-
     #region public method
-
     /// <summary>
     /// アイテムの使用
     /// </summary>
@@ -63,8 +36,5 @@ public class EXP : ItemBase
         gameObject.transform.localPosition = Vector2.zero;
         gameObject.SetActive(false);
     }
-    #endregion
-
-    #region private method
     #endregion
 }

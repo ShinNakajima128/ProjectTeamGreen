@@ -31,13 +31,6 @@ public class TestEnemy : EnemyBase
     protected override void Start()
     {
         base.Start();
-
-        this.UpdateAsObservable()
-            .Subscribe(_ =>
-            {
-
-            })
-            .AddTo(this);
     }
     #endregion
 

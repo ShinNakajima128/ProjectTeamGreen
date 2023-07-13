@@ -13,25 +13,33 @@ public class Bomb : MonoBehaviour
     [Tooltip("飛ぶ速さ")]
     [SerializeField]
     private float _moveSpeed = 1.5f;
+
+    [Tooltip("スキルの生存時間")]
+    [SerializeField]
+    private float _lifeTime = 5.0f;
     #endregion
 
     #region private
     /// <summary>現在の攻撃力</summary>
     private float _currentAttackAmount = 0;
-    /// <summary>スキル持続時間</summary>
-    private float _lifeTime = 10.0f;
     /// <summary>現在のスキルレベル</summary>
     private int _currentSkillLevel = 1;
+    /// <summary>Rigidbody2D格納用</summary>
     private Rigidbody2D _rb;
+    /// <summary>コルーチン格納用</summary>
     private Coroutine _inactiveCoroutine = default;
+    /// <summary>爆発生成コンポーネント格納用</summary>
     private BombExplosionGenerator _generator;
+    /// <summary>親のTransform</summary>
+    private Transform _parent;
     #endregion
 
     #region unity methods
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _generator = GameObject.Find("MuscleBombSkill").GetComponent<BombExplosionGenerator>();
+        _generator = transform.parent.gameObject.GetComponent<BombExplosionGenerator>();
+        _parent = transform.parent;
     }
 
     private void OnEnable()
@@ -46,18 +54,16 @@ public class Bomb : MonoBehaviour
             StopCoroutine(_inactiveCoroutine);
             _inactiveCoroutine = null;
         }
-
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(GameTag.Enemy))
         {
-            //var target = collision.GetComponent<IDamagable>();
-
-            //target.Damage(_currentAttackAmount);
+            //爆発
             SetExplosion();
+            //親を設定しなおして非アクティブ化
+            transform.SetParent(_parent);
             gameObject.SetActive(false);
         }
     }
@@ -96,14 +102,22 @@ public class Bomb : MonoBehaviour
     /// </summary>
     public void SetExplosion()
     {
+        //使う爆発のオブジェクトを取得
         GameObject skillObj = _generator.ExplosionPool.Rent();
+        //爆発がnullでなければ
         if (skillObj != null)
         {
+            //使う爆発のコンポーネントを取得
             var explosion = skillObj.GetComponent<BombExplosion>();
+            //爆発オブジェクトのアクティブ化
             explosion.gameObject.SetActive(true);
+            //すきっレベルに応じてスケールを変化
             explosion.SetScale(_currentSkillLevel);
+            //爆発をボムの位置に移動
             explosion.transform.position = transform.position;
+            //親子関係解除
             explosion.gameObject.transform.SetParent(null);
+            //攻撃力を設定
             explosion.SetAttackAmount(_currentAttackAmount);
         }
     }
@@ -111,12 +125,16 @@ public class Bomb : MonoBehaviour
 
     #region Coroutine method
     /// <summary>
-    /// 一定時間後に非アクティブ化
+    /// 一定時間後に爆発して非アクティブ化
     /// </summary>
     /// <returns></returns>
     private IEnumerator InactiveCoroutine()
     {
+        //一定時間後に爆発
         yield return new WaitForSeconds(_lifeTime);
+        SetExplosion();
+        //親を設定しなおして非アクティブ化
+        transform.SetParent(_parent);
         gameObject.SetActive(false);
     }
     #endregion
