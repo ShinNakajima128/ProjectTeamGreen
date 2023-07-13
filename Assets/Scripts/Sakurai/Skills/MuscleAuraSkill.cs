@@ -95,7 +95,6 @@ public class MuscleAuraSkill : SkillBase
     #endregion
 
     #region private method
-
     /// <summary>
     /// オーラを生成する
     /// </summary>
@@ -113,10 +112,12 @@ public class MuscleAuraSkill : SkillBase
     #endregion
 
     #region coroutine method
+    /// <summary>
+    /// スキルのアクションで行うコルーチン(オーラスキルでは使用しない)
+    /// </summary>
     protected override IEnumerator SkillActionCoroutine()
     {
         yield return null;
     }
     #endregion
-
 }

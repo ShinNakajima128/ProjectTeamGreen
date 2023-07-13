@@ -19,21 +19,18 @@ public class FadeManager : MonoBehaviour
     [Header("変数")]
     [Tooltip("フェードにかける時間")]
     [SerializeField]
-    private float _fadeTime = 2.0f;
+    private float _fadeTime = 1.0f;
 
     [Tooltip("フェード用のマテリアル")]
     [SerializeField]
     private Material _effectMaterial = null;
-
     #endregion
 
     #region private
     /// <summary>シェーダープロパティにアクセスするためのIDを格納。読み取り専用</summary>
     private readonly int _progressId = Shader.PropertyToID("_progress");
-
     /// <summary>フェード中かどうかのフラグ</summary>
     private bool _isFading = false;
-
     /// <summary>フェードアウトの時に途中で待ち合わせる時間</summary>
     private float _fadeWaitTime = 1.0f;
     #endregion
@@ -57,7 +54,6 @@ public class FadeManager : MonoBehaviour
         {
             return;
         }
-
         Instance.StartCoroutine(Instance.Transition(type, callback));
     }
     #endregion
@@ -69,35 +65,66 @@ public class FadeManager : MonoBehaviour
     /// <param name="type">フェードインかフェードアウト</param>
     /// <param name="callback">フェード完了後のイベント</param>
     /// <returns></returns>
-    IEnumerator Transition(FadeType type,Action callback = null)
+    IEnumerator Transition(FadeType type, Action callback = null)
     {
-        //マテリアルのプロパティの値を初期化。
-        float currentValue = (type == FadeType.In) ? 0f : 1f;
-
         //フェードアウトの時のみ待ち合わせのフラグ。
         bool hasWaiting = false;
 
-        //フェードの処理。
-        while((type == FadeType.In && currentValue < _fadeTime) || (type == FadeType.Out&& currentValue > 0))
-        {
-            //スライダーを動かすための値をprogressに代入。
-            float progress = currentValue / _fadeTime;
+        yield return Test(type);
+        //switch (type)
+        //{
+        //    case FadeType.In:
 
-            //第一引数はマテリアルのプロパティの値(Slider),第二引数は第一引数を変化させるための値。
-            _effectMaterial.SetFloat(_progressId, progress);
-            yield return null;
 
-            //フェードアウト中にprogressの値は0.1を下回ったら1秒だけフェードを待つ。
-            if (type == FadeType.Out && progress < 0.1f && !hasWaiting)
-            {
-                yield return new WaitForSeconds(_fadeWaitTime);
-                hasWaiting = true;
-            }
+        //        yield return DOTween.To(() => currentValue,
+        //                             x => currentValue = x,
+        //                             1,
+        //                             _fadeTime)
+        //                            .SetEase(Ease.Linear)
+        //                            .OnUpdate(() =>
+        //                            {
+        //                                //第一引数はマテリアルのプロパティの値(Slider),第二引数は第一引数を変化させるための値。
+        //                                _effectMaterial.SetFloat(_progressId, currentValue);
+        //                            })
+        //                            .WaitForCompletion();
+        //        break;
+        //    case FadeType.Out:
+        //        yield return DOTween.To(() => currentValue,
+        //                            x => currentValue = x,
+        //                            0,
+        //                            _fadeTime)
+        //                          .SetEase(Ease.Linear)
+        //                          .OnUpdate(() =>
+        //                          {
+        //                                //第一引数はマテリアルのプロパティの値(Slider),第二引数は第一引数を変化させるための値。
+        //                                _effectMaterial.SetFloat(_progressId, currentValue);
+        //                          })
+        //                          .WaitForCompletion();
+        //        break;
+        //    default:
+        //        break;
+        //}
 
-            //フェードインであれば値を足して、フェードアウトであれな値を減らす。
-            currentValue += (type == FadeType.In ? Time.deltaTime : -Time.deltaTime);
-        }
+        ////フェードの処理。
+        //while ((type == FadeType.In && currentValue < _fadeTime) || (type == FadeType.Out && currentValue > 0))
+        //{
+        //    //スライダーを動かすための値をprogressに代入。
+        //    float progress = currentValue / _fadeTime;
 
+        //    //第一引数はマテリアルのプロパティの値(Slider),第二引数は第一引数を変化させるための値。
+        //    _effectMaterial.SetFloat(_progressId, progress);
+
+        //    yield return null;
+
+        //    //フェードアウト中にprogressの値は0.1を下回ったら1秒だけフェードを待つ。
+        //    if (type == FadeType.Out && progress < 0.1f && !hasWaiting)
+        //    {
+        //        yield return new WaitForSeconds(_fadeWaitTime);
+        //        hasWaiting = true;
+        //    }
+        //    //フェードインであれば値を足して、フェードアウトであれな値を減らす。
+        //    currentValue += (type == FadeType.In ? Time.deltaTime : -Time.deltaTime);
+        //}
         //フェードさせるマテリアルの値を指定の数字にセット。
         _effectMaterial.SetFloat(_progressId, (type == FadeType.In) ? 1f : 0f);
 
@@ -106,10 +133,29 @@ public class FadeManager : MonoBehaviour
     }
     #endregion
 
+    IEnumerator Test(FadeType type)
+    {
+        (float currentValue, float endValue) = type == FadeType.In ? (0f, 1f) : (1f, 0f);
+
+        yield return DOTween.To(() => currentValue,
+                                 x => currentValue = x,
+                                 endValue,
+                                 _fadeTime)
+                                .SetEase(Ease.Linear)
+                                .OnUpdate(() =>
+                                {
+                                    //第一引数はマテリアルのプロパティの値(Slider),第二引数は第一引数を変化させるための値。
+                                    _effectMaterial.SetFloat(_progressId, currentValue);
+                                })
+                                .WaitForCompletion();
+    }
 }
 
+/// <summary>
+/// フェードの種類
+/// </summary>
 public enum FadeType
 {
     In,
-    Out
+    Out  
 }

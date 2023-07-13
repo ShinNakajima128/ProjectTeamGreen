@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CircleCollider2D))]
-
 /// <summary>
 /// フェアリーコンポーネント
 /// </summary>
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class Fairy : MonoBehaviour
 {
     #region property

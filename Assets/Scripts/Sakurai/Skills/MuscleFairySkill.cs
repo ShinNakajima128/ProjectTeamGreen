@@ -7,9 +7,6 @@ using UnityEngine;
 /// </summary>
 public class MuscleFairySkill : SkillBase
 {
-    #region property
-    #endregion
-
     #region serialize
     [Header("変数")]
     [Tooltip("回転する妖精")]
@@ -41,7 +38,6 @@ public class MuscleFairySkill : SkillBase
 
     /// <summary>妖精の開始角度</summary>
     private List<float> _currentFairyAngles = new List<float>();
-
     #endregion
 
     #region Constant
@@ -55,7 +51,6 @@ public class MuscleFairySkill : SkillBase
     {
         base.Awake();
     }
-
     #endregion
 
     #region public method
