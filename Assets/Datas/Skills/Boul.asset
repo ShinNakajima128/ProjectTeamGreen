@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Boul
   m_EditorClassIdentifier: 
   _skillType: 3
-  _attackAmount: 1
+  _attackAmount: 20
   _correctionvalue: 1
