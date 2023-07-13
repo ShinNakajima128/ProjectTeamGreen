@@ -21,6 +21,8 @@ public class BombExplosion : MonoBehaviour
     private Vector2 _baseScale;
     /// <summary>現在の大きさ</summary>
     private Vector2 _currentScale;
+    /// <summary>親のTransform</summary>
+    private Transform _parent;
     #endregion
 
     #region unity methods
@@ -28,6 +30,7 @@ public class BombExplosion : MonoBehaviour
     {
         _baseScale = transform.localScale;
         _currentScale = _baseScale;
+        _parent = transform.parent;
     }
 
     private void OnEnable()
@@ -60,7 +63,8 @@ public class BombExplosion : MonoBehaviour
     /// </summary>
     public void SetScale(int currentLevel)
     {
-        for(int i = 0; i < currentLevel; i++)
+        //スキルレベル分係数をかける
+        for(int i = 1; i < currentLevel; i++)
         {
             _currentScale *= _scaleCoefficient;
         }
@@ -73,6 +77,8 @@ public class BombExplosion : MonoBehaviour
     /// </summary>
     public void OnAnimationFinish()
     {
+        //親を設定しなおして非アクティブ化
+        transform.SetParent(_parent);
         gameObject.SetActive(false);
     }
     #endregion

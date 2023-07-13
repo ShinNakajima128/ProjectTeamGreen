@@ -18,6 +18,7 @@ public class GamePauseUI : MonoBehaviour
     [SerializeField]
     private Button _continueButton = default;
 
+    [Tooltip("Pauseボタン")]
     [SerializeField]
     private Button _pauseButton = default;
 
@@ -27,17 +28,13 @@ public class GamePauseUI : MonoBehaviour
     #endregion
 
     #region private
+    /// <summary>ポーズ中かどうか</summary>
     private bool _isPause = false;
-    //private Button _pauseButton;
+    /// <summary>現在アクティブのスキルのリスト</summary>
     private List<SkillType> _activeSkill;
     #endregion
 
     #region unity methods
-    //private void Awake()
-    //{
-    //    _pauseButton = GetComponent<Button>();
-    //}
-
     private void Start()
     {
         //ボタン押下時の処理を設定
@@ -62,7 +59,7 @@ public class GamePauseUI : MonoBehaviour
         _panel.alpha = 1;
         _panel.interactable = true;
 
-        ActiveSkill();
+        ActiveSkillInfo();
         _isPause = true;
     }
 
@@ -73,10 +70,10 @@ public class GamePauseUI : MonoBehaviour
     {
         //ポーズ中でなければreturn
         if (!_isPause) return;
-        
+
         //時を動かす
         Time.timeScale = 1;
-        
+
         //ポーズ画面を非表示
         _panel.alpha = 0;
         _panel.interactable = false;
@@ -84,20 +81,20 @@ public class GamePauseUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 現在持っているスキルをアクティブにする
+    /// 現在持っているスキル情報をアクティブにする
     /// </summary>
-    private void ActiveSkill()
+    private void ActiveSkillInfo()
     {
         //現在持っているスキルのスキルタイプを取得
         _activeSkill = SkillManager.Instance.Skills
-            .Where(x => x.IsSkillActived)
-            .Select(x => x.SkillType)
-            .ToList();
+                                   .Where(x => x.IsSkillActived)
+                                   .Select(x => x.SkillType)
+                                   .ToList();
 
         //現在持っているスキルのアイコンとレベルを表示
-        foreach(SkillInfo info in _skillInfos)
+        foreach (SkillInfo info in _skillInfos)
         {
-            if(_activeSkill.Any(x=>x == info.ThisSkillType))
+            if (_activeSkill.Any(x => x == info.SkillType))
             {
                 info.gameObject.SetActive(true);
                 info.RewriteCurrentLevelText();
