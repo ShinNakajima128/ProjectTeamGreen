@@ -148,5 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lifeTime: 1
   _riseAmount: 0.5
-  _yellowBorder: 2
-  _redBorder: 3
+  _middleBorder: 2
+  _highBorder: 3
+  _middleColor: {r: 1, g: 0.9979697, b: 0, a: 1}
+  _highColor: {r: 1, g: 0, b: 0, a: 1}
