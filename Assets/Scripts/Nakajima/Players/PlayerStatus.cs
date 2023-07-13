@@ -70,12 +70,15 @@ public class PlayerStatus : MonoBehaviour
     public void AddExp(uint value)
     {
         _currentExp.Value += value;
-
+        
         //経験値が現在の必要値を超えた場合
         if (_currentExp.Value >= _currentRequireExp.Value)
         {
+            //経験値が超過した分を保持
+            uint overFlowExp = _currentExp.Value - _currentRequireExp.Value;
+
             _currentPlayerLevel.Value++;
-            _currentExp.Value = 0;
+            _currentExp.Value = overFlowExp;
             _currentRequireExp.Value = (uint)(_currentRequireExp.Value * EXP_LEVERAGE);
         }
         _getEXPSubject.OnNext((float)_currentExp.Value / _currentRequireExp.Value);

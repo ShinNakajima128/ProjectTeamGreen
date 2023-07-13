@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 using TMPro;
+using DG.Tweening;
 
 /// <summary>
 /// プレイヤーのステータスを画面に表示するUI機能を持つコンポーネント
@@ -15,6 +16,10 @@ public class PlayerStatusUI : MonoBehaviour
     #endregion
 
     #region serialize
+    [Tooltip("FillAmountの数値のアニメーション時間")]
+    [SerializeField]
+    private float _fillAnimationTime = 0.1f;
+
     [Tooltip("現在のHPバーのFillArea")]
     [SerializeField]
     private Image _currentHPFillArea = default;
@@ -33,6 +38,7 @@ public class PlayerStatusUI : MonoBehaviour
     #endregion
 
     #region private
+    Tween _currentTween;
     #endregion
 
     #region Constant
@@ -78,7 +84,12 @@ public class PlayerStatusUI : MonoBehaviour
     /// <param name="amount">進行度</param>
     private void CurrentEXPView(float amount)
     {
-        _bulkFillArea.fillAmount = amount;
+        if (_currentTween != null)
+        {
+            _currentTween.Kill();
+            _currentTween = null;
+        }
+        _currentTween = _bulkFillArea.DOFillAmount(amount, _fillAnimationTime);
     }
     /// <summary>
     /// レベルをUIに表示する
