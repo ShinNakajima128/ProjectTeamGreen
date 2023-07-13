@@ -40,11 +40,11 @@ public class BuildTestButtonManager : MonoBehaviour
             SkillType type = (SkillType)i;
 
             _skillTestButtons[i].OnClickAsObservable()
+                                .TakeUntilDestroy(this)
                                 .Subscribe(_ =>
                                 {
                                     OnSkill(type);
-                                })
-                                .AddTo(this);
+                                });
         }
     }
     #endregion

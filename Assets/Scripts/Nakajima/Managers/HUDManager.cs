@@ -46,8 +46,8 @@ public class HUDManager : MonoBehaviour
     private void Start()
     {
         StageManager.Instance.IsInGameObserver
-                             .Subscribe(value => ChangeHUDPanelActive(value))
-                             .AddTo(this);
+                             .TakeUntilDestroy(this)
+                             .Subscribe(value => ChangeHUDPanelActive(value));
     }
     #endregion
 
