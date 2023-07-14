@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,11 +30,14 @@ public class SkillUpSelect : MonoBehaviour
     #region private
     /// <summary>表示させるUIの数</summary>
     private int _activeAmount = 3;
+
+    /// <summary>キャンバスグループのアルファ値</summary>
+    private int _alphaAmount = 1;
     #endregion
 
     #region Constant
     #endregion
-    
+
     #region Event
     #endregion
 
@@ -43,7 +47,7 @@ public class SkillUpSelect : MonoBehaviour
         //プレイヤーのレベルが変更されたら、UI表示の処理を行う(ゲームスタート時の1回はスキップ)
         PlayerController.Instance.Status.CurrentPlayerLevel
                                         .TakeUntilDestroy(this)
-                                        .Skip(2)
+                                        .Skip(1)
                                         .Subscribe(_ => ActivateRondomSkillUIs());
                                                 
         for (int i = 0; i < _skillSelectUIs.Count; i++)
@@ -54,7 +58,7 @@ public class SkillUpSelect : MonoBehaviour
             //クリックしたらUIにスキルを登録する。
             _skillSelectUIs[i].onClick.AddListener(() => OnSkill(type));
         }
-        CanvasGroupChange(0, false);
+        CanvasGroupChange(false);
     }
     #endregion
 
@@ -68,28 +72,28 @@ public class SkillUpSelect : MonoBehaviour
                                                             .Where(x => x.Item.CurrentSkillLevel >= 5)  //第一引数のカレントレベルを調べる。
                                                             .Select(c =>c.Index )　　//カレントレベル5以上のスキルの要素数を取得。
                                                             .ToArray();
+
+        _alphaAmount = 1;
         if (maxSkillIndices.Length == _skillSelectUIs.Count)
         {
             _healUI.gameObject.SetActive(true);
-
-            CanvasGroupChange(1, true);
-
+            CanvasGroupChange(true);
             return;
-
         }
         else
         {
             //UIの数分を見てそこからOrderByでランダムの値を3つだけ値を取得する。
             IEnumerable randomIndices = Enumerable.Range(0, _skillSelectUIs.Count)
                                                   .Except(maxSkillIndices)
-                                                  .OrderBy(x => Random.value)
+                                                  .OrderBy(x => UnityEngine.Random.value)
                                                   .Take(_activeAmount);
+
             //ランダムで取得したUIをアクティブにする。
             foreach (int index in randomIndices)
             {
                 _skillSelectUIs[index].gameObject.SetActive(true);
             }
-            CanvasGroupChange(1, true);
+            CanvasGroupChange(true);
 
             //ゲーム画面を止める。
             Time.timeScale = 0f;
@@ -112,16 +116,17 @@ public class SkillUpSelect : MonoBehaviour
         {
             skillUI.gameObject.SetActive(false); 
         }
+        _alphaAmount = 0;
 
-        CanvasGroupChange(0, false);
+        CanvasGroupChange(false);
 
         //ゲーム画面を再開
         Time.timeScale = 1f;
     }
 
-    private void CanvasGroupChange(int alphaAmount, bool change) 
+    private void CanvasGroupChange(bool change) 
     {
-        _skillUpSelectGroup.alpha = alphaAmount;
+        _skillUpSelectGroup.alpha = Convert.ToInt32(change);
         _skillUpSelectGroup.interactable = change;
         _skillUpSelectGroup.blocksRaycasts = change;
     }
