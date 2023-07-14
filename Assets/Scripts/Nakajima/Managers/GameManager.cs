@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 /// <summary>
 /// ゲーム全体を管理するManagerクラス
@@ -38,6 +40,15 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private void Start()
     {
         FadeManager.Fade(FadeType.In);
+        AudioManager.PlayBGM(BGMType.Title);
+
+        //ゲーム終了時にBGMを変更する処理を登録
+        StageManager.Instance.GameEndObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ =>
+                             {
+                                 AudioManager.PlayBGM(BGMType.Result);
+                             });
     }
     #endregion
 

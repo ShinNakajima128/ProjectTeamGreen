@@ -131,6 +131,12 @@ public class PlayerMove : MonoBehaviour
     private void ChangeIsCanMove(bool value)
     {
         _isCanMove = value;
+
+        if (!value)
+        {
+            _currentDir = Vector2.zero;
+            _rb.velocity = Vector2.zero;
+        }
     }
     #endregion
 }
