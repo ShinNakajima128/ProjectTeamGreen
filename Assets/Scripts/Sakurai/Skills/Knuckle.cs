@@ -54,7 +54,6 @@ public class Knuckle : MonoBehaviour
             _currentCoroutine = null;
         }
         transform.localPosition = Vector2.zero;
-       
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -152,6 +151,9 @@ public class Knuckle : MonoBehaviour
     #endregion
 
     #region private method
+    /// <summary>
+    /// プールで生成したオブジェクトを2秒後非アクティブにする。
+    /// </summary>
     private IEnumerator InActiveCoroutine()
     {
         yield return new WaitForSeconds(_lifeTime);
