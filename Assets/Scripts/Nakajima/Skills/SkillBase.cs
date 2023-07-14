@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 /// <summary>
 /// 各スキルのベースとなるクラス。スキル作成時はこれを必ず継承すること
@@ -47,7 +48,10 @@ public abstract class SkillBase : MonoBehaviour
 
     protected virtual void Start()
     {
-
+        //ゲーム終了時にスキルをリセットする処理を登録
+        StageManager.Instance.GameEndObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => ResetSkill());
     }
     #endregion
 
@@ -82,6 +86,16 @@ public abstract class SkillBase : MonoBehaviour
     /// </summary>
     /// <param name="coefficient">係数</param>
     public abstract void AttackUpSkill(float coefficient);
+
+    /// <summary>
+    /// スキルの状態をリセットする
+    /// </summary>
+    public virtual void ResetSkill()
+    {
+        _isSkillActived = false;
+        _currentSkillLebel = 1;
+        _currentAttackAmount = _skillData.AttackAmount;
+    }
 
     /// <summary>
     /// スキル実行時の処理を行うコルーチン

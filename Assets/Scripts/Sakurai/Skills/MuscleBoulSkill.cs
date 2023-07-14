@@ -111,6 +111,13 @@ public class MuscleBoulSkill : SkillBase
         _currentAttackAmount *= coefficient;
     }
 
+    /// <summary>
+    /// スキルの状態をリセットする
+    /// </summary>
+    public override void ResetSkill()
+    {
+        base.ResetSkill();
+    }
     #endregion
 
     #region private method

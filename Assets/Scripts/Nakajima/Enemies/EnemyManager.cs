@@ -88,6 +88,10 @@ public class EnemyManager : MonoBehaviour
     #endregion
 
     #region private method
+    private void PowerUpEnemy()
+    {
+
+    }
     private void BossGenerate(EnemyType bossType)
     {
         _generator.BossGenerate(bossType);
