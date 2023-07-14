@@ -1,18 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 /// <summary>
 /// 敵の弾
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
-public class EnemyBullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour, IPoolable
 {
     #region serialize
     [Tooltip("弾の速さ")]
     [SerializeField]
     private float _moveSpeed = 3.0f;
+    public IObservable<Unit> InactiveObserver => _inactiveSubject;
     #endregion
 
     #region private
@@ -26,6 +29,10 @@ public class EnemyBullet : MonoBehaviour
     private Coroutine _currentCoroutine;
     /// <summary>親のTransform格納用</summary>
     private Transform _parent;
+    #endregion
+
+    #region Event
+    private Subject<Unit> _inactiveSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
@@ -47,6 +54,7 @@ public class EnemyBullet : MonoBehaviour
             StopCoroutine(_currentCoroutine);
             _currentCoroutine = null;
         }
+        _inactiveSubject.OnNext(Unit.Default);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -95,6 +103,11 @@ public class EnemyBullet : MonoBehaviour
         //親を設定しなおして非アクティブ化
         transform.SetParent(_parent);
         gameObject.SetActive(false);
+    }
+
+    public void ReturnPool()
+    {
+        throw new NotImplementedException();
     }
     #endregion
 }

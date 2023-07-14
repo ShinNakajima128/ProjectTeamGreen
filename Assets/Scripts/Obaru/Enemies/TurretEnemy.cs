@@ -79,22 +79,20 @@ public class TurretEnemy : EnemyBase
             if (_isCanShot)
             {
                 //使う弾を取得
-                GameObject bulletObj = _generator.BulletPool.Rent();
+                EnemyBullet bulletObj = _generator.BulletPool.Rent();
                 //弾がnullでないなら
                 if (bulletObj != null)
                 {
-                    //使用する弾のコンポーネントを取得
-                    var bullet = bulletObj.GetComponent<EnemyBullet>();
                     //弾をアクティブ化
-                    bullet.gameObject.SetActive(true);
+                    bulletObj.gameObject.SetActive(true);
                     //弾のポジションを移動
-                    bullet.transform.position = transform.position;
+                    bulletObj.transform.position = transform.position;
                     //親子関係を解除
-                    bullet.gameObject.transform.SetParent(null);
+                    bulletObj.gameObject.transform.SetParent(null);
                     //弾の攻撃力を設定
-                    bullet.SetAttackAmount(_currentAttackAmount);
+                    bulletObj.SetAttackAmount(_currentAttackAmount);
                     //velocityをプレイヤーの方向に設定
-                    bullet.SetVelocity((_playerTrans.position - transform.position).normalized);
+                    bulletObj.SetVelocity((_playerTrans.position - transform.position).normalized);
                 }
             }
             //発射間隔分待つ

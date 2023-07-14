@@ -19,7 +19,7 @@ public class ItemGenerator : MonoBehaviour
 
     #region private
     private Transform _playerTrans;
-    private Dictionary<ItemType, ObjectPool> _itemPoolDic = new Dictionary<ItemType, ObjectPool>();
+    private Dictionary<ItemType, ObjectPool<ItemBase>> _itemPoolDic = new Dictionary<ItemType, ObjectPool<ItemBase>>();
     #endregion
 
     #region Constant
@@ -54,7 +54,7 @@ public class ItemGenerator : MonoBehaviour
 
         if (item != null)
         {
-            item.SetActive(true);
+            item.gameObject.SetActive(true);
             ////指定した座標に移動
             item.transform.localPosition = pos;
         }
@@ -80,10 +80,8 @@ public class ItemGenerator : MonoBehaviour
 
         for (int i = 0; i < _items.Length; i++)
         {
-            _itemPoolDic.Add(_items[i].ItemPrefab.ItemType, new ObjectPool(_items[i].ItemPrefab.gameObject, 
-                                                               _items[i].ItemPrefab.ReserveAmount, 
-                                                               _items[i].ItemPrefab.ActivationLimit, 
-                                                               _items[i].Parent));
+            _itemPoolDic.Add(_items[i].ItemPrefab.ItemType, new ObjectPool<ItemBase>(_items[i].ItemPrefab, 
+                                                                                     _items[i].Parent));
         }
     }
     #endregion

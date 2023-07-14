@@ -103,22 +103,21 @@ public class Bomb : MonoBehaviour
     public void SetExplosion()
     {
         //使う爆発のオブジェクトを取得
-        GameObject skillObj = _bombExplosionGenerator.ExplosionPool.Rent();
+        BombExplosion skillObj = _bombExplosionGenerator.ExplosionPool.Rent();
+        
         //爆発がnullでなければ
         if (skillObj != null)
         {
-            //使う爆発のコンポーネントを取得
-            var explosion = skillObj.GetComponent<BombExplosion>();
             //爆発オブジェクトのアクティブ化
-            explosion.gameObject.SetActive(true);
+            skillObj.gameObject.SetActive(true);
             //すきっレベルに応じてスケールを変化
-            explosion.SetScale(_currentSkillLevel);
+            skillObj.SetScale(_currentSkillLevel);
             //爆発をボムの位置に移動
-            explosion.transform.position = transform.position;
+            skillObj.transform.position = transform.position;
             //親子関係解除
-            explosion.gameObject.transform.SetParent(null);
+            skillObj.gameObject.transform.SetParent(null);
             //攻撃力を設定
-            explosion.SetAttackAmount(_currentAttackAmount);
+            skillObj.SetAttackAmount(_currentAttackAmount);
         }
     }
     #endregion

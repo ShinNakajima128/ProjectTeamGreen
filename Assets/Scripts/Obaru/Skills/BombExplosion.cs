@@ -1,17 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 /// <summary>
 /// 爆発
 /// </summary>
 [RequireComponent(typeof(CircleCollider2D))]
-public class BombExplosion : MonoBehaviour
+public class BombExplosion : MonoBehaviour, IPoolable
 {
     #region serialize
     [Tooltip("スケールに対する係数")]
     [SerializeField]
     private float _scaleCoefficient = 1.2f;
+    public IObservable<Unit> InactiveObserver => _inactiveSubject;
     #endregion
 
     #region private
@@ -25,6 +28,10 @@ public class BombExplosion : MonoBehaviour
     private Transform _parent;
     #endregion
 
+    #region Event
+    private Subject<Unit> _inactiveSubject = new Subject<Unit>();
+    #endregion
+
     #region unity methods
     private void Awake()
     {
@@ -36,6 +43,11 @@ public class BombExplosion : MonoBehaviour
     private void OnEnable()
     {
         _currentScale = _baseScale;
+    }
+
+    private void OnDisable()
+    {
+        _inactiveSubject.OnNext(Unit.Default);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -80,6 +92,11 @@ public class BombExplosion : MonoBehaviour
         //親を設定しなおして非アクティブ化
         transform.SetParent(_parent);
         gameObject.SetActive(false);
+    }
+
+    public void ReturnPool()
+    {
+        throw new NotImplementedException();
     }
     #endregion
 }

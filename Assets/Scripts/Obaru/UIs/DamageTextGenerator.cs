@@ -8,7 +8,7 @@ using UnityEngine;
 public class DamageTextGenerator : MonoBehaviour
 {
     #region property
-    public ObjectPool DamageTextPool => _damageTextPool;
+    public ObjectPool<DamageText> DamageTextPool => _damageTextPool;
     #endregion
 
     #region serialize
@@ -30,13 +30,13 @@ public class DamageTextGenerator : MonoBehaviour
     #endregion
 
     #region private
-    private ObjectPool _damageTextPool;
+    private ObjectPool<DamageText> _damageTextPool;
     #endregion
 
     #region unity methods
     private void Awake()
     {
-        _damageTextPool = new ObjectPool(_damageTextPrefab.gameObject, _reserveAmount, _limit, _parent);
+        _damageTextPool = new ObjectPool<DamageText>(_damageTextPrefab, _parent);
     }
     #endregion
 }

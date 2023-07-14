@@ -4,18 +4,21 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 using DG.Tweening;
+using System;
 
 /// <summary>
 /// 敵の機能全般を管理するベースクラス。
 /// このクラスは直接アタッチできないので、必ず継承して敵を作成してください。
 /// </summary>
-public abstract class EnemyBase : MonoBehaviour, IDamagable
+public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
 {
     #region property
     public EnemyType EnemyType => _enemyData.EnemyType;
     public EnemyActionType ActionType => _enemyData.ActionType;
     public bool IsInvincible => _isInvincible;
     public float ApproachDistance => _enemyData.ApproachDistance;
+
+    public IObservable<Unit> InactiveObserver => _inactiveSubject;
     #endregion
 
     #region serialize
@@ -40,6 +43,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
     #region private
     private bool _init = false;
+    private float _currentMaxHP;
     private IDamagable _target;
     private Coroutine _coroutine;
     private Tween _currentTween;
@@ -50,12 +54,15 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     #endregion
 
     #region Event
+    /// <summary>非アクティブとなった時に通知を発行するSubject</summary>
+    private Subject<Unit> _inactiveSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
     protected virtual void Awake()
     {
-        _currentHP = _enemyData.HP;
+        _currentMaxHP = _enemyData.HP;
+        _currentHP = _currentMaxHP;
         _currentAttackAmount = _enemyData.AttackAmount;
         _enemyRenderer = GetComponent<SpriteRenderer>();
         _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
@@ -69,6 +76,13 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         _init = true;
         _coroutine = StartCoroutine(OnActionCoroutine());
         _damageTextGenerator = DamageTextManager.Instance.TextGenerator;
+
+        PlayerController.Instance.Status.CurrentPlayerLevel
+                                        .TakeUntilDestroy(this)
+                                        .Subscribe(_ =>
+                                        {
+                                            PowerUp(1.2f);
+                                        });
 
         //プレイヤーと接触した時の処理を登録する
         this.OnTriggerStay2DAsObservable()
@@ -107,6 +121,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
         _enemyRenderer.color = Color.white;
         transform.localScale = Vector3.one;
         _currentTween = null;
+
+        _inactiveSubject.OnNext(Unit.Default);
     }
     #endregion
 
@@ -129,7 +145,12 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
             //討伐数を加算
             EnemyManager.Instance.DefeatAmount.Value++;
             ItemManager.Instance.GenerateItem(_enemyData.DropItemType, transform.position);
+            AudioManager.PlaySE(SEType.Dead_Enemy);
             gameObject.SetActive(false);
+        }
+        else
+        {
+            AudioManager.PlaySE(SEType.Damage_Enemy);
         }
 
         Debug.Log($"{gameObject.name}:Damage、残りHP:{_currentHP}");
@@ -142,13 +163,14 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     #region private method
     private void Setup()
     {
-        _currentHP = _enemyData.HP;
+        _currentHP = _currentMaxHP;
         _enemyRenderer.color = Color.white;
     }
 
-    private void ChangeAttackAmount(int coefficient)
+    private void PowerUp(float coefficient)
     {
-        _currentAttackAmount = coefficient;
+        _currentAttackAmount *= coefficient;
+        _currentMaxHP *= coefficient;
     }
 
     private void DamageAnimation()
@@ -171,12 +193,12 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
 
     private void DamageTextGenerate(float amount)
     {
-        GameObject textObj = _damageTextGenerator.DamageTextPool.Rent();
+        DamageText textObj = _damageTextGenerator.DamageTextPool.Rent();
+        
         if (textObj != null)
         {
-            var damageText = textObj.GetComponent<DamageText>();
-            damageText.gameObject.SetActive(true);
-            damageText.SetDamageText(transform, amount);
+            textObj.gameObject.SetActive(true);
+            textObj.SetDamageText(transform, amount);
         }
     }
     #endregion
@@ -185,4 +207,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable
     /// </summary>
     /// <returns></returns>
     protected abstract IEnumerator OnActionCoroutine();
+
+    public void ReturnPool()
+    {
+        throw new NotImplementedException();
+    }
 }

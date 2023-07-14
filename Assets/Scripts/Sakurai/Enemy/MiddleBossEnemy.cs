@@ -141,20 +141,18 @@ public class MiddleBossEnemy : BossEnemyBase
         for (int i = 0; i < 3; i++)
         {
             //プールからオブジェクトを取り出す。
-            GameObject bulletObj = _generator.BulletPool.Rent();
+            EnemyBullet bulletObj = _generator.BulletPool.Rent();
 
             if (bulletObj != null)
             {
-                EnemyBullet bullet = bulletObj.GetComponent<EnemyBullet>();
-
                 //バレットをアクティブにする。
-                bullet.gameObject.SetActive(true);
+                bulletObj.gameObject.SetActive(true);
                 //バレットのポジションをエネミーの位置に設定。
-                bullet.transform.position = transform.position;
+                bulletObj.transform.position = transform.position;
                 //バレットに攻撃力を持たせる。
-                bullet.SetAttackAmount(_bulletAttackAmount);
+                bulletObj.SetAttackAmount(_bulletAttackAmount);
                 //バレットに速度を持たせる。
-                bullet.SetVelocity((_playerTrans.position - transform.position).normalized);
+                bulletObj.SetVelocity((_playerTrans.position - transform.position).normalized);
                 yield return new WaitForSeconds(_waitTime);
             }
         }

@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
+using System;
+using UniRx;
 
 /// <summary>
 /// ダメージを表記するためのテキスト
 /// </summary>
-public class DamageText : MonoBehaviour
+public class DamageText : MonoBehaviour, IPoolable
 {
+    #region property
+    public IObservable<Unit> InactiveObserver => _inactiveSubject;
+    #endregion
+
     #region serialize
     [Tooltip("生存時間")]
     [SerializeField]
@@ -40,6 +46,10 @@ public class DamageText : MonoBehaviour
     private TextMeshProUGUI _damageText;
     /// <summary>コルーチン格納用</summary>
     private Coroutine _currentCoroutine;
+    #endregion
+
+    #region Event
+    private Subject<Unit> _inactiveSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
@@ -117,6 +127,11 @@ public class DamageText : MonoBehaviour
     {
         yield return new WaitForSeconds(_lifeTime);
         gameObject.SetActive(false);
+    }
+
+    public void ReturnPool()
+    {
+        throw new NotImplementedException();
     }
     #endregion
 }

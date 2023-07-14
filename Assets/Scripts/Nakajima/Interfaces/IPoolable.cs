@@ -14,6 +14,6 @@ public interface IPoolable
     #endregion
 
     #region public method
-    void Return();
+    void ReturnPool();
     #endregion
 }

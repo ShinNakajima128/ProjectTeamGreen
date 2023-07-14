@@ -8,7 +8,7 @@ using UnityEngine;
 public class BombExplosionGenerator : MonoBehaviour
 {
     #region property
-    public ObjectPool ExplosionPool => _explosionPool;
+    public ObjectPool<BombExplosion> ExplosionPool => _explosionPool;
     #endregion
 
     #region serialize
@@ -30,13 +30,13 @@ public class BombExplosionGenerator : MonoBehaviour
     #endregion
 
     #region private
-    private ObjectPool _explosionPool;
+    private ObjectPool<BombExplosion> _explosionPool;
     #endregion
 
     #region unity methods
     private void Awake()
     {
-        _explosionPool = new ObjectPool(_explosionPrefab.gameObject, _reserveAmount, _limit, _parent);
+        _explosionPool = new ObjectPool<BombExplosion>(_explosionPrefab, _parent);
     }
     #endregion
 }

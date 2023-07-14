@@ -8,7 +8,7 @@ using UnityEngine;
 public class KnucleGenerator : MonoBehaviour
 {
     #region property
-    public ObjectPool KnucklePool => _knucklePool;
+    public ObjectPool<Knuckle> KnucklePool => _knucklePool;
     #endregion
 
     #region serialize
@@ -31,7 +31,7 @@ public class KnucleGenerator : MonoBehaviour
     #endregion
 
     #region private
-    private ObjectPool _knucklePool;
+    private ObjectPool<Knuckle> _knucklePool;
     #endregion
 
     #region Constant
@@ -43,7 +43,7 @@ public class KnucleGenerator : MonoBehaviour
     #region unity methods
     private void Awake()
     {
-        _knucklePool = new ObjectPool(_knucklePrefab.gameObject, _reserveAmount, _limit, _parent);
+        _knucklePool = new ObjectPool<Knuckle>(_knucklePrefab, _parent);
     }
     #endregion
 }

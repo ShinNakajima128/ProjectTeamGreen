@@ -7,7 +7,7 @@ using UniRx;
 /// <summary>
 /// オブジェクトを再利用する機能をもつクラス
 /// </summary>
-public class ObjectPool<T> where T: Object
+public class ObjectPool<T> where T : Object
 {
     #region property
     #endregion
@@ -22,11 +22,10 @@ public class ObjectPool<T> where T: Object
     private T _object;
     /// <summary>生成されたオブジェクトの親オブジェクト</summary>
     private Transform _parent;
-    /// <summary>同時に使用する限度</summary>
-    private uint _activationLimit = 0;
     #endregion
 
     #region Constant
+    /// <summary>プーリング可能な上限</summary>
     private const uint DEFAULT_LIMIT = 50;
     #endregion
 
@@ -45,7 +44,7 @@ public class ObjectPool<T> where T: Object
         _object = obj;
         _parent = parent;
     }
-   
+
     /// <summary>
     /// 使用する
     /// </summary>
@@ -68,12 +67,11 @@ public class ObjectPool<T> where T: Object
             //無かった場合は新しく作り、それを渡す
             var obj = Object.Instantiate(_object, _parent);
 
-            //インターフェースを取得するため、GameObjectに変換
-            var o = obj as GameObject;
-
-            //プーリング機能のインターフェースを取得できた場合
-            if (o.TryGetComponent(out IPoolable p))
+            //インターフェースを取得する
+            try
             {
+                var p = obj as IPoolable;
+
                 //非アクティブとなった時にQueueに戻る処理を登録
                 p.InactiveObserver
                  .Subscribe(_ =>
@@ -81,9 +79,15 @@ public class ObjectPool<T> where T: Object
                      _pool.Enqueue(obj);
                      Debug.Log("poolに帰還");
                  });
-
-                Debug.Log($"新しく{obj.name}を作成");
             }
+            catch
+            {
+                Debug.LogError($"インターフェースが継承されていません。オブジェクト名:{obj.name}");
+            }
+
+
+            Debug.Log($"新しく{obj.name}を作成");
+
             return obj;
         }
     }
