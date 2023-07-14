@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 中ボスの機能。
+/// </summary>
 public class MiddleBossEnemy : BossEnemyBase
 {
-    #region property
-    #endregion
 
     #region serialize
     [Header("変数")]
@@ -19,7 +20,6 @@ public class MiddleBossEnemy : BossEnemyBase
     #endregion
 
     #region private
-
     //ステートマシンの待機時間
     private float _waitTime = 1.0f;
 

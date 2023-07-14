@@ -70,40 +70,7 @@ public class FadeManager : MonoBehaviour
         //フェードアウトの時のみ待ち合わせのフラグ。
         bool hasWaiting = false;
 
-        yield return Test(type);
-        //switch (type)
-        //{
-        //    case FadeType.In:
-
-
-        //        yield return DOTween.To(() => currentValue,
-        //                             x => currentValue = x,
-        //                             1,
-        //                             _fadeTime)
-        //                            .SetEase(Ease.Linear)
-        //                            .OnUpdate(() =>
-        //                            {
-        //                                //第一引数はマテリアルのプロパティの値(Slider),第二引数は第一引数を変化させるための値。
-        //                                _effectMaterial.SetFloat(_progressId, currentValue);
-        //                            })
-        //                            .WaitForCompletion();
-        //        break;
-        //    case FadeType.Out:
-        //        yield return DOTween.To(() => currentValue,
-        //                            x => currentValue = x,
-        //                            0,
-        //                            _fadeTime)
-        //                          .SetEase(Ease.Linear)
-        //                          .OnUpdate(() =>
-        //                          {
-        //                                //第一引数はマテリアルのプロパティの値(Slider),第二引数は第一引数を変化させるための値。
-        //                                _effectMaterial.SetFloat(_progressId, currentValue);
-        //                          })
-        //                          .WaitForCompletion();
-        //        break;
-        //    default:
-        //        break;
-        //}
+        yield return ShaderFade(type);
 
         ////フェードの処理。
         //while ((type == FadeType.In && currentValue < _fadeTime) || (type == FadeType.Out && currentValue > 0))
@@ -126,14 +93,14 @@ public class FadeManager : MonoBehaviour
         //    currentValue += (type == FadeType.In ? Time.deltaTime : -Time.deltaTime);
         //}
         //フェードさせるマテリアルの値を指定の数字にセット。
-        _effectMaterial.SetFloat(_progressId, (type == FadeType.In) ? 1f : 0f);
+        //_effectMaterial.SetFloat(_progressId, (type == FadeType.In) ? 1f : 0f);
 
         //Actionに登録されていれば実行。
         callback?.Invoke();
     }
     #endregion
 
-    IEnumerator Test(FadeType type)
+    IEnumerator ShaderFade(FadeType type)
     {
         (float currentValue, float endValue) = type == FadeType.In ? (0f, 1f) : (1f, 0f);
 
@@ -148,6 +115,8 @@ public class FadeManager : MonoBehaviour
                                     _effectMaterial.SetFloat(_progressId, currentValue);
                                 })
                                 .WaitForCompletion();
+
+        _effectMaterial.SetFloat(_progressId, (type == FadeType.In) ? 1f : 0f);
     }
 }
 
