@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     private PlayerHealth _health;
     private PlayerStatus _status;
     private SpriteRenderer _sr;
-    private bool _isCanControl = false;
+    private bool _isDead = false;
     private bool _isInvincible = false;
     private Tween _currentTween;
     #endregion
@@ -63,11 +63,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void Start()
     {
-        //ゲームが開始/終了された時の処理を登録
-        StageManager.Instance.IsInGameObserver
-                             .TakeUntilDestroy(this)
-                             .Subscribe(value => ChangeIsCanControl(value));
-        
         //プレイヤーの画像を右向きか左向きか切り替える機能を登録
         _move.IsFlipedProerty
              .TakeUntilDestroy(this)
@@ -114,6 +109,11 @@ public class PlayerController : MonoBehaviour, IDamagable
     /// <param name="amount">ダメージ量</param>
     public void Damage(float amount)
     {
+        if (_isDead)
+        {
+            return;
+        }
+
         Debug.Log("ダメージ");
         //ダメージアニメーション
         if (_currentTween == null)
@@ -129,7 +129,11 @@ public class PlayerController : MonoBehaviour, IDamagable
         //ダメージを受けた後、プレイヤーのHPが無くなったら
         if (_health.Damage(amount))
         {
-            StageManager.Instance.OnGameEnd();
+            if (!_isDead)
+            {
+                StageManager.Instance.OnGameEnd();
+                _isDead = true;
+            }
         }
         Debug.Log("Playerがダメージを受けた");
     }
@@ -171,11 +175,6 @@ public class PlayerController : MonoBehaviour, IDamagable
     private void StopMove(InputAction.CallbackContext obj)
     {
         _move.SetDirection(Vector2.zero);
-    }
-
-    private void ChangeIsCanControl(bool value)
-    {
-        _isCanControl = value;
     }
 
     /// <summary>
