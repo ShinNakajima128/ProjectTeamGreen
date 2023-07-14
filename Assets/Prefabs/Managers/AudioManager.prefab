@@ -86,7 +86,7 @@ MonoBehaviour:
     Volume: 0.3
   - BGMName: InGame
     BGMType: 1
-    Clip: {fileID: 8300000, guid: 4dccfedab5cdc4d86bbe6f579ad4ede7, type: 3}
+    Clip: {fileID: 8300000, guid: ae95cd7e284a61d4b9eeef613482ef25, type: 3}
     Volume: 0.2
   - BGMName: Result
     BGMType: 2

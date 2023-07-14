@@ -56,7 +56,7 @@ public class TitleUI : MonoBehaviour
     private void Setup()
     {
         _titlePanel.SetActive(true);
-
+        
         //スタートボタンが押された時の処理を登録
         _startButton.OnClickAsObservable()
                     .TakeUntilDestroy(this)
@@ -75,6 +75,7 @@ public class TitleUI : MonoBehaviour
             FadeManager.Fade(FadeType.In);
             _titlePanel.SetActive(false);
             _pressStartButtonSubject.OnNext(Unit.Default);
+            AudioManager.PlayBGM(BGMType.InGame);
         });
     }
     #endregion
