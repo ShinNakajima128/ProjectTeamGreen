@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 /// <summary>
@@ -7,8 +9,12 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
-public class Bomb : MonoBehaviour
+public class Bomb : MonoBehaviour, IPoolable
 {
+    #region property
+    public IObservable<Unit> InactiveObserver => _inactiveSubject;
+    #endregion
+
     #region serialize
     [Tooltip("飛ぶ速さ")]
     [SerializeField]
@@ -32,6 +38,8 @@ public class Bomb : MonoBehaviour
     private BombExplosionGenerator _bombExplosionGenerator;
     /// <summary>親のTransform</summary>
     private Transform _parent;
+
+    private Subject<Unit> _inactiveSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
@@ -54,6 +62,7 @@ public class Bomb : MonoBehaviour
             StopCoroutine(_inactiveCoroutine);
             _inactiveCoroutine = null;
         }
+        _inactiveSubject.OnNext(Unit.Default);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -135,6 +144,11 @@ public class Bomb : MonoBehaviour
         //親を設定しなおして非アクティブ化
         transform.SetParent(_parent);
         gameObject.SetActive(false);
+    }
+
+    public void ReturnPool()
+    {
+        throw new NotImplementedException();
     }
     #endregion
 }

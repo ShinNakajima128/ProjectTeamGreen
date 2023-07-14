@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 /// <summary>
@@ -9,8 +10,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
 
-public class Knuckle : MonoBehaviour
+public class Knuckle : MonoBehaviour, IPoolable
 {
+
+    public IObservable<Unit> InactiveObserver => _inactiveSubject;
+
+
     #region serialize
     [Header("変数")]
     [Tooltip("拳が動く速さ")]
@@ -33,6 +38,9 @@ public class Knuckle : MonoBehaviour
     #region Event
     /// <summary>スキル機能変更用のデリゲート</summary>
     public Action RandomDirection { get; set; }
+
+    private Subject<Unit> _inactiveSubject = new Subject<Unit>(); 
+
     #endregion
 
     #region unity methods
@@ -54,6 +62,8 @@ public class Knuckle : MonoBehaviour
             _currentCoroutine = null;
         }
         transform.localPosition = Vector2.zero;
+
+        _inactiveSubject.OnNext(Unit.Default);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -158,6 +168,11 @@ public class Knuckle : MonoBehaviour
     {
         yield return new WaitForSeconds(_lifeTime);
         gameObject.SetActive(false);
+    }
+
+    public void ReturnPool()
+    {
+        throw new NotImplementedException();
     }
     #endregion
 
