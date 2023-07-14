@@ -97,6 +97,15 @@ public class MuscleKnuckleSkill : SkillBase
         //現在のスキル攻撃力に係数を掛け合わせる
         _currentAttackAmount *= coefficient;
     }
+
+    /// <summary>
+    /// スキルの状態をリセットする
+    /// </summary>
+    public override void ResetSkill()
+    {
+        base.ResetSkill();
+        _currentAttackInterval = _startAttackInterval;
+    }
     #endregion
 
     #region coroutine method
@@ -108,19 +117,17 @@ public class MuscleKnuckleSkill : SkillBase
     {
         while (_isSkillActived)
         {
-            GameObject sklObj = _knucleGenerator.KnucklePool.Rent();
+            Knuckle sklObj = _knucleGenerator.KnucklePool.Rent();
 
             if (sklObj != null)
             {
-                Knuckle knuckle = sklObj.GetComponent<Knuckle>();
-
-                knuckle.transform.position = transform.position;  
-                knuckle.gameObject.SetActive(true);
-                knuckle.SetAttackAmount(_currentAttackAmount);
+                sklObj.transform.position = transform.position;
+                sklObj.gameObject.SetActive(true);
+                sklObj.SetAttackAmount(_currentAttackAmount);
 
                 //これは使いどころではない。関数に変更する。
-                knuckle.RandomDirection = (_currentSkillLebel < 4) ? new Action(knuckle.RondomFourDirection) : new Action(knuckle.RondomEightDirection);
-                knuckle.RandomDirection.Invoke();
+                sklObj.RandomDirection = (_currentSkillLebel < 4) ? new Action(sklObj.RondomFourDirection) : new Action(sklObj.RondomEightDirection);
+                sklObj.RandomDirection.Invoke();
             }
 
              yield return new WaitForSeconds(_currentAttackInterval);

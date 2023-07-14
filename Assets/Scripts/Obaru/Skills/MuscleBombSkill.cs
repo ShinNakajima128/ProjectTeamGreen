@@ -150,24 +150,22 @@ public class MuscleBombSkill : SkillBase
                 SetTarget();
 
                 //使うボムのオブジェクトを取得
-                GameObject skillObj = _bombGenerator.BombPool.Rent();
+                Bomb skillObj = _bombGenerator.BombPool.Rent();
                 //ボムがnullでなければ
                 if (skillObj != null)
                 {
-                    //使うボムのコンポーネント取得
-                    var bomb = skillObj.GetComponent<Bomb>();
                     //ボムのオブジェクトをアクティブ化
-                    bomb.gameObject.SetActive(true);
+                    skillObj.gameObject.SetActive(true);
                     //ボムをスキルの位置に移動
-                    bomb.transform.position = transform.position;
+                    skillObj.transform.position = transform.position;
                     //親子関係を解除
-                    bomb.gameObject.transform.SetParent(null);
+                    skillObj.gameObject.transform.SetParent(null);
                     //攻撃力を設定
-                    bomb.SetAttackAmount(_currentAttackAmount);
+                    skillObj.SetAttackAmount(_currentAttackAmount);
                     //velocityを設定
-                    bomb.SetVelocity(_targetDir);
+                    skillObj.SetVelocity(_targetDir);
                     //スキルレベルを取得
-                    bomb.GetCurrentLevel(_currentSkillLebel);
+                    skillObj.GetCurrentLevel(_currentSkillLebel);
                 }
             }
             //攻撃間隔分待つ

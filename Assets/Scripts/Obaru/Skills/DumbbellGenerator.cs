@@ -8,7 +8,7 @@ using UnityEngine;
 public class DumbbellGenerator : MonoBehaviour
 {
     #region property
-    public ObjectPool DumbbellPool => _dumbbellPool;
+    public ObjectPool<Dumbbell> DumbbellPool => _dumbbellPool;
     #endregion
 
     #region serialize
@@ -30,13 +30,13 @@ public class DumbbellGenerator : MonoBehaviour
     #endregion
 
     #region private
-    private ObjectPool _dumbbellPool;
+    private ObjectPool<Dumbbell> _dumbbellPool;
     #endregion
 
     #region unity methods
     private void Awake()
     {
-        _dumbbellPool = new ObjectPool(_dumbbellPrefab.gameObject, _reserveAmount, _limit, _parent);
+        _dumbbellPool = new ObjectPool<Dumbbell>(_dumbbellPrefab, _parent);
     }
     #endregion
 }

@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 /// <summary>
 /// オブジェクトを再利用する機能をもつクラス
 /// </summary>
-public class ObjectPool
+public class ObjectPool<T> where T : Object
 {
     #region property
     #endregion
@@ -16,16 +17,16 @@ public class ObjectPool
 
     #region private
     /// <summary>オブジェクトのプール</summary>
-    private List<GameObject> _pool;
+    private Queue<T> _pool;
     /// <summary>プーリングしているオブジェクト</summary>
-    private GameObject _object;
+    private T _object;
     /// <summary>生成されたオブジェクトの親オブジェクト</summary>
     private Transform _parent;
-    /// <summary>同時に使用する限度</summary>
-    private uint _activationLimit = 0;
     #endregion
 
     #region Constant
+    /// <summary>プーリング可能な上限</summary>
+    private const uint DEFAULT_LIMIT = 50;
     #endregion
 
     #region Event
@@ -36,63 +37,58 @@ public class ObjectPool
     /// コンストラクタ
     /// </summary>
     /// <param name="obj">プーリングするオブジェクト</param>
-    /// <param name="reserveAmount">最初に用意する数</param>
-    /// <param name="limit">一度にアクティブになる限度</param>
-    /// <param name="parent">親オブジェクト</param>
-    public ObjectPool(GameObject obj, uint reserveAmount, uint limit, Transform parent)
+    /// /// <param name="parent">親オブジェクト</param>
+    public ObjectPool(T obj, Transform parent)
     {
-        _pool = new List<GameObject>();
+        _pool = new Queue<T>();
         _object = obj;
-        _activationLimit = limit;
         _parent = parent;
-
-        for (int i = 0; i < reserveAmount; i++)
-        {
-            var o = Object.Instantiate(_object, parent);
-            o.SetActive(false);
-            _pool.Add(o);
-        }
     }
 
     /// <summary>
     /// 使用する
     /// </summary>
     /// <returns>使用するオブジェクト</returns>
-    public GameObject Rent()
+    public T Rent(uint limit = DEFAULT_LIMIT)
     {
-        if (_activationLimit <= _pool.Count(x => x.activeInHierarchy))
+        if (_pool.Count > 0)
         {
-            Debug.Log($"{_object}はアクティブ限度数に達しています");
-            return null;
+            Debug.Log($"Queueから取り出した");
+            return _pool.Dequeue();
         }
-        //待機状態のオブジェクトを探し、あればそれを渡す
-        foreach (var obj in _pool)
+        else
         {
-            if (!obj.activeSelf)
+            if (_parent.childCount >= limit)
             {
-                return obj;
+                Debug.Log("生成上限です");
+                return null;
             }
-        }
 
-        //無かった場合は新しく作り、それを渡す
-        var o = Object.Instantiate(_object, _parent);
-        _pool.Add(o);
-        return o;
-    }
+            //無かった場合は新しく作り、それを渡す
+            var obj = Object.Instantiate(_object, _parent);
 
-    /// <summary>
-    /// 使用しているオブジェクトを戻す
-    /// </summary>
-    public void Return()
-    {
-        foreach (var obj in _pool)
-        {
-            if (obj.activeSelf)
+            //インターフェースを取得する
+            try
             {
-                obj.SetActive(false);
-                obj.transform.localPosition = Vector2.zero;
-                obj.transform.localEulerAngles = Vector3.zero;
+                var p = obj as IPoolable;
+
+                //非アクティブとなった時にQueueに戻る処理を登録
+                p.InactiveObserver
+                 .Subscribe(_ =>
+                 {
+                     _pool.Enqueue(obj);
+                     Debug.Log("poolに帰還");
+                 });
             }
+            catch
+            {
+                Debug.LogError($"インターフェースが継承されていません。オブジェクト名:{obj.name}");
+            }
+
+
+            Debug.Log($"新しく{obj.name}を作成");
+
+            return obj;
         }
     }
 

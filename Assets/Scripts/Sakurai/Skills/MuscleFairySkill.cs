@@ -100,6 +100,21 @@ public class MuscleFairySkill : SkillBase
         //現在のスキル攻撃力に係数をかけ合わせる。
         _currentAttackAmount *= coefficient; 
     }
+
+    /// <summary>
+    /// スキルの状態をリセットする
+    /// </summary>
+    public override void ResetSkill()
+    {
+        base.ResetSkill();
+
+        foreach (var fairy in _currentFairyAmount)
+        {
+            Destroy(fairy.gameObject);
+        }
+        _currentFairyAmount.Clear();
+        _currentFairyAngles.Clear();
+    }
     #endregion
 
     #region private method

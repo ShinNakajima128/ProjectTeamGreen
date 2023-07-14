@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 /// <summary>
@@ -7,8 +9,12 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
-public class Dumbbell : MonoBehaviour
+public class Dumbbell : MonoBehaviour, IPoolable
 {
+    #region property
+    public IObservable<Unit> InactiveObserver => _inactiveSubject;
+    #endregion
+
     #region serialize
     [Tooltip("飛ぶ速さ")]
     [SerializeField]
@@ -26,6 +32,10 @@ public class Dumbbell : MonoBehaviour
     private Coroutine _currentCoroutine = default;
     /// <summary>親のTransform格納用</summary>
     private Transform _parent;
+    #endregion
+
+    #region Event
+    private Subject<Unit> _inactiveSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
@@ -92,6 +102,11 @@ public class Dumbbell : MonoBehaviour
     {
         yield return new WaitForSeconds(_lifeTime);
         gameObject.SetActive(false);
+    }
+
+    public void ReturnPool()
+    {
+        throw new NotImplementedException();
     }
     #endregion
 }

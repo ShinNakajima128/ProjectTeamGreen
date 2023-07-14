@@ -8,7 +8,7 @@ using UnityEngine;
 public class EnemyBulletGenerater : MonoBehaviour
 {
     #region property
-    public ObjectPool BulletPool => _bulletPool;
+    public ObjectPool<EnemyBullet> BulletPool => _bulletPool;
     #endregion
 
     #region serialize
@@ -30,13 +30,13 @@ public class EnemyBulletGenerater : MonoBehaviour
     #endregion
 
     #region private
-    private ObjectPool _bulletPool;
+    private ObjectPool<EnemyBullet> _bulletPool;
     #endregion
 
     #region unity methods
     private void Awake()
     {
-        _bulletPool = new ObjectPool(_bulletPrefab.gameObject, _reserveAmount, _limit, _parent);
+        _bulletPool = new ObjectPool<EnemyBullet>(_bulletPrefab, _parent);
     }
     #endregion
 

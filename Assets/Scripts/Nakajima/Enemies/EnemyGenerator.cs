@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
 
 /// <summary>
 /// 敵の生成機能を持つコンポーネント
@@ -25,6 +26,9 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField]
     private uint _onceGenerateAmount = 10;
 
+    [SerializeField]
+    private uint _startGenerateLimit = 10;
+
     [Header("オブジェクト")]
     [Tooltip("各敵")]
     [SerializeField]
@@ -34,10 +38,11 @@ public class EnemyGenerator : MonoBehaviour
     #region private
     private Transform _playerTrans;
     /// <summary>各敵のプールを管理するDictionary</summary>
-    private Dictionary<EnemyType, ObjectPool> _enemyPoolDic = new Dictionary<EnemyType, ObjectPool>();
+    private Dictionary<EnemyType, ObjectPool<EnemyBase>> _enemyPoolDic = new Dictionary<EnemyType, ObjectPool<EnemyBase>>();
     private Dictionary<EnemyType, Coroutine> _generateCoroutineDic = new Dictionary<EnemyType, Coroutine>();
     private bool _isInGame = false;
     private uint _currentOnceGenerateAmount;
+    private uint _currentGenerateLimit;
     #endregion
 
     #region Constant
@@ -53,6 +58,12 @@ public class EnemyGenerator : MonoBehaviour
 
         //仮の処理
         _isInGame = true;
+    }
+    private void Start()
+    {
+        PlayerController.Instance.Status.CurrentPlayerLevel
+                                        .TakeUntilDestroy(this)
+                                        .Subscribe(_ => AddGenerateLimitAmount());
     }
     #endregion
 
@@ -98,11 +109,11 @@ public class EnemyGenerator : MonoBehaviour
                 Debug.LogError("ボスが指定されていません");
                 break;
         }
-        var currentBoss = _enemyPoolDic[bossType].Rent();
+        var currentBoss = _enemyPoolDic[bossType].Rent(1);
 
         if (currentBoss != null)
         {
-            currentBoss.SetActive(true);
+            currentBoss.gameObject.SetActive(true);
         }
     }
     #endregion
@@ -112,14 +123,18 @@ public class EnemyGenerator : MonoBehaviour
     {
         for (int i = 0; i < _enemies.Length; i++)
         {
-            _enemyPoolDic.Add(_enemies[i].EnemyPrefab.EnemyType, new ObjectPool(_enemies[i].EnemyPrefab.gameObject,
-                                                           _enemies[i].ReserveAmount,
-                                                           _enemies[i].ActivationLimit,
-                                                           _enemies[i].Parent));
+            _enemyPoolDic.Add(_enemies[i].EnemyPrefab.EnemyType, 
+                　　　　　　　new ObjectPool<EnemyBase>(_enemies[i].EnemyPrefab, _enemies[i].Parent));
         }
 
         _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
         _currentOnceGenerateAmount = _onceGenerateAmount;
+        _currentGenerateLimit = _startGenerateLimit;
+        }
+
+    private void AddGenerateLimitAmount()
+    {
+        _currentGenerateLimit += 5;
     }
     #endregion
 
@@ -136,12 +151,12 @@ public class EnemyGenerator : MonoBehaviour
         {
             for (int i = 0; i < _currentOnceGenerateAmount; i++)
             {
-                var enemy = _enemyPoolDic[type].Rent();
+                var enemy = _enemyPoolDic[type].Rent(_currentGenerateLimit);
 
                 //プールに敵オブジェクトがある場合は指定範囲の中でランダムな座標に生成
                 if (enemy != null)
                 {
-                    enemy.SetActive(true);
+                    enemy.gameObject.SetActive(true);
 
                     float randomX = UnityEngine.Random.Range(_playerTrans.position.x + _generatePointAbsValue.x,
                                                              _playerTrans.position.x + _generatePointAbsValue.x + 2.5f);

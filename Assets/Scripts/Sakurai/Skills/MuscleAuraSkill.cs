@@ -31,7 +31,7 @@ public class MuscleAuraSkill : SkillBase
     private float _sumAmount = 1.0f;
 
     /// <summary>現在のオーラ</summary>
-    Aura _currentAura = default;
+    private Aura _currentAura = default;
     #endregion
 
     #region unity methods
@@ -95,6 +95,16 @@ public class MuscleAuraSkill : SkillBase
     public override void AttackUpSkill(float coefficient)
     {
         _currentAttackAmount *= coefficient;
+    }
+
+    /// <summary>
+    /// スキルの状態をリセットする
+    /// </summary>
+    public override void ResetSkill()
+    {
+        base.ResetSkill();
+        Destroy(_currentAura.gameObject);
+        _currentAura = null;
     }
     #endregion
 

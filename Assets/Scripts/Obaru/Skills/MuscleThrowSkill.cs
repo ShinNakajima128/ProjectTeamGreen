@@ -145,22 +145,20 @@ public class MuscleThrowSkill : SkillBase
                 SetTarget();
 
                 //使うダンベルを取得
-                GameObject skillObj = _dumbbellGenerator.DumbbellPool.Rent();
+                Dumbbell skillObj = _dumbbellGenerator.DumbbellPool.Rent();
                 //ダンベルがnullでないなら
                 if (skillObj != null)
                 {
-                    //使用するダンベルのコンポーネントを取得
-                    var dumbbell = skillObj.GetComponent<Dumbbell>();
                     //オブジェクトをアクティブ化
-                    dumbbell.gameObject.SetActive(true);
+                    skillObj.gameObject.SetActive(true);
                     //ダンベルの位置をスキルの位置に
-                    dumbbell.transform.position = transform.position;
+                    skillObj.transform.position = transform.position;
                     //親子関係を解除
-                    dumbbell.gameObject.transform.SetParent(null);
+                    skillObj.gameObject.transform.SetParent(null);
                     //攻撃力を設定
-                    dumbbell.SetAttackAmount(_currentAttackAmount);
+                    skillObj.SetAttackAmount(_currentAttackAmount);
                     //verocityを設定
-                    dumbbell.SetVelocity(_targetDir);
+                    skillObj.SetVelocity(_targetDir);
                 }
             }
             //攻撃間隔分待つ
