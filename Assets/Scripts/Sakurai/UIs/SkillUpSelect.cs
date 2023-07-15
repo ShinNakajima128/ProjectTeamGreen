@@ -25,6 +25,10 @@ public class SkillUpSelect : MonoBehaviour
     [Tooltip("スキル獲得画面グループ")]
     [SerializeField]
     private CanvasGroup _skillUpSelectGroup = default;
+
+    [Tooltip("スキル獲得画面のグリッドレイアウトグループ")]
+    [SerializeField]
+    private GridLayoutGroup _skillUpSelectGrid = default;
     #endregion
 
     #region private
@@ -72,7 +76,6 @@ public class SkillUpSelect : MonoBehaviour
                                                             .Where(x => x.Item.CurrentSkillLevel >= 5)  //第一引数のカレントレベルを調べる。
                                                             .Select(c =>c.Index )　　//カレントレベル5以上のスキルの要素数を取得。
                                                             .ToArray();
-
         _alphaAmount = 1;
         if (maxSkillIndices.Length == _skillSelectUIs.Count)
         {
@@ -83,10 +86,20 @@ public class SkillUpSelect : MonoBehaviour
         else
         {
             //UIの数分を見てそこからOrderByでランダムの値を3つだけ値を取得する。
-            IEnumerable randomIndices = Enumerable.Range(0, _skillSelectUIs.Count)
+            IEnumerable<int> randomIndices = Enumerable.Range(0, _skillSelectUIs.Count)
                                                   .Except(maxSkillIndices)
                                                   .OrderBy(x => UnityEngine.Random.value)
                                                   .Take(_activeAmount);
+
+
+            if (randomIndices.Count() == 2)
+            {
+                _skillUpSelectGrid.padding.left = -270;
+            }
+            else if(randomIndices.Count() == 1)
+            {
+                _skillUpSelectGrid.padding.left = -100;
+            }
 
             //ランダムで取得したUIをアクティブにする。
             foreach (int index in randomIndices)
