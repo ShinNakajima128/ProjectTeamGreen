@@ -987,7 +987,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8457658842452579696}
   m_Layer: 0
-  m_Name: MaxUIs
+  m_Name: HealUIs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7768,6 +7768,9 @@ MonoBehaviour:
   - {fileID: 7847442074863123324}
   _healUI: {fileID: 6709139351116484570}
   _skillUpSelectGroup: {fileID: 8057754399610351717}
+  _skillUpSelectGrid: {fileID: 7847442073764069157}
+  _playerHealth: {fileID: 6401274250604127975, guid: bfc6947bd3d4b6f40aee31ad9f832e15,
+    type: 3}
 --- !u!1 &4428365954337781733
 GameObject:
   m_ObjectHideFlags: 0
@@ -9863,10 +9866,10 @@ RectTransform:
   m_Father: {fileID: 7847442073764069156}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -300, y: -50}
-  m_SizeDelta: {x: 300, y: 400}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7847442074446349705
 CanvasRenderer:
@@ -10266,10 +10269,10 @@ RectTransform:
   m_Father: {fileID: 7847442073764069156}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -50}
+  m_SizeDelta: {x: 300, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7847442075057481643
 CanvasRenderer:

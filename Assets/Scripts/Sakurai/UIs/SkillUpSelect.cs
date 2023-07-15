@@ -29,6 +29,10 @@ public class SkillUpSelect : MonoBehaviour
     [Tooltip("スキル獲得画面のグリッドレイアウトグループ")]
     [SerializeField]
     private GridLayoutGroup _skillUpSelectGrid = default;
+
+    [Tooltip("プレイヤー回復用コンポーネント")]
+    [SerializeField]
+     private PlayerHealth _playerHealth = default;
     #endregion
 
     #region private
@@ -53,6 +57,9 @@ public class SkillUpSelect : MonoBehaviour
                                         .TakeUntilDestroy(this)
                                         .Skip(1)
                                         .Subscribe(_ => ActivateRondomSkillUIs());
+
+        float healAmount = 10.0f;
+        _healUI.onClick.AddListener(() => PlayerHeal(healAmount));
                                                 
         for (int i = 0; i < _skillSelectUIs.Count; i++)
         {
@@ -81,6 +88,7 @@ public class SkillUpSelect : MonoBehaviour
         {
             _healUI.gameObject.SetActive(true);
             CanvasGroupChange(true);
+            Time.timeScale = 0;
             return;
         }
         else
@@ -111,6 +119,20 @@ public class SkillUpSelect : MonoBehaviour
             //ゲーム画面を止める。
             Time.timeScale = 0f;
         }
+    }
+    #endregion
+
+    #region public method
+    public void PlayerHeal(float healAmount)
+    {
+        _playerHealth.Heal(healAmount);
+
+        _healUI.gameObject.SetActive(false);
+
+        _alphaAmount = 0;
+        CanvasGroupChange(false);
+        //ゲーム画面を再開
+        Time.timeScale = 1f;
     }
     #endregion
 
