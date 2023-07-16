@@ -25,6 +25,14 @@ public class SkillUpSelect : MonoBehaviour
     [Tooltip("スキル獲得画面グループ")]
     [SerializeField]
     private CanvasGroup _skillUpSelectGroup = default;
+
+    [Tooltip("スキル獲得画面のグリッドレイアウトグループ")]
+    [SerializeField]
+    private GridLayoutGroup _skillUpSelectGrid = default;
+
+    [Tooltip("プレイヤー回復用コンポーネント")]
+    [SerializeField]
+    private PlayerHealth _playerHealth = default;
     #endregion
 
     #region private
@@ -49,6 +57,9 @@ public class SkillUpSelect : MonoBehaviour
                                         .TakeUntilDestroy(this)
                                         .Skip(1)
                                         .Subscribe(_ => ActivateRondomSkillUIs());
+
+        float healAmount = 10.0f;
+        _healUI.onClick.AddListener(() => PlayerHeal(healAmount));
                                                 
         for (int i = 0; i < _skillSelectUIs.Count; i++)
         {
@@ -69,7 +80,7 @@ public class SkillUpSelect : MonoBehaviour
     public void ActivateRondomSkillUIs()
     {
         int[] maxSkillIndices = SkillManager.Instance.Skills.Select((item,index) => new {Item = item , Index = index})  //Skillsの第一引数が要素、第二が要素のインデックス番号。
-                                                            .Where(x => x.Item.CurrentSkillLevel >= 5)  //第一引数のカレントレベルを調べる。
+                                                            .Where(x => x.Item.CurrentSkillLevel >=5 )  //第一引数のカレントレベルを調べる。
                                                             .Select(c =>c.Index )　　//カレントレベル5以上のスキルの要素数を取得。
                                                             .ToArray();
 
@@ -78,15 +89,20 @@ public class SkillUpSelect : MonoBehaviour
         {
             _healUI.gameObject.SetActive(true);
             CanvasGroupChange(true);
+            Time.timeScale = 0;
             return;
         }
         else
         {
             //UIの数分を見てそこからOrderByでランダムの値を3つだけ値を取得する。
-            IEnumerable randomIndices = Enumerable.Range(0, _skillSelectUIs.Count)
-                                                  .Except(maxSkillIndices)
-                                                  .OrderBy(x => UnityEngine.Random.value)
-                                                  .Take(_activeAmount);
+            IEnumerable<int> randomIndices = Enumerable.Range(0, _skillSelectUIs.Count)
+                                                       .Except(maxSkillIndices)
+                                                       .OrderBy(x => UnityEngine.Random.value)
+                                                       .Take(_activeAmount);
+
+            //レベルマックスではないスキルが残り1or2個であればpaddingの値を変更。
+            int gridLeftAmount = (randomIndices.Count() >= 3) ? -450:(randomIndices.Count() == 2) ? -270 : -100; 
+            _skillUpSelectGrid.padding.left = gridLeftAmount;
 
             //ランダムで取得したUIをアクティブにする。
             foreach (int index in randomIndices)
@@ -98,6 +114,20 @@ public class SkillUpSelect : MonoBehaviour
             //ゲーム画面を止める。
             Time.timeScale = 0f;
         }
+    }
+    #endregion
+
+    #region public method
+    public void PlayerHeal(float healAmount)
+    {
+        _playerHealth.Heal(healAmount);
+
+        _healUI.gameObject.SetActive(false);
+
+        _alphaAmount = 0;
+        CanvasGroupChange(false);
+        //ゲーム画面を再開
+        Time.timeScale = 1f;
     }
     #endregion
 
