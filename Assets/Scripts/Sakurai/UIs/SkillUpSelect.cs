@@ -32,7 +32,7 @@ public class SkillUpSelect : MonoBehaviour
 
     [Tooltip("プレイヤー回復用コンポーネント")]
     [SerializeField]
-     private PlayerHealth _playerHealth = default;
+    private PlayerHealth _playerHealth = default;
     #endregion
 
     #region private
@@ -80,9 +80,10 @@ public class SkillUpSelect : MonoBehaviour
     public void ActivateRondomSkillUIs()
     {
         int[] maxSkillIndices = SkillManager.Instance.Skills.Select((item,index) => new {Item = item , Index = index})  //Skillsの第一引数が要素、第二が要素のインデックス番号。
-                                                            .Where(x => x.Item.CurrentSkillLevel >= 5)  //第一引数のカレントレベルを調べる。
+                                                            .Where(x => x.Item.CurrentSkillLevel >=5 )  //第一引数のカレントレベルを調べる。
                                                             .Select(c =>c.Index )　　//カレントレベル5以上のスキルの要素数を取得。
                                                             .ToArray();
+
         _alphaAmount = 1;
         if (maxSkillIndices.Length == _skillSelectUIs.Count)
         {
@@ -95,19 +96,13 @@ public class SkillUpSelect : MonoBehaviour
         {
             //UIの数分を見てそこからOrderByでランダムの値を3つだけ値を取得する。
             IEnumerable<int> randomIndices = Enumerable.Range(0, _skillSelectUIs.Count)
-                                                  .Except(maxSkillIndices)
-                                                  .OrderBy(x => UnityEngine.Random.value)
-                                                  .Take(_activeAmount);
+                                                       .Except(maxSkillIndices)
+                                                       .OrderBy(x => UnityEngine.Random.value)
+                                                       .Take(_activeAmount);
 
-
-            if (randomIndices.Count() == 2)
-            {
-                _skillUpSelectGrid.padding.left = -270;
-            }
-            else if(randomIndices.Count() == 1)
-            {
-                _skillUpSelectGrid.padding.left = -100;
-            }
+            //レベルマックスではないスキルが残り1or2個であればpaddingの値を変更。
+            int gridLeftAmount = (randomIndices.Count() >= 3) ? -450:(randomIndices.Count() == 2) ? -270 : -100; 
+            _skillUpSelectGrid.padding.left = gridLeftAmount;
 
             //ランダムで取得したUIをアクティブにする。
             foreach (int index in randomIndices)
