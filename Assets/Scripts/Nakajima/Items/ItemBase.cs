@@ -35,7 +35,7 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
 
     Rigidbody2D _rb2d;
 
-    private float _arrivalTime = 2.0f;
+    private float m_arrivalTime = 0.6f;
     #endregion
 
     #region Constant
@@ -59,7 +59,7 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
     private void OnEnable()
     {
         _itemPosition = transform.position;
-        _period = _arrivalTime;
+        _period = m_arrivalTime;
     }
 
     private void OnDisable()
@@ -88,16 +88,20 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
     public IEnumerator ItemGet(PlayerController player, Transform playerPos)
     {
         _itemPosition = transform.position;
-        while (_period > 0.5f)
+
+        Vector2 initialDirection = _itemPosition - (Vector2)playerPos.position;
+        initialDirection.Normalize();
+        float initialSpeed = 3.0f; //初期移動速度
+        _velocity = initialDirection * initialSpeed;
+
+        float useDistance = 0.2f;
+
+        while (Vector2.Distance(_itemPosition,playerPos.position) > useDistance)
         {
             var acceleration = _rb2d.velocity;
             var diff = (Vector2)playerPos.position - _itemPosition;
             acceleration += (diff - _velocity * _period) * 2.0f / (_period * _period);
             _period -= Time.deltaTime;
-
-            _velocity += acceleration * Time.deltaTime;
-            _itemPosition += _velocity * Time.deltaTime;
-            transform.position = _itemPosition;
 
             _velocity += acceleration * Time.deltaTime;
             _itemPosition += _velocity * Time.deltaTime;
