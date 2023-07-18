@@ -23,22 +23,19 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
     [Tooltip("アイテムデータ")]
     [SerializeField]
     private ItemData _itemData = default;
-
-    [Tooltip("プレイヤーのポジション")]
-    [SerializeField]
-    private Transform _playerPositon;
     #endregion
 
     #region private
     private Vector2 _itemPosition;
 
-    private bool _isUpdated = false;
 
-    private Vector2 _velocty;
+    private Vector2 _velocity;
 
     private float _period;
 
     Rigidbody2D _rb2d;
+
+    private float _arrivalTime = 2.0f;
     #endregion
 
     #region Constant
@@ -57,6 +54,12 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
     private void Start()
     {
 
+    }
+
+    private void OnEnable()
+    {
+        _itemPosition = transform.position;
+        _period = _arrivalTime;
     }
 
     private void OnDisable()
@@ -82,32 +85,28 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
     #region private method
     #endregion
 
-    IEnumerator ItemGet(PlayerController player)
+    public IEnumerator ItemGet(PlayerController player, Transform playerPos)
     {
-        if (_isUpdated)
+        _itemPosition = transform.position;
+        while (_period > 0.5f)
         {
-            _itemPosition = transform.position;
-            _isUpdated = false;
+            var acceleration = _rb2d.velocity;
+            var diff = (Vector2)playerPos.position - _itemPosition;
+            acceleration += (diff - _velocity * _period) * 2.0f / (_period * _period);
+            _period -= Time.deltaTime;
+
+            _velocity += acceleration * Time.deltaTime;
+            _itemPosition += _velocity * Time.deltaTime;
+            transform.position = _itemPosition;
+
+            _velocity += acceleration * Time.deltaTime;
+            _itemPosition += _velocity * Time.deltaTime;
+            transform.position = _itemPosition;
+
+            yield return null;
         }
-
-        var acceleration = _rb2d.velocity;
-        var diff = (Vector2)_playerPositon.position - _itemPosition;
-        acceleration += (diff - _velocty * _period) * 2.0f / (_period * _period);
-        _period -= Time.deltaTime;
-
-        _velocty += acceleration * Time.deltaTime;
-        _itemPosition += _velocty * Time.deltaTime;
-        transform.position = _itemPosition;
-
-        Vector2 currentDistance = transform.position;
-
-        yield return null;
-
-        //if (currentDistance <= 0)
-        //{
-        //    Use(player);
-        //}
-
+        Use(player);
+        this.gameObject.SetActive(false);
     }
 
     public void ReturnPool()
