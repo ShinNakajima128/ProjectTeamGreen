@@ -103,8 +103,11 @@ public class MuscleAuraSkill : SkillBase
     public override void ResetSkill()
     {
         base.ResetSkill();
-        Destroy(_currentAura.gameObject);
-        _currentAura = null;
+        if (_currentAura != null)
+        {
+            Destroy(_currentAura.gameObject);
+            _currentAura = null;
+        }
     }
     #endregion
 
