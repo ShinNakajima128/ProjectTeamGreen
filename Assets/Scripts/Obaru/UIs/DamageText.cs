@@ -72,6 +72,7 @@ public class DamageText : MonoBehaviour, IPoolable
         }
         //テキストのフェード値を元に戻す
         _damageText.DOFade(1, 0);
+        _inactiveSubject.OnNext(Unit.Default);
     }
     #endregion
 
