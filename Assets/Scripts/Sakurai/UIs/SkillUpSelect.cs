@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using UniRx;
+using DG.Tweening;
 
 /// <summary>
 /// スキルアップ時のUI管理
@@ -107,7 +108,7 @@ public class SkillUpSelect : MonoBehaviour
             //ランダムで取得したUIをアクティブにする。
             foreach (int index in randomIndices)
             {
-                _skillSelectUIs[index].gameObject.SetActive(true);
+                 _skillSelectUIs[index].gameObject.SetActive(true);
             }
             CanvasGroupChange(true);
 

@@ -29,8 +29,8 @@ Transform:
   m_Children:
   - {fileID: 6081314993622381871}
   - {fileID: 8767298794262439336}
-  - {fileID: 6106057511394468907}
   - {fileID: 8468211977644228662}
+  - {fileID: 6106057511394468907}
   - {fileID: 5750000313029909710}
   - {fileID: 4450332287827270563}
   - {fileID: 7493415904120809670}
@@ -84,8 +84,8 @@ MonoBehaviour:
   _skills:
   - {fileID: 615132988994988202}
   - {fileID: 2932161964424419589}
-  - {fileID: 9076031519427252960}
   - {fileID: 4658681808403298644}
+  - {fileID: 9076031519427252960}
   - {fileID: 5750000313029909553}
   - {fileID: 4450332287827270566}
 --- !u!1001 &898710436113467371
@@ -358,7 +358,7 @@ PrefabInstance:
     - target: {fileID: 2964477411638937897, guid: 580ca9d6cb10a4b44bb6ccb093e1fbf7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2964477411638937897, guid: 580ca9d6cb10a4b44bb6ccb093e1fbf7,
         type: 3}
@@ -537,7 +537,7 @@ PrefabInstance:
     - target: {fileID: 2393719388478529040, guid: 251b7428bc9ca4aaf8c3bf9e2dc54a01,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2393719388478529040, guid: 251b7428bc9ca4aaf8c3bf9e2dc54a01,
         type: 3}
