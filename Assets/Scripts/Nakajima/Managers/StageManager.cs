@@ -16,6 +16,7 @@ public class StageManager : MonoBehaviour
     public IObservable<Unit> GameStartObserver => _gameStartSubject;
     public IObservable<bool> GamePauseObserver => _gamePauseSubject;
     public IObservable<Unit> GameEndObserver => _gameEndSubject;
+    public IObservable<Unit> GameResetObserver => _gameResetSubject;
     #endregion
 
     #region serialize
@@ -36,6 +37,8 @@ public class StageManager : MonoBehaviour
     private Subject<bool> _gamePauseSubject = new Subject<bool>();
     /// <summary>ゲーム終了時のSubject</summary>
     private Subject<Unit> _gameEndSubject = new Subject<Unit>();
+    /// <summary>ゲームの内容をリセットするSubject</summary>
+    private Subject<Unit> _gameResetSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
@@ -71,6 +74,14 @@ public class StageManager : MonoBehaviour
     {
         _gameEndSubject.OnNext(Unit.Default);
         _isInGameSubject.OnNext(false);
+    }
+
+    /// <summary>
+    /// ゲームをリセットする
+    /// </summary>
+    public void OnGameReset()
+    {
+        _gameResetSubject.OnNext(Unit.Default);
     }
     #endregion
 
