@@ -81,16 +81,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         _input.actions["Move"].canceled -= StopMove;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //アイテムオブジェクトに当たった場合
-        if (collision.CompareTag(GameTag.Item))
-        {
-            var item = collision.GetComponent<ItemBase>();
-
-            //item.Use(this);
-        }
-    }
     #endregion
 
     #region public method

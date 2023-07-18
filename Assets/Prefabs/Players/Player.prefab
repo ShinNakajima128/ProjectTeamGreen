@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6271645416469885306}
   - component: {fileID: 4861855586001680474}
+  - component: {fileID: 3083213855857235260}
   m_Layer: 16
   m_Name: ItemGetCollider
   m_TagString: Untagged
@@ -46,7 +47,19 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 2
+--- !u!114 &3083213855857235260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742627385065702563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74a633697004b40309c4a4169d4d4e9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6401274250604127983
 GameObject:
   m_ObjectHideFlags: 0
