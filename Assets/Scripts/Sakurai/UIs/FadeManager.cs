@@ -13,6 +13,7 @@ public class FadeManager : MonoBehaviour
     #region property
     /// <summary>フェードマネージャーのプロパティ</summary>
     public static FadeManager Instance { get; private set; }
+    public static bool IsFading => Instance._isFading;
     #endregion
 
     #region serialize
@@ -55,6 +56,7 @@ public class FadeManager : MonoBehaviour
             return;
         }
         Instance.StartCoroutine(Instance.Transition(type, callback));
+        Instance._isFading = true;
     }
     #endregion
 
@@ -117,6 +119,7 @@ public class FadeManager : MonoBehaviour
                                 .WaitForCompletion();
 
         _effectMaterial.SetFloat(_progressId, (type == FadeType.In) ? 1f : 0f);
+        Instance._isFading = false;
     }
 }
 
