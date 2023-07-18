@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             var item = collision.GetComponent<ItemBase>();
 
-            item.Use(this);
+            //item.Use(this);
         }
     }
     #endregion
