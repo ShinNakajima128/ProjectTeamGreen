@@ -114,6 +114,34 @@ public class EnemyGenerator : MonoBehaviour
         if (currentBoss != null)
         {
             currentBoss.gameObject.SetActive(true);
+            int randomXY = UnityEngine.Random.Range(0, 2);
+            float randomX, randomY;
+
+            if (randomXY == 0)
+            {
+                randomX = UnityEngine.Random.Range(_playerTrans.position.x,
+                                                   _playerTrans.position.x + _generatePointAbsValue.x + 2.5f);
+                randomY = UnityEngine.Random.Range(_playerTrans.position.y + _generatePointAbsValue.y,
+                                                   _playerTrans.position.y + _generatePointAbsValue.y + 2.5f);
+
+                randomX = UnityEngine.Random.Range(0, 2) == 0 ? randomX : -randomX;
+                randomY = UnityEngine.Random.Range(0, 2) == 0 ? randomY : randomY - (_generatePointAbsValue.y * -2);
+
+            }
+            else
+            {
+                randomX = UnityEngine.Random.Range(_playerTrans.position.x + _generatePointAbsValue.x,
+                                                   _playerTrans.position.x + _generatePointAbsValue.x + 2.5f);
+                randomY = UnityEngine.Random.Range(_playerTrans.position.y,
+                                                   _playerTrans.position.y + _generatePointAbsValue.y + 2.5f);
+
+                randomX = UnityEngine.Random.Range(0, 2) == 0 ? randomX : randomX - (_generatePointAbsValue.x * -2);
+                randomY = UnityEngine.Random.Range(0, 2) == 0 ? randomY : -randomY;
+            }
+
+            Vector2 generatePos = new Vector2(randomX, randomY);
+
+            currentBoss.gameObject.transform.localPosition = generatePos;
         }
     }
     #endregion
@@ -123,18 +151,19 @@ public class EnemyGenerator : MonoBehaviour
     {
         for (int i = 0; i < _enemies.Length; i++)
         {
-            _enemyPoolDic.Add(_enemies[i].EnemyPrefab.EnemyType, 
-                　　　　　　　new ObjectPool<EnemyBase>(_enemies[i].EnemyPrefab, _enemies[i].Parent));
+            _enemyPoolDic.Add(_enemies[i].EnemyPrefab.EnemyType,
+                new ObjectPool<EnemyBase>(_enemies[i].EnemyPrefab, _enemies[i].Parent));
         }
 
         _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
         _currentOnceGenerateAmount = _onceGenerateAmount;
         _currentGenerateLimit = _startGenerateLimit;
-        }
+    }
 
     private void AddGenerateLimitAmount()
     {
         _currentGenerateLimit += 5;
+        _currentOnceGenerateAmount++;
     }
     #endregion
 
@@ -157,20 +186,35 @@ public class EnemyGenerator : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.gameObject.SetActive(true);
+                    int randomXY = UnityEngine.Random.Range(0, 2);
+                    float randomX, randomY;
 
-                    float randomX = UnityEngine.Random.Range(_playerTrans.position.x + _generatePointAbsValue.x,
-                                                             _playerTrans.position.x + _generatePointAbsValue.x + 2.5f);
-                    float randomY = UnityEngine.Random.Range(_playerTrans.position.y,
-                                                             _playerTrans.position.y + _generatePointAbsValue.y);
+                    if (randomXY == 0)
+                    {
+                        randomX = UnityEngine.Random.Range(_playerTrans.position.x - _generatePointAbsValue.x - 1.5f,
+                                                           _playerTrans.position.x + _generatePointAbsValue.x + 1.5f);
+                        randomY = UnityEngine.Random.Range(_playerTrans.position.y + _generatePointAbsValue.y,
+                                                           _playerTrans.position.y + _generatePointAbsValue.y + 2.5f);
 
-                    randomX = UnityEngine.Random.Range(0, 2) == 0 ? randomX : randomX * -1;
-                    randomY = UnityEngine.Random.Range(0, 2) == 0 ? randomY : randomY * -1;
+                        randomY = UnityEngine.Random.Range(0, 2) == 0 ? randomY : randomY - (Vector2.Distance(_playerTrans.position,
+                                                                                                              new Vector2(_playerTrans.position.x, randomY)) * -2);
 
+                    }
+                    else
+                    {
+                        randomX = UnityEngine.Random.Range(_playerTrans.position.x + _generatePointAbsValue.x,
+                                                           _playerTrans.position.x + _generatePointAbsValue.x + 1.5f);
+                        randomY = UnityEngine.Random.Range(_playerTrans.position.y - _generatePointAbsValue.y - 2f,
+                                                           _playerTrans.position.y + _generatePointAbsValue.y + 2f);
+
+                        randomX = UnityEngine.Random.Range(0, 2) == 0 ? randomX : randomX - (Vector2.Distance(_playerTrans.position,
+                                                                                                              new Vector2(randomX, _playerTrans.position.y)) * -2);
+                    }
                     Vector2 generatePos = new Vector2(randomX, randomY);
                     enemy.transform.localPosition = generatePos;
                 }
             }
-            
+
             yield return interval;
         }
     }
@@ -181,7 +225,7 @@ public class EnemyGenerator : MonoBehaviour
 /// 敵
 /// </summary>
 [Serializable]
-class Enemy 
+class Enemy
 {
     public string EnemyName;
     public EnemyBase EnemyPrefab;
