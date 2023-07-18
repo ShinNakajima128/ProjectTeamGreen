@@ -13,6 +13,7 @@ using TMPro;
 [RequireComponent(typeof(TitleUI))]
 [RequireComponent(typeof(GamePauseUI))]
 [RequireComponent(typeof(SkillUpSelect))]
+[RequireComponent(typeof(ResultUI))]
 public class HUDManager : MonoBehaviour
 {
     #region property
@@ -29,6 +30,7 @@ public class HUDManager : MonoBehaviour
     private TitleUI _title;
     private GamePauseUI _gamePause;
     private SkillUpSelect _skillUpSelect;
+    private ResultUI _result;
     #endregion
 
     #region Constant
@@ -76,6 +78,7 @@ public class HUDManager : MonoBehaviour
         _title = GetComponent<TitleUI>();
         _gamePause = GetComponent<GamePauseUI>();
         _skillUpSelect = GetComponent<SkillUpSelect>();
+        _result = GetComponent<ResultUI>();
 
         _playerStatus.ChangeActivePanelView(false);
         _gameStatus.ChangeActivePanelView(false);
@@ -87,6 +90,14 @@ public class HUDManager : MonoBehaviour
               {
                   StageManager.Instance.OnGameStart();
               });
+
+        //ゲーム終了時にリザルト画面を表示する処理を登録
+        StageManager.Instance.GameEndObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ =>
+                             {
+                                 _result.OnResultView();
+                             });
     }
     #endregion
 }
