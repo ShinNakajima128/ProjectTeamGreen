@@ -98,6 +98,17 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
                     x.Damage(_currentAttackAmount);
                 }
             });
+
+        //プレイヤーから一定距離離れたらプールに戻る処理を登録
+        Observable.Interval(TimeSpan.FromSeconds(3f))
+                  .TakeUntilDestroy(this)
+                  .Subscribe(_ =>
+                  {
+                      if (Vector2.Distance(_playerTrans.position, transform.position) >= 15f)
+                      {
+                          gameObject.SetActive(false);
+                      }
+                  });
     }
 
     protected virtual void OnEnable()

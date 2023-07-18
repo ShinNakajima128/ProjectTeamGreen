@@ -11,6 +11,7 @@ public class PlayerStatus : MonoBehaviour
 {
     #region property
     public float SkillAttackCoefficient => _skillAttackCoefficient;
+    public uint CurrentPlayerLevelAmount => _currentPlayerLevel.Value;
     public IObservable<uint> CurrentPlayerLevel => _currentPlayerLevel;
     public IObservable<uint> CurrentExp => _currentExp;
     public IObservable<uint> CurrentRequireExp => _currentRequireExp;
@@ -38,7 +39,7 @@ public class PlayerStatus : MonoBehaviour
 
     #region Constant
     /// <summary>次のレベルアップ時に必要な経験値に掛け合わせる倍率</summary>
-    private const float EXP_LEVERAGE = 1.2f;
+    private const float EXP_LEVERAGE = 1.5f;
     #endregion
 
     #region Event
@@ -79,7 +80,7 @@ public class PlayerStatus : MonoBehaviour
 
             _currentPlayerLevel.Value++;
             _currentExp.Value = overFlowExp;
-            _currentRequireExp.Value = (uint)(_currentRequireExp.Value * EXP_LEVERAGE);
+            _currentRequireExp.Value = (uint)((_currentRequireExp.Value + (_currentRequireExp.Value / 2)) * EXP_LEVERAGE);
         }
         _getEXPSubject.OnNext((float)_currentExp.Value / _currentRequireExp.Value);
         Debug.Log($"{_currentExp.Value} / {_currentRequireExp.Value}:{((float) _currentExp.Value / _currentRequireExp.Value) * 100}");

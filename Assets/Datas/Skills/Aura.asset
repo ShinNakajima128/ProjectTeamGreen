@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Aura
   m_EditorClassIdentifier: 
   _skillType: 0
-  _attackAmount: 3
+  _attackAmount: 1.5
   _correctionvalue: 1
