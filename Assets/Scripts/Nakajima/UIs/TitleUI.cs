@@ -44,6 +44,14 @@ public class TitleUI : MonoBehaviour
     {
         Setup();
     }
+
+    private void Start()
+    {
+        //アクティブ状態の切り替え処理を登録
+        SignalManager.Instance.ChangeTitleActiveObserver
+                     .TakeUntilDestroy(this)
+                     .Subscribe(_ => ChangeActive());
+    }
     #endregion
 
     #region public method
@@ -77,6 +85,21 @@ public class TitleUI : MonoBehaviour
             _pressStartButtonSubject.OnNext(Unit.Default);
             AudioManager.PlayBGM(BGMType.InGame);
         });
+    }
+
+    /// <summary>
+    /// アクティブ状態の切り替え
+    /// </summary>
+    private void ChangeActive()
+    {
+        if (gameObject.activeSelf)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
     }
     #endregion
 }
