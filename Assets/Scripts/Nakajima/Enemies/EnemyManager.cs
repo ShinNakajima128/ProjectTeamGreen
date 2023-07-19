@@ -64,7 +64,7 @@ public class EnemyManager : MonoBehaviour
                     .Subscribe(_ =>
                     {
                         _generator.OnEnemyGenerate(EnemyType.Wave1_Chase1);
-                        _generator.OnEnemyGenerate(EnemyType.Wave1_Point1);
+                        //_generator.OnEnemyGenerate(EnemyType.Wave1_Point1);
                     });
         
         

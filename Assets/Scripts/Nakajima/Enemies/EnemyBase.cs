@@ -104,7 +104,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
                   .TakeUntilDestroy(this)
                   .Subscribe(_ =>
                   {
-                      if (Vector2.Distance(_playerTrans.position, transform.position) >= 15f)
+                      if (Vector2.Distance(_playerTrans.position, transform.position) >= 10f)
                       {
                           gameObject.SetActive(false);
                       }

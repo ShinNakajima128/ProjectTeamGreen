@@ -114,30 +114,11 @@ public class EnemyGenerator : MonoBehaviour
         if (currentBoss != null)
         {
             currentBoss.gameObject.SetActive(true);
-            int randomXY = UnityEngine.Random.Range(0, 2);
             float randomX, randomY;
+            int randomRad = UnityEngine.Random.Range(0, 360);
 
-            if (randomXY == 0)
-            {
-                randomX = UnityEngine.Random.Range(_playerTrans.position.x,
-                                                   _playerTrans.position.x + _generatePointAbsValue.x + 2.5f);
-                randomY = UnityEngine.Random.Range(_playerTrans.position.y + _generatePointAbsValue.y,
-                                                   _playerTrans.position.y + _generatePointAbsValue.y + 2.5f);
-
-                randomX = UnityEngine.Random.Range(0, 2) == 0 ? randomX : -randomX;
-                randomY = UnityEngine.Random.Range(0, 2) == 0 ? randomY : randomY - (_generatePointAbsValue.y * -2);
-
-            }
-            else
-            {
-                randomX = UnityEngine.Random.Range(_playerTrans.position.x + _generatePointAbsValue.x,
-                                                   _playerTrans.position.x + _generatePointAbsValue.x + 2.5f);
-                randomY = UnityEngine.Random.Range(_playerTrans.position.y,
-                                                   _playerTrans.position.y + _generatePointAbsValue.y + 2.5f);
-
-                randomX = UnityEngine.Random.Range(0, 2) == 0 ? randomX : randomX - (_generatePointAbsValue.x * -2);
-                randomY = UnityEngine.Random.Range(0, 2) == 0 ? randomY : -randomY;
-            }
+            randomX = _generatePointAbsValue.x * Mathf.Sin(Time.time * randomRad);
+            randomY = _generatePointAbsValue.y * Mathf.Cos(Time.time * randomRad);
 
             Vector2 generatePos = new Vector2(randomX, randomY);
 
@@ -186,31 +167,14 @@ public class EnemyGenerator : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.gameObject.SetActive(true);
-                    int randomXY = UnityEngine.Random.Range(0, 2);
                     float randomX, randomY;
 
-                    if (randomXY == 0)
-                    {
-                        randomX = UnityEngine.Random.Range(_playerTrans.position.x - _generatePointAbsValue.x - 1.5f,
-                                                           _playerTrans.position.x + _generatePointAbsValue.x + 1.5f);
-                        randomY = UnityEngine.Random.Range(_playerTrans.position.y + _generatePointAbsValue.y,
-                                                           _playerTrans.position.y + _generatePointAbsValue.y + 2.5f);
+                    int randomRad = UnityEngine.Random.Range(0, 360);
+                    
+                    randomX = _generatePointAbsValue.x * Mathf.Sin(Time.time * randomRad);
+                    randomY = _generatePointAbsValue.y * Mathf.Cos(Time.time * randomRad);
 
-                        randomY = UnityEngine.Random.Range(0, 2) == 0 ? randomY : randomY - (Vector2.Distance(_playerTrans.position,
-                                                                                                              new Vector2(_playerTrans.position.x, randomY)) * -2);
-
-                    }
-                    else
-                    {
-                        randomX = UnityEngine.Random.Range(_playerTrans.position.x + _generatePointAbsValue.x,
-                                                           _playerTrans.position.x + _generatePointAbsValue.x + 1.5f);
-                        randomY = UnityEngine.Random.Range(_playerTrans.position.y - _generatePointAbsValue.y - 2f,
-                                                           _playerTrans.position.y + _generatePointAbsValue.y + 2f);
-
-                        randomX = UnityEngine.Random.Range(0, 2) == 0 ? randomX : randomX - (Vector2.Distance(_playerTrans.position,
-                                                                                                              new Vector2(randomX, _playerTrans.position.y)) * -2);
-                    }
-                    Vector2 generatePos = new Vector2(randomX, randomY);
+                    Vector2 generatePos = new Vector2(_playerTrans.position.x + randomX, _playerTrans.position.y + randomY);
                     enemy.transform.localPosition = generatePos;
                 }
             }
