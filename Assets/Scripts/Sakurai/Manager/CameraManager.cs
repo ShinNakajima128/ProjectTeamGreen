@@ -21,6 +21,7 @@ public class CameraManager : MonoBehaviour
     #endregion
 
     #region Constant
+    private const int PriorityAmount = 11;
     #endregion
 
     #region Event
@@ -47,7 +48,7 @@ public class CameraManager : MonoBehaviour
     #endregion
 
     #region public method
-    public void CameraChange(CameraType cameraType,int priorityAmount)
+    public void CameraChange(CameraType cameraType)
     {
         Debug.Log("実行");
 
@@ -57,8 +58,7 @@ public class CameraManager : MonoBehaviour
         {
             camera.Value.Priority = _initialPriority;
         }
-
-        _camerasDic[cameraType].Priority = priorityAmount;
+        _camerasDic[cameraType].Priority = PriorityAmount;
         
     }
     #endregion
