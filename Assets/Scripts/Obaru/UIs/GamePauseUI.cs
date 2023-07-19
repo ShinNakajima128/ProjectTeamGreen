@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
+using UniRx;
 
 /// <summary>
 /// ポーズボタンを押した時の処理
@@ -35,11 +37,21 @@ public class GamePauseUI : MonoBehaviour
     #endregion
 
     #region unity methods
-    private void Start()
+    private void Awake()
     {
-        //ボタン押下時の処理を設定
-        _pauseButton.onClick.AddListener(() => PauseGame());
-        _continueButton.onClick.AddListener(() => PauseEnd());
+        //ポーズボタンを押した時の処理を追加
+        _pauseButton.OnClickAsObservable()
+            .TakeUntilDestroy(this)
+            //連打防止処理。一度押されてから「5」秒経つまでは次の処理を実行しない
+            .ThrottleFirst(TimeSpan.FromMilliseconds(5000))
+            .Subscribe(_ => PauseGame());
+
+        //コンティニューボタンを押した時の処理を追加
+        _continueButton.OnClickAsObservable()
+            .TakeUntilDestroy(this)
+            //連打防止処理。一度押されてから「5」秒経つまでは次の処理を実行しない
+            .ThrottleFirst(TimeSpan.FromMilliseconds(5000))
+            .Subscribe(_ => PauseEnd());
     }
     #endregion
 
