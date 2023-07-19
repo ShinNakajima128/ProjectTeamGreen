@@ -88,17 +88,20 @@ public class TitleUI : MonoBehaviour
     }
 
     /// <summary>
-    /// アクティブ状態の切り替え
+    /// タイトルパネルのアクティブ状態の切り替え
     /// </summary>
     private void ChangeActive()
     {
-        if (gameObject.activeSelf)
+        //タイトルパネルの親のキャンバス
+        var parentCanvas = _titlePanel.transform.parent.gameObject;
+
+        if (parentCanvas.activeSelf)
         {
-            gameObject.SetActive(false);
+            parentCanvas.SetActive(false);
         }
         else
         {
-            gameObject.SetActive(true);
+            parentCanvas.SetActive(true);
         }
     }
     #endregion
