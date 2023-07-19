@@ -42,6 +42,9 @@ public class TimeManager : MonoBehaviour
 
     #region Event
     private Subject<EnemyType> _bossEventSubject = new Subject<EnemyType>();
+    private IObservable<long> _currentTimeEvent;
+    private IDisposable _resetEvent;
+    private Coroutine _currentCoroutine;
     #endregion
 
     #region unity methods
@@ -64,6 +67,14 @@ public class TimeManager : MonoBehaviour
                              _limitTimeTMP.text = $"{value / 60:00} : {(value % 60):00}";
                              
                          });
+
+        //ゲームリセット時の処理を登録
+        StageManager.Instance.GameResetObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => 
+                             {
+                                 OnReset();
+                             });
     }
     #endregion
 
@@ -77,20 +88,20 @@ public class TimeManager : MonoBehaviour
     private void OnLimitAndEventTimer()
     {
         //指定された時間毎にイベントを発行するタイマーを起動
-        var s = _bossEvents.Select(e => Observable.Timer(TimeSpan.FromSeconds(e.InvokeTime)))
-                           .Merge();
+        _currentTimeEvent = _bossEvents.Select(e => Observable.Timer(TimeSpan.FromSeconds(e.InvokeTime)))
+                                       .Merge();
         
         uint currentBossEventIndex = 0;
 
         //ボスイベント発光の処理を登録
-        s.TakeUntilDestroy(this)
-         .Subscribe(_ =>
-         {
-             _bossEventSubject.OnNext(_bossEvents[currentBossEventIndex].BossType);
-             currentBossEventIndex++;
-         });
+        _resetEvent = _currentTimeEvent.TakeUntilDestroy(this)
+                         .Subscribe(_ =>
+                         {
+                             _bossEventSubject.OnNext(_bossEvents[currentBossEventIndex].BossType);
+                             currentBossEventIndex++;
+                         });
 
-        StartCoroutine(OnLimitTimerCoroutine());
+        _currentCoroutine = StartCoroutine(OnLimitTimerCoroutine());
     }
     #endregion
 
@@ -106,6 +117,23 @@ public class TimeManager : MonoBehaviour
             _currentLimitTime.Value -= TIME_SECOND;
             yield return interval;
         }
+    }
+
+    private void OnReset()
+    {
+        if (_resetEvent != null)
+        {
+            _resetEvent.Dispose();
+            _resetEvent = null;
+        }
+
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+            _currentCoroutine = null;
+        }
+
+        _currentLimitTime.Value = _limitTime * 60;
     }
     #endregion
 }

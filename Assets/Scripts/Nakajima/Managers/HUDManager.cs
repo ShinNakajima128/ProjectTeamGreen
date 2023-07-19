@@ -99,5 +99,14 @@ public class HUDManager : MonoBehaviour
                   StageManager.Instance.OnGameStart();
               });
     }
+
+    /// <summary>
+    /// タイトル画面を表示する
+    /// </summary>
+    public void OnTitleView()
+    {
+        _title.ActivePanel();
+        AudioManager.PlayBGM(BGMType.Title);
+    }
     #endregion
 }

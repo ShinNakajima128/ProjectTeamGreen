@@ -280,7 +280,7 @@ public class AudioManager : MonoBehaviour
         _bgmSource.clip = afterBgm.Clip; //BGMの入れ替え
         _bgmSource.loop = loopType;
         _bgmSource.Play();
-        currentVol *= afterBgm.Volume;
+        //currentVol = Instance._bgmVolume * Instance._masterVolume;
 
         //音量を基に戻す
         while(_bgmSource.volume < currentVol)
