@@ -51,7 +51,6 @@ public class StarUI : MonoBehaviour
     {
         PlayerController.Instance.Status.CurrentPlayerLevel
                         .TakeUntilDestroy(this)
-                        .Skip(1)
                         .Subscribe(_ => IncreaseStar());
     }
 
@@ -77,38 +76,39 @@ public class StarUI : MonoBehaviour
         _currentLevel = SkillManager.Instance.Skills
                                     .FirstOrDefault(x => x.SkillType == _type)
                                     .CurrentSkillLevel;
-        
-        //Image flashingImage = _stars[_currentLevel];
-        //flashingImage.sprite = _filledStarSprite;
-        
+
+        Image flashingImage = _stars[_currentLevel];
 
         if (_activeSkill.Any(x => x == _type))
         {
+            flashingImage.sprite = _filledStarSprite;
+            
             _stars[_currentLevel - 1].sprite = _filledStarSprite;
-            
-            //if (_currentLevel < 5 && _currentLevel >=1)
-            //{
-            //    Flashing(flashingImage);
-            //}
-            //else
-            //{
-            //    flashingImage = _stars[0];
-            //    Flashing(flashingImage);
-            //}
-            
+            _stars[_currentLevel - 1].DOKill();
+            _stars[_currentLevel - 1].color = new Color(flashingImage.color.r, flashingImage.color.g, flashingImage.color.b, 1f);
+
+            if (_currentLevel < _stars.Length)
+            {
+                Flashing(flashingImage);
+            }
+        }
+        else
+        {
+            flashingImage = _stars[0];
+            flashingImage.sprite = _filledStarSprite;
+
+            Flashing(flashingImage);
         }
     }
     #endregion
-    
-    //private void Flashing(Image flashingImage)
-    //{
-    //    flashingImage.DOFade(0f, 1f).OnComplete(() =>
-    //    {
-    //         flashingImage.DOFade(1f, 1f).OnComplete(() =>
-    //         {
-    //                Flashing(flashingImage);
-    //         });
-    //    });
-    //}
-    
+
+    private void Flashing(Image flashingImage)
+    {
+        _stars[_currentLevel].color = new Color(flashingImage.color.r, flashingImage.color.g, flashingImage.color.b, 1f);
+        flashingImage.DOFade(0f, 1f)
+                     .SetEase(Ease.InQuad)
+                     .SetLoops(-1, LoopType.Yoyo)
+                     .SetUpdate(true);
+    }
+
 }

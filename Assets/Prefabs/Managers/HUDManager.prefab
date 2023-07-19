@@ -2530,7 +2530,7 @@ GameObject:
   - component: {fileID: 8049962171467322816}
   - component: {fileID: 7142589068258817106}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2605,7 +2605,7 @@ GameObject:
   - component: {fileID: 6459563818659276570}
   - component: {fileID: 7481689021680919471}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2680,7 +2680,7 @@ GameObject:
   - component: {fileID: 8713650426287350441}
   - component: {fileID: 7539228414610591956}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2904,7 +2904,7 @@ GameObject:
   - component: {fileID: 4938121220936826614}
   - component: {fileID: 2767193274642623686}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3635,7 +3635,7 @@ GameObject:
   - component: {fileID: 225812298329022094}
   - component: {fileID: 6954657748098187089}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3710,7 +3710,7 @@ GameObject:
   - component: {fileID: 1056268662900239037}
   - component: {fileID: 4728145841060041476}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6689,6 +6689,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1412909262495715534}
+  - component: {fileID: 4702026125428743868}
   m_Layer: 5
   m_Name: Stars
   m_TagString: Untagged
@@ -6720,6 +6721,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4702026125428743868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2230917172167540577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2909f305a58074dc387dbcbcc0bf8e33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stars:
+  - {fileID: 3401839586478420543}
+  - {fileID: 6954657748098187089}
+  - {fileID: 1190770734225072469}
+  - {fileID: 2767193274642623686}
+  - {fileID: 7186490440468213890}
+  _filledStarSprite: {fileID: 4919849598652735845, guid: 2f945dd1dcb074763b147044694933fa,
+    type: 3}
+  _flashStarSprite: {fileID: -4347516545251022216, guid: 2f945dd1dcb074763b147044694933fa,
+    type: 3}
+  _type: 5
 --- !u!1 &2443149867127179336
 GameObject:
   m_ObjectHideFlags: 0
@@ -6806,7 +6830,7 @@ GameObject:
   - component: {fileID: 7288163931692926817}
   - component: {fileID: 5362051339821153549}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7220,6 +7244,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4632198497273057191}
+  - component: {fileID: 7582831211871531673}
   m_Layer: 5
   m_Name: Stars
   m_TagString: Untagged
@@ -7251,6 +7276,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7582831211871531673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2954157237522178854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2909f305a58074dc387dbcbcc0bf8e33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stars:
+  - {fileID: 4728145841060041476}
+  - {fileID: 4726054330857780669}
+  - {fileID: 7329699459984753601}
+  - {fileID: 1465806988555724664}
+  - {fileID: 7809408654950030716}
+  _filledStarSprite: {fileID: 4919849598652735845, guid: 2f945dd1dcb074763b147044694933fa,
+    type: 3}
+  _flashStarSprite: {fileID: -4347516545251022216, guid: 2f945dd1dcb074763b147044694933fa,
+    type: 3}
+  _type: 1
 --- !u!1 &3013386665494624805
 GameObject:
   m_ObjectHideFlags: 0
@@ -7410,6 +7458,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4668678226069067011}
+  - component: {fileID: 8410461168755765328}
   m_Layer: 5
   m_Name: Stars
   m_TagString: Untagged
@@ -7441,6 +7490,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8410461168755765328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3161157614017794751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2909f305a58074dc387dbcbcc0bf8e33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stars:
+  - {fileID: 7142589068258817106}
+  - {fileID: 3928938097138101376}
+  - {fileID: 1565285791105409505}
+  - {fileID: 5603458382526699448}
+  - {fileID: 7539228414610591956}
+  _filledStarSprite: {fileID: 4919849598652735845, guid: 2f945dd1dcb074763b147044694933fa,
+    type: 3}
+  _flashStarSprite: {fileID: -4347516545251022216, guid: 2f945dd1dcb074763b147044694933fa,
+    type: 3}
+  _type: 3
 --- !u!1 &3437394852298596639
 GameObject:
   m_ObjectHideFlags: 0
@@ -7453,7 +7525,7 @@ GameObject:
   - component: {fileID: 1572924415093929623}
   - component: {fileID: 2522688513552911897}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7676,7 +7748,7 @@ GameObject:
   - component: {fileID: 750396148518680400}
   - component: {fileID: 2324143170057582551}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7946,7 +8018,7 @@ GameObject:
   - component: {fileID: 7000027384766808696}
   - component: {fileID: 7018103851271480994}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8021,7 +8093,7 @@ GameObject:
   - component: {fileID: 7751318500587561821}
   - component: {fileID: 7329699459984753601}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8246,7 +8318,7 @@ GameObject:
   - component: {fileID: 499529677066213788}
   - component: {fileID: 4726054330857780669}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11338,8 +11410,9 @@ GameObject:
   - component: {fileID: 1736568651031462501}
   - component: {fileID: 6047039990625062296}
   - component: {fileID: 7186490440468213890}
+  - component: {fileID: 1934600423}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11402,6 +11475,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1934600423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5100958960504819527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2909f305a58074dc387dbcbcc0bf8e33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stars:
+  - {fileID: 3401839586478420543}
+  - {fileID: 6954657748098187089}
+  - {fileID: 1190770734225072469}
+  - {fileID: 2767193274642623686}
+  - {fileID: 7186490440468213890}
+  _filledStarSprite: {fileID: 4919849598652735845, guid: 2f945dd1dcb074763b147044694933fa,
+    type: 3}
+  _flashStarSprite: {fileID: 0}
+  _type: 5
 --- !u!1 &5217722373742281794
 GameObject:
   m_ObjectHideFlags: 0
@@ -11414,7 +11509,7 @@ GameObject:
   - component: {fileID: 1390068021285970943}
   - component: {fileID: 3928938097138101376}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11563,7 +11658,7 @@ GameObject:
   - component: {fileID: 1605551485580500641}
   - component: {fileID: 1565285791105409505}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12401,6 +12496,8 @@ MonoBehaviour:
   - {fileID: 4730339865144292597}
   _filledStarSprite: {fileID: 4919849598652735845, guid: 2f945dd1dcb074763b147044694933fa,
     type: 3}
+  _flashStarSprite: {fileID: -4347516545251022216, guid: 2f945dd1dcb074763b147044694933fa,
+    type: 3}
   _type: 0
 --- !u!1 &6672691859990312614
 GameObject:
@@ -12411,6 +12508,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5525633058698543045}
+  - component: {fileID: 6214479319774769611}
   m_Layer: 5
   m_Name: Stars
   m_TagString: Untagged
@@ -12442,6 +12540,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6214479319774769611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6672691859990312614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2909f305a58074dc387dbcbcc0bf8e33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stars:
+  - {fileID: 7018103851271480994}
+  - {fileID: 5362051339821153549}
+  - {fileID: 7481689021680919471}
+  - {fileID: 2288487483123296102}
+  - {fileID: 7605854949222884537}
+  _filledStarSprite: {fileID: 4919849598652735845, guid: 2f945dd1dcb074763b147044694933fa,
+    type: 3}
+  _flashStarSprite: {fileID: -4347516545251022216, guid: 2f945dd1dcb074763b147044694933fa,
+    type: 3}
+  _type: 2
 --- !u!1 &6689039118164058702
 GameObject:
   m_ObjectHideFlags: 0
@@ -12599,6 +12720,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8131308442149753611}
+  - component: {fileID: 6881209255522714668}
   m_Layer: 5
   m_Name: Stars
   m_TagString: Untagged
@@ -12630,6 +12752,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6881209255522714668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7207439927555534785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2909f305a58074dc387dbcbcc0bf8e33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stars:
+  - {fileID: 2522688513552911897}
+  - {fileID: 7836247967663919584}
+  - {fileID: 7752666892007974600}
+  - {fileID: 2324143170057582551}
+  - {fileID: 5458993414891943355}
+  _filledStarSprite: {fileID: 4919849598652735845, guid: 2f945dd1dcb074763b147044694933fa,
+    type: 3}
+  _flashStarSprite: {fileID: -4347516545251022216, guid: 2f945dd1dcb074763b147044694933fa,
+    type: 3}
+  _type: 4
 --- !u!1 &7261964850572077869
 GameObject:
   m_ObjectHideFlags: 0
@@ -12642,7 +12787,7 @@ GameObject:
   - component: {fileID: 5926054977784036147}
   - component: {fileID: 7605854949222884537}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12791,7 +12936,7 @@ GameObject:
   - component: {fileID: 2199350824049405212}
   - component: {fileID: 7752666892007974600}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13000,7 +13145,7 @@ GameObject:
   - component: {fileID: 9021631810182458723}
   - component: {fileID: 5603458382526699448}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13276,7 +13421,7 @@ GameObject:
   - component: {fileID: 6013182206445171628}
   - component: {fileID: 7809408654950030716}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13485,7 +13630,7 @@ GameObject:
   - component: {fileID: 5811960264780382318}
   - component: {fileID: 3401839586478420543}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13632,7 +13777,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7847442074139918781
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13757,7 +13902,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7847442074446349706
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13882,7 +14027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7847442074708452303
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14038,7 +14183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7847442074863123327
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14163,7 +14308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7847442075057481620
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14288,7 +14433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7847442075495608606
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14407,7 +14552,7 @@ GameObject:
   - component: {fileID: 4188104029265475397}
   - component: {fileID: 7836247967663919584}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14750,7 +14895,7 @@ GameObject:
   - component: {fileID: 1841332944304463908}
   - component: {fileID: 1190770734225072469}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14899,7 +15044,7 @@ GameObject:
   - component: {fileID: 8948952110699116759}
   - component: {fileID: 1465806988555724664}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15049,7 +15194,7 @@ GameObject:
   - component: {fileID: 8422858673362951136}
   - component: {fileID: 2288487483123296102}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15406,7 +15551,7 @@ GameObject:
   - component: {fileID: 5784921493417086466}
   - component: {fileID: 5458993414891943355}
   m_Layer: 5
-  m_Name: Star
+  m_Name: Star5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
