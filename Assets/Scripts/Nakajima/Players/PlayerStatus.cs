@@ -83,7 +83,6 @@ public class PlayerStatus : MonoBehaviour
             _currentRequireExp.Value = (uint)((_currentRequireExp.Value + (_currentRequireExp.Value / 2)) * EXP_LEVERAGE);
         }
         _getEXPSubject.OnNext((float)_currentExp.Value / _currentRequireExp.Value);
-        Debug.Log($"{_currentExp.Value} / {_currentRequireExp.Value}:{((float) _currentExp.Value / _currentRequireExp.Value) * 100}");
     }
     #endregion
 
