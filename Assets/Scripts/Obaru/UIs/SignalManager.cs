@@ -6,6 +6,10 @@ using UnityEngine.UI;
 using UnityEngine.Playables;
 using UniRx;
 
+/// <summary>
+/// シグナル関連のManager
+/// </summary>
+[RequireComponent(typeof(PlayableDirector))]
 public class SignalManager : MonoBehaviour
 {
     #region property
@@ -18,11 +22,13 @@ public class SignalManager : MonoBehaviour
     [SerializeField]
     private Button _skipButton = default;
 
+    [Tooltip("スキップ先のフレーム")]
     [SerializeField]
     private float _skipFrame = 1020f;
     #endregion
 
     #region private
+    /// <summary>timelineのfps</summary>
     private float _directorFps = 60f;
     /// <summary>PlayableDirectorコンポーネント格納用</summary>
     private PlayableDirector _playableDirector;
@@ -38,7 +44,13 @@ public class SignalManager : MonoBehaviour
     {
         Instance = this;
         _playableDirector = GetComponent<PlayableDirector>();
-        _skipButton.onClick.AddListener(() => OnClickSkipButton());
+
+        //スキップボタンを押した時の処理を追加
+        _skipButton.OnClickAsObservable()
+            .TakeUntilDestroy(this)
+            //連打防止処理。一度押されてから「5」秒経つまでは次の処理を実行しない
+            .ThrottleFirst(TimeSpan.FromMilliseconds(5000))
+            .Subscribe(_ => OnClickSkipButton());
     }
     #endregion
 
@@ -59,6 +71,7 @@ public class SignalManager : MonoBehaviour
         FadeManager.Fade(FadeType.Out, () =>
         {
             FadeManager.Fade(FadeType.In);
+            gameObject.SetActive(false);
             _changeTitleActiveSubject.OnNext(Unit.Default);
         });
     }
