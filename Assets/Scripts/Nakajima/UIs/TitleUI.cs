@@ -55,6 +55,10 @@ public class TitleUI : MonoBehaviour
     #endregion
 
     #region public method
+    public void ActivePanel()
+    {
+        _titlePanel.SetActive(true);
+    }
     #endregion
 
     #region private method

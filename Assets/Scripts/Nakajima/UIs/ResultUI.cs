@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -97,7 +98,7 @@ public class ResultUI : MonoBehaviour
     /// </summary>
     public void OnResultView()
     {
-        OnResultAsync().Forget();
+        OnResultAsync(this.GetCancellationTokenOnDestroy()).Forget();
         Debug.Log("call");
     }
     #endregion
@@ -108,14 +109,21 @@ public class ResultUI : MonoBehaviour
     /// </summary>
     private void OnRestart()
     {
-
+        OnPressResultButtonAction(() =>
+        {
+            StageManager.Instance.OnGameStart();
+            AudioManager.PlayBGM(BGMType.InGame);
+        });
     }
     /// <summary>
     /// タイトル画面に戻る
     /// </summary>
     private void OnReturnTitle()
     {
-
+        OnPressResultButtonAction(() =>
+        {
+            HUDManager.Instance.OnTitleView();
+        });
     }
 
     /// <summary>
@@ -134,7 +142,7 @@ public class ResultUI : MonoBehaviour
     /// <summary>
     /// リザルト画面を表示するUniTask
     /// </summary>
-    private async UniTask OnResultAsync()
+    private async UniTask OnResultAsync(CancellationToken token)
     {
         _resultParent.SetActive(true);
 
@@ -148,15 +156,15 @@ public class ResultUI : MonoBehaviour
         });
 
         //フェード処理が終了するまで待機
-        await UniTask.WaitUntil(() => !FadeManager.IsFading);
+        await UniTask.WaitUntil(() => !FadeManager.IsFading, cancellationToken: token);
 
-        await UniTask.Delay(1000);
+        await UniTask.Delay(1000, cancellationToken: token);
 
         //現在のプレイヤーレベルを表示
         _playerLevelViewObj.SetActive(true);
         _playerLevelTMP.text = PlayerController.Instance.Status.CurrentPlayerLevelAmount.ToString();
 
-        await UniTask.Delay(1000);
+        await UniTask.Delay(1000, cancellationToken: token);
 
         //討伐数を表示する処理
         _defeatAmountViewObj.SetActive(true);
@@ -165,17 +173,32 @@ public class ResultUI : MonoBehaviour
                       x => _currentDefeatAmount = x,
                       EnemyManager.Instance.DefeatAmount.Value,
                       _viewAnimTime)
-                     .OnUpdate(() => 
+                     .OnUpdate(() =>
                      {
                          _defeatAmountTMP.text = _currentDefeatAmount.ToString();
                      })
                      .AsyncWaitForCompletion();
 
-        await UniTask.Delay(1000);
+        await UniTask.Delay(1000, cancellationToken: token);
 
         //もう一度遊ぶかタイトルに戻るか選択するボタンを表示
         _buttonsParent.SetActive(true);
-    } 
+    }
+
+    /// <summary>
+    /// リザルト画面の各ボタンが押された時の処理を実行する
+    /// </summary>
+    /// <param name="action">フェード後の処理</param>
+    private void OnPressResultButtonAction(Action action)
+    {
+        FadeManager.Fade(FadeType.Out, () =>
+        {
+            FadeManager.Fade(FadeType.In);
+            _resultParent.SetActive(false);
+            StageManager.Instance.OnGameReset();
+            action?.Invoke();
+        });
+    }
     #endregion
 
     /// <summary>
