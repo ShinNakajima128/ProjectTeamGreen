@@ -91,13 +91,13 @@ public class HUDManager : MonoBehaviour
                   StageManager.Instance.OnGameStart();
               });
 
-        //ゲーム終了時にリザルト画面を表示する処理を登録
-        StageManager.Instance.GameEndObserver
-                             .TakeUntilDestroy(this)
-                             .Subscribe(_ =>
-                             {
-                                 _result.OnResultView();
-                             });
+        ////ゲーム終了時にリザルト画面を表示する処理を登録
+        //StageManager.Instance.GameEndObserver
+        //                     .TakeUntilDestroy(this)
+        //                     .Subscribe(_ =>
+        //                     {
+        //                         _result.OnResultView();
+        //                     });
     }
     #endregion
 }
