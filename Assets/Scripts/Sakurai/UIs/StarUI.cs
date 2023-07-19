@@ -33,6 +33,8 @@ public class StarUI : MonoBehaviour
     private List<SkillType> _activeSkill = default;
 
     private int _currentLevel;
+
+    private Tween _currentTween;
     #endregion
 
     #region Constant
@@ -57,6 +59,16 @@ public class StarUI : MonoBehaviour
     private void Update()
     {
 
+    }
+
+    private void OnDisable()
+    {
+        //_stars[_currentLevel - 1].DOFade(1f, 0f).SetUpdate(true);
+        if (_currentTween != null)
+        {
+            _currentTween.Kill();
+            _currentTween = null;
+        }
     }
     #endregion
 
@@ -85,7 +97,7 @@ public class StarUI : MonoBehaviour
             
             _stars[_currentLevel - 1].sprite = _filledStarSprite;
             _stars[_currentLevel - 1].DOKill();
-            _stars[_currentLevel - 1].color = new Color(flashingImage.color.r, flashingImage.color.g, flashingImage.color.b, 1f);
+            //_stars[_currentLevel - 1].color = new Color(flashingImage.color.r, flashingImage.color.g, flashingImage.color.b, 1f);
 
             if (_currentLevel < _stars.Length)
             {
@@ -104,11 +116,13 @@ public class StarUI : MonoBehaviour
 
     private void Flashing(Image flashingImage)
     {
-        _stars[_currentLevel].color = new Color(flashingImage.color.r, flashingImage.color.g, flashingImage.color.b, 1f);
+        flashingImage.DOFade(1f, 0f).SetUpdate(true);
+
         flashingImage.DOFade(0f, 1f)
                      .SetEase(Ease.InQuad)
                      .SetLoops(-1, LoopType.Yoyo)
-                     .SetUpdate(true);
+                     .SetUpdate(true)
+                     .OnKill(() => flashingImage.DOFade(1f,0f).SetUpdate(true));
     }
 
 }

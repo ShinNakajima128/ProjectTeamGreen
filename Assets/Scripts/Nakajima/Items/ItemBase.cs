@@ -94,14 +94,19 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
         float initialSpeed = 3.0f; //初期移動速度
         _velocity = initialDirection * initialSpeed;
 
-        float useDistance = 0.2f;
+        //float useDistance = 0.2f;
 
-        while (Vector2.Distance(_itemPosition,playerPos.position) > useDistance)
+        while (true)
         {
             var acceleration = _rb2d.velocity;
             var diff = (Vector2)playerPos.position - _itemPosition;
             acceleration += (diff - _velocity * _period) * 2.0f / (_period * _period);
             _period -= Time.deltaTime;
+
+            if (_period <= 0)
+            {
+                break;
+            }
 
             _velocity += acceleration * Time.deltaTime;
             _itemPosition += _velocity * Time.deltaTime;
