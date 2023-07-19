@@ -179,6 +179,8 @@ public class ResultUI : MonoBehaviour
                      })
                      .AsyncWaitForCompletion();
 
+        StageManager.Instance.OnGameReset();
+
         await UniTask.Delay(1000, cancellationToken: token);
 
         //もう一度遊ぶかタイトルに戻るか選択するボタンを表示
@@ -195,7 +197,6 @@ public class ResultUI : MonoBehaviour
         {
             FadeManager.Fade(FadeType.In);
             _resultParent.SetActive(false);
-            StageManager.Instance.OnGameReset();
             action?.Invoke();
         });
     }

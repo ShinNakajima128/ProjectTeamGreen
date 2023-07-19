@@ -109,6 +109,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
                           gameObject.SetActive(false);
                       }
                   });
+
+        //ゲームリセット時の処理を登録
+        StageManager.Instance.GameResetObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => ResetParameter());
     }
 
     protected virtual void OnEnable()
@@ -212,6 +217,16 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
             textObj.SetDamageText(transform, amount);
         }
     }
+
+    /// <summary>
+    /// 各パラメーターを初期値に戻す
+    /// </summary>
+    private void ResetParameter()
+    {
+        _currentMaxHP = _enemyData.HP;
+        _currentHP = _currentMaxHP;
+        _currentAttackAmount = _enemyData.AttackAmount;
+    }
     #endregion
     /// <summary>
     /// 敵毎のアクションの処理を行うコルーチン
@@ -221,6 +236,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
 
     public void ReturnPool()
     {
-        throw new NotImplementedException();
+        gameObject.SetActive(false);
     }
 }
