@@ -1553,6 +1553,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 634426361, guid: e5a1960b8cb184b46824fb74e1a32120, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 965614424, guid: e5a1960b8cb184b46824fb74e1a32120, type: 3}
       propertyPath: _bossEvents.Array.data[0].InvokeTime
       value: 10

@@ -69,6 +69,7 @@ public class ResultUI : MonoBehaviour
     #region private
     /// <summary>倒した数</summary>
     private uint _currentDefeatAmount;
+    private bool _isLoading = false;
     #endregion
 
     #region Constant
@@ -83,13 +84,13 @@ public class ResultUI : MonoBehaviour
         ChangeResultView(false);
 
         _restartButton.OnClickAsObservable()
-                      //.TakeUntilDestroy(this)
-                      .ThrottleFirst(TimeSpan.FromSeconds(3))
+                      .TakeUntilDestroy(this)
+                      .Where(_ => !_isLoading)
                       .Subscribe(_ => OnRestart());
 
         _returnTitleButton.OnClickAsObservable()
-                          //.TakeUntilDestroy(this)
-                          .ThrottleFirst(TimeSpan.FromSeconds(3))
+                          .TakeUntilDestroy(this)
+                          .Where(_ => !_isLoading)
                           .Subscribe(_ => OnReturnTitle());
     }
     #endregion
@@ -100,8 +101,8 @@ public class ResultUI : MonoBehaviour
     /// </summary>
     public void OnResultView()
     {
-        StartCoroutine(OnResultCoroutine());
-        //OnResultAsync(this.GetCancellationTokenOnDestroy()).Preserve().Forget();
+        //StartCoroutine(OnResultCoroutine());
+        OnResultAsync(this.GetCancellationTokenOnDestroy()).Preserve().Forget();
         //Debug.Log("call");
     }
     #endregion
@@ -248,6 +249,11 @@ public class ResultUI : MonoBehaviour
     /// <param name="action">フェード後の処理</param>
     private void OnPressResultButtonAction(Action action)
     {
+        if (Time.timeScale < 1)
+        {
+            Time.timeScale = 1;
+        }
+        _isLoading = true;
         FadeManager.Fade(FadeType.Out, () =>
         {
             FadeManager.Fade(FadeType.In);
@@ -258,6 +264,7 @@ public class ResultUI : MonoBehaviour
             _buttonsParent.SetActive(false);
             _resultParent.SetActive(false);
             ChangeResultView(false);
+            _isLoading = false;
             action?.Invoke();
         });
     }

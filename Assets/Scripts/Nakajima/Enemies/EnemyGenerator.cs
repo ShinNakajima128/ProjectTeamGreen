@@ -125,6 +125,7 @@ public class EnemyGenerator : MonoBehaviour
         _enemyPoolDic.Select(x => x.Value)
                      .ToList()
                      .ForEach(x => x.Return());
+        
     }
     public void BossGenerate(EnemyType bossType)
     {

@@ -151,7 +151,10 @@ public class PlayerController : MonoBehaviour, IDamagable
     /// <param name="value">獲得した経験値の値（正の値のみ）</param>
     public void GetExp(uint value)
     {
-        _status.AddExp(value);
+        if (!_isDead)
+        {
+            _status.AddExp(value);
+        }
     }
     #endregion
 
