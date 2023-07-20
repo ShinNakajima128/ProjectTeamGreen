@@ -46,7 +46,6 @@ public class PlayerController : MonoBehaviour, IDamagable
     #region Event
     /// <summary>スキルに掛け合わせる係数の変更時のSubject</summary>
     private Subject<float> _changeAttackCoefficientSubject = new Subject<float>();
-
     #endregion
 
     #region unity methods
@@ -67,6 +66,11 @@ public class PlayerController : MonoBehaviour, IDamagable
         _move.IsFlipedProerty
              .TakeUntilDestroy(this)
              .Subscribe(value => FlipSprite(value));
+
+        //プレイヤーのレベルが上がった時の処理を登録
+        _status.CurrentPlayerLevel
+               .TakeUntilDestroy(this)
+               .Subscribe(_ => _health.PowerUpHealth());
 
         StageManager.Instance.GameResetObserver
                              .TakeUntilDestroy(this)

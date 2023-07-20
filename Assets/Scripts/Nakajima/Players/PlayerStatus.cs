@@ -39,7 +39,7 @@ public class PlayerStatus : MonoBehaviour
 
     #region Constant
     /// <summary>次のレベルアップ時に必要な経験値に掛け合わせる倍率</summary>
-    private const float EXP_LEVERAGE = 1.5f;
+    private const float EXP_LEVERAGE = 1.3f;
     #endregion
 
     #region Event
