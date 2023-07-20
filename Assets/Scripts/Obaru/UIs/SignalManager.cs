@@ -32,6 +32,8 @@ public class SignalManager : MonoBehaviour
     private float _directorFps = 60f;
     /// <summary>PlayableDirectorコンポーネント格納用</summary>
     private PlayableDirector _playableDirector;
+    /// <summary>スキップ時のフラグ</summary>
+    private bool _isSkipped = false;
     #endregion
 
     #region Event
@@ -68,20 +70,32 @@ public class SignalManager : MonoBehaviour
     /// </summary>
     public void FadeOpening()
     {
+        if (!_isSkipped)
+        {
+            FadeManager.Fade(FadeType.Out, () =>
+            {
+                FadeManager.Fade(FadeType.In);
+                gameObject.SetActive(false);
+                _changeTitleActiveSubject.OnNext(Unit.Default);
+                AudioManager.PlayBGM(BGMType.Title);
+            });
+        }
+    }
+
+        /// <summary>
+        ///　スキップボタンを押した時の処理
+        /// </summary>
+        public void OnClickSkipButton()
+    {
         FadeManager.Fade(FadeType.Out, () =>
         {
             FadeManager.Fade(FadeType.In);
+            _playableDirector.time = _skipFrame / _directorFps;
             gameObject.SetActive(false);
             _changeTitleActiveSubject.OnNext(Unit.Default);
+            AudioManager.PlayBGM(BGMType.Title);
+            _isSkipped = true;
         });
-    }
-
-    /// <summary>
-    ///　スキップボタンを押した時の処理
-    /// </summary>
-    public void OnClickSkipButton()
-    {
-        _playableDirector.time = _skipFrame / _directorFps;
     }
     #endregion
 }
