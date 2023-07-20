@@ -34,6 +34,8 @@ public class StarUI : MonoBehaviour
 
     private int _currentLevel;
 
+    private Image _flashingImage;
+
     private Tween _currentTween;
     #endregion
 
@@ -63,7 +65,6 @@ public class StarUI : MonoBehaviour
 
     private void OnDisable()
     {
-        //_stars[_currentLevel - 1].DOFade(1f, 0f).SetUpdate(true);
         if (_currentTween != null)
         {
             _currentTween.Kill();
@@ -89,27 +90,29 @@ public class StarUI : MonoBehaviour
                                     .FirstOrDefault(x => x.SkillType == _type)
                                     .CurrentSkillLevel;
 
-        Image flashingImage = _stars[_currentLevel];
+        if (_currentLevel < 5)
+        {
+            _flashingImage = _stars[_currentLevel];
+        }
 
         if (_activeSkill.Any(x => x == _type))
         {
-            flashingImage.sprite = _filledStarSprite;
+            _flashingImage.sprite = _filledStarSprite;
             
             _stars[_currentLevel - 1].sprite = _filledStarSprite;
             _stars[_currentLevel - 1].DOKill();
-            //_stars[_currentLevel - 1].color = new Color(flashingImage.color.r, flashingImage.color.g, flashingImage.color.b, 1f);
 
             if (_currentLevel < _stars.Length)
             {
-                Flashing(flashingImage);
+                Flashing(_flashingImage);
             }
         }
         else
         {
-            flashingImage = _stars[0];
-            flashingImage.sprite = _filledStarSprite;
+            _flashingImage = _stars[0];
+            _flashingImage.sprite = _filledStarSprite;
 
-            Flashing(flashingImage);
+            Flashing(_flashingImage);
         }
     }
     #endregion
@@ -118,11 +121,11 @@ public class StarUI : MonoBehaviour
     {
         flashingImage.DOFade(1f, 0f).SetUpdate(true);
 
-        flashingImage.DOFade(0f, 1f)
-                     .SetEase(Ease.InQuad)
-                     .SetLoops(-1, LoopType.Yoyo)
-                     .SetUpdate(true)
-                     .OnKill(() => flashingImage.DOFade(1f,0f).SetUpdate(true));
+        _currentTween = flashingImage.DOFade(0f, 1f)
+                                     .SetEase(Ease.InQuad)
+                                     .SetLoops(-1, LoopType.Yoyo)
+                                     .SetUpdate(true)
+                                     .OnKill(() => flashingImage.DOFade(1f,0f).SetUpdate(true));
     }
 
 }
