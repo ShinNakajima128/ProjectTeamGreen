@@ -50,10 +50,6 @@ public abstract class SkillBase : MonoBehaviour
 
     protected virtual void Start()
     {
-        //ゲーム終了時にスキルをリセットする処理を登録
-        StageManager.Instance.GameEndObserver
-                             .TakeUntilDestroy(this)
-                             .Subscribe(_ => ResetSkill());
     }
     #endregion
 

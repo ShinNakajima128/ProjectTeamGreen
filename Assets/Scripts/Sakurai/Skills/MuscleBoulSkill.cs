@@ -120,9 +120,10 @@ public class MuscleBoulSkill : SkillBase
 
         foreach (var boul in _currentBoulAmount)
         {
-            Destroy(boul);
+            Destroy(boul.gameObject);
         }
         _currentBoulAmount.Clear();
+        Debug.Log("削除完了");
     }
     #endregion
 
