@@ -67,6 +67,10 @@ public class PlayerController : MonoBehaviour, IDamagable
         _move.IsFlipedProerty
              .TakeUntilDestroy(this)
              .Subscribe(value => FlipSprite(value));
+
+        StageManager.Instance.GameResetObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => ResetPlayerStatus());
     }
 
     private void OnEnable()
@@ -174,6 +178,16 @@ public class PlayerController : MonoBehaviour, IDamagable
     private void FlipSprite(bool value)
     {
         _sr.flipX = value;
+    }
+
+    /// <summary>
+    /// プレイヤーの各パラメーターをリセットする
+    /// </summary>
+    private void ResetPlayerStatus()
+    {
+        _isDead = false;
+        _health.ResetHealth();
+        _status.ResetStatus();
     }
     #endregion
 }

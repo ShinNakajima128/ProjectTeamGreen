@@ -156,15 +156,15 @@ public class ResultUI : MonoBehaviour
         });
 
         //フェード処理が終了するまで待機
-        await UniTask.WaitUntil(() => !FadeManager.IsFading, cancellationToken: token);
+        await UniTask.WaitUntil(() => !FadeManager.IsFading);
 
-        await UniTask.Delay(1000, cancellationToken: token);
+        await UniTask.Delay(1000);
 
         //現在のプレイヤーレベルを表示
         _playerLevelViewObj.SetActive(true);
         _playerLevelTMP.text = PlayerController.Instance.Status.CurrentPlayerLevelAmount.ToString();
 
-        await UniTask.Delay(1000, cancellationToken: token);
+        await UniTask.Delay(1000);
 
         //討伐数を表示する処理
         _defeatAmountViewObj.SetActive(true);
@@ -181,7 +181,7 @@ public class ResultUI : MonoBehaviour
 
         StageManager.Instance.OnGameReset();
 
-        await UniTask.Delay(1000, cancellationToken: token);
+        await UniTask.Delay(1000);
 
         //もう一度遊ぶかタイトルに戻るか選択するボタンを表示
         _buttonsParent.SetActive(true);

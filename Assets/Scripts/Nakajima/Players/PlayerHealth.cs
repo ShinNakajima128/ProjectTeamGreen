@@ -81,6 +81,12 @@ public class PlayerHealth : MonoBehaviour
         }
         return false;
     }
+
+    public void ResetHealth()
+    {
+        Setup();
+        _changeHPSubject.OnNext(_currentHP / _currentMaxHP);
+    }
     #endregion
 
     #region private method

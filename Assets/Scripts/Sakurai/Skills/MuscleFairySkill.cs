@@ -61,7 +61,7 @@ public class MuscleFairySkill : SkillBase
     {
         Debug.Log($"{SkillType}スキル発動");
         _isSkillActived = true;
-        StartCoroutine(SkillActionCoroutine());
+        _currentCoroutine = StartCoroutine(SkillActionCoroutine());
         CreateNewFairy();
     }
     /// <summary>

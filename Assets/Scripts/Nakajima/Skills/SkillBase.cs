@@ -27,6 +27,8 @@ public abstract class SkillBase : MonoBehaviour
     protected int _currentSkillLebel = 1;
     /// <summary>スキルがアクティブかどうか</summary>
     protected bool _isSkillActived = false;
+    /// <summary>現在稼働中のコルーチン</summary>
+    protected Coroutine _currentCoroutine;
     #endregion
 
     #region private
@@ -95,6 +97,12 @@ public abstract class SkillBase : MonoBehaviour
         _isSkillActived = false;
         _currentSkillLebel = 1;
         _currentAttackAmount = _skillData.AttackAmount;
+
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+            _currentCoroutine = null;
+        }
     }
 
     /// <summary>

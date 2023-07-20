@@ -190,10 +190,11 @@ public class EnemyGenerator : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.gameObject.SetActive(true);
+                    
                     float randomX, randomY;
-
                     int randomRad = UnityEngine.Random.Range(0, 360);
 
+                    //画面外に生成するため、プレイヤーから指定した距離の絶対値を掛け合わせる
                     randomX = _generatePointAbsValue.x * Mathf.Sin(Time.time * randomRad);
                     randomY = _generatePointAbsValue.y * Mathf.Cos(Time.time * randomRad);
 

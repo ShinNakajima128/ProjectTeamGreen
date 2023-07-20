@@ -84,6 +84,16 @@ public class PlayerStatus : MonoBehaviour
         }
         _getEXPSubject.OnNext((float)_currentExp.Value / _currentRequireExp.Value);
     }
+
+    /// <summary>
+    /// ステータスをリセットする
+    /// </summary>
+    public void ResetStatus()
+    {
+        _currentPlayerLevel.Value = 1;
+        _currentExp.Value = 0;
+        _currentRequireExp.Value = _startRequireExp;
+    }
     #endregion
 
     #region private method
