@@ -69,7 +69,8 @@ public enum EnemyType
     Wave1_Chase1,
     Wave1_Chase2,
     Wave1_Point1,
-    Wave1_Boss
+    Wave1_Boss,
+    Wave1_PointBoss
 }
 
 /// <summary>
