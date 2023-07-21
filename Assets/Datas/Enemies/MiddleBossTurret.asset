@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyType: 4
   _actionType: 0
-  _hp: 300
+  _hp: 1000
   _attackAmount: 1
   _approachDistance: 0.1
   _dropItemType: 4
+  _knockbackAmount: 0

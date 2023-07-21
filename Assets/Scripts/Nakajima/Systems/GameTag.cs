@@ -11,6 +11,7 @@ public class GameTag
     public static string Player => _player;
     public static string Enemy => _enemy;
     public static string Item => _item;
+    public static string VanishBullet => _vanishBullet;
     #endregion
 
     #region Constant
@@ -23,5 +24,6 @@ public class GameTag
     /// </summary>
     private static string _enemy = "Enemy";
     private static string _item = "Item";
+    private static string _vanishBullet = "VanishBullet";
     #endregion
 }

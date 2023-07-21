@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Throw
   m_EditorClassIdentifier: 
   _skillType: 4
-  _attackAmount: 15
+  _attackAmount: 30
   _correctionvalue: 1
