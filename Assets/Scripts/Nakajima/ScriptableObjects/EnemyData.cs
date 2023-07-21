@@ -16,6 +16,7 @@ public class EnemyData : ScriptableObject
     public float AttackAmount => _attackAmount;
     public float ApproachDistance => _approachDistance;
     public ItemType DropItemType => _dropItemType;
+    public float KnockbackAmount => _knockbackAmount;
     #endregion
 
     #region serialize
@@ -43,6 +44,10 @@ public class EnemyData : ScriptableObject
     [Tooltip("ドロップするアイテムの種類")]
     [SerializeField]
     private ItemType _dropItemType = default;
+
+    [Tooltip("攻撃が当たった時の吹き飛ぶ力")]
+    [SerializeField]
+    private float _knockbackAmount = 0;
     #endregion
 
     #region private
