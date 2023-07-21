@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -61,9 +62,19 @@ public class EnemyGenerator : MonoBehaviour
     }
     private void Start()
     {
+        //プレイヤーのレベルが上がった時の処理を登録
         PlayerController.Instance.Status.CurrentPlayerLevel
                                         .TakeUntilDestroy(this)
                                         .Subscribe(_ => AddGenerateLimitAmount());
+
+        StageManager.Instance.IsInGameObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(value => _isInGame = value);
+        
+        //ゲームリセット時の処理を登録
+        StageManager.Instance.GameResetObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => OnReset());
     }
     #endregion
 
@@ -146,6 +157,18 @@ public class EnemyGenerator : MonoBehaviour
         _currentGenerateLimit += 5;
         _currentOnceGenerateAmount++;
     }
+    private void OnReset()
+    {
+        //現在ステージに存在する敵を全てプールに戻す
+        _enemyPoolDic.Select(x => x.Value)
+                     .ToList()
+                     .ForEach(x => x.Return());
+
+        _currentOnceGenerateAmount = _onceGenerateAmount;
+        _currentGenerateLimit = _startGenerateLimit;
+        _isInGame = true;
+        Debug.Log("リセット完了");
+    }
     #endregion
 
     #region coroutine method
@@ -170,7 +193,7 @@ public class EnemyGenerator : MonoBehaviour
                     float randomX, randomY;
 
                     int randomRad = UnityEngine.Random.Range(0, 360);
-                    
+
                     randomX = _generatePointAbsValue.x * Mathf.Sin(Time.time * randomRad);
                     randomY = _generatePointAbsValue.y * Mathf.Cos(Time.time * randomRad);
 

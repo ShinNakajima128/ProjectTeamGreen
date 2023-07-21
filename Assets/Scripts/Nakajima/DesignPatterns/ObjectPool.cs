@@ -30,6 +30,7 @@ public class ObjectPool<T> where T : Object
     #endregion
 
     #region Event
+    private Subject<Unit> _returnSubject = new Subject<Unit>();
     #endregion
 
     #region public method
@@ -79,6 +80,9 @@ public class ObjectPool<T> where T : Object
                      _pool.Enqueue(obj);
                      Debug.Log("poolに帰還");
                  });
+
+                //使用中のオブジェクトを全てプールに戻すための処理を登録
+                _returnSubject.Subscribe(_ => p.ReturnPool());
             }
             catch
             {
@@ -92,6 +96,13 @@ public class ObjectPool<T> where T : Object
         }
     }
 
+    /// <summary>
+    /// 使用中のオブジェクトを全てプールに戻す
+    /// </summary>
+    public void Return()
+    {
+        _returnSubject.OnNext(Unit.Default);
+    }
     /// <summary>
     /// プールの状態を確認する
     /// </summary>
