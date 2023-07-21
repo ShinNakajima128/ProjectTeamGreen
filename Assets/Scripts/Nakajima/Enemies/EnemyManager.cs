@@ -21,6 +21,10 @@ public class EnemyManager : MonoBehaviour
     public EnemyBulletGenerater MiddleBossPoolGenerator => _middleBossPoolGenerator;
 
     public EnemyBulletGenerater TurretPoolGenerator => _turretPoolGenerator;
+
+    public RockGenerator RockPoolGenerator => _rockPoolGenerator;
+
+    public MissileGenerator MissilePoolGenerator => _missilePoolGenerator;
     public IObservable<float> ChangeEnemyStatusCoefficientObserver => _changeEnemyStatusCoefficientSubject;
     public IObservable<Unit> DefeatedBossObserver => _defeatedBossSubject;
     #endregion
@@ -34,6 +38,14 @@ public class EnemyManager : MonoBehaviour
     [Tooltip("タレットのバレットをプールするオブジェクト")]
     [SerializeField]
     private EnemyBulletGenerater _turretPoolGenerator;
+
+    [Tooltip("中ボスタレットの岩をプールするオブジェクト")]
+    [SerializeField]
+    private RockGenerator _rockPoolGenerator;
+
+    [Tooltip("中ボスタレットのミサイルをプールするオブジェクト")]
+    [SerializeField]
+    private MissileGenerator _missilePoolGenerator;
     #endregion
 
     #region private

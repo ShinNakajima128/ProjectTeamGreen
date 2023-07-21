@@ -9,7 +9,7 @@ using UniRx;
 /// </summary>
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class Potato : MonoBehaviour,IPoolable
+public class Rock : MonoBehaviour,IPoolable
 {
     #region property
     public IObservable<Unit> InactiveObserver => _inactiveSubject;
@@ -79,6 +79,11 @@ public class Potato : MonoBehaviour,IPoolable
     {
         _currentAttackAmount = amount;
     }
+
+    public void ReturnPool()
+    {
+        throw new NotImplementedException();
+    }
     #endregion
 
     #region private method
@@ -118,9 +123,5 @@ public class Potato : MonoBehaviour,IPoolable
         gameObject.SetActive(false);
     }
 
-    public void ReturnPool()
-    {
-        throw new NotImplementedException();
-    }
     #endregion
 }

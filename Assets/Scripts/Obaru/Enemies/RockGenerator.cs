@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Missileの生成
+/// Rockの生成
 /// </summary>
-public class MissileGenerator : MonoBehaviour
+public class RockGenerator : MonoBehaviour
 {
     #region property
-    public ObjectPool<Missile> MissilePool => _missilePool;
+    public ObjectPool<Rock> RockPool => _rockPool;
     #endregion
 
     #region serialize
     [Tooltip("プレハブ")]
     [SerializeField]
-    private Missile _missilePrefab = default;
+    private Rock _rockPrefab = default;
 
     [Tooltip("親")]
     [SerializeField]
@@ -22,13 +22,13 @@ public class MissileGenerator : MonoBehaviour
     #endregion
 
     #region private
-    private ObjectPool<Missile> _missilePool;
+    private ObjectPool<Rock> _rockPool;
     #endregion
 
     #region unity methods
     private void Awake()
     {
-        _missilePool = new ObjectPool<Missile>(_missilePrefab, _parent);
+        _rockPool = new ObjectPool<Rock>(_rockPrefab, _parent);
     }
     #endregion
 }
