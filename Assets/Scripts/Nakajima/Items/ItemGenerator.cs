@@ -60,7 +60,7 @@ public class ItemGenerator : MonoBehaviour
     /// </summary>
     /// <param name="type">アイテムの種類</param>
     /// <param name="pos">生成する位置</param>
-    public void Generate(ItemType type, Vector2 pos)
+    public void Generate(ItemType type, Vector2 pos, uint limit = 50)
     {
         //アイテムが指定されていない場合は処理を行わない
         if (type == ItemType.None)
@@ -69,7 +69,7 @@ public class ItemGenerator : MonoBehaviour
         }
 
         //指定されたアイテムのオブジェクトデータを取得
-        var item = _itemPoolDic.FirstOrDefault(x => x.Key == type).Value.Rent(10);
+        var item = _itemPoolDic.FirstOrDefault(x => x.Key == type).Value.Rent(limit);
 
         if (item != null)
         {
@@ -131,7 +131,7 @@ public class ItemGenerator : MonoBehaviour
             Vector2 generatePos = new Vector2(_playerTrans.position.x + randomX, _playerTrans.position.y + randomY);
 
             //テストとして、現状は回復アイテムのみを生成する
-            Generate(type, generatePos);
+            Generate(type, generatePos, 5);
             Debug.Log("アイテム生成");
             yield return interval;
         }

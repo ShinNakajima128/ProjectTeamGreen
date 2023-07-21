@@ -51,7 +51,11 @@ public class HUDManager : MonoBehaviour
     {
         StageManager.Instance.IsInGameObserver
                              .TakeUntilDestroy(this)
-                             .Subscribe(value => ChangeHUDPanelActive(value));
+                             .Subscribe(value => 
+                             {
+                                 ChangeHUDPanelActive(value);
+                                 _gamePause.ChangeButtonActive(value);
+                             });
 
         //ゲーム終了時にリザルト画面を表示する処理を登録
         StageManager.Instance.GameEndObserver

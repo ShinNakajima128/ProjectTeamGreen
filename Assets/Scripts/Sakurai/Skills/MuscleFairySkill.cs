@@ -27,6 +27,7 @@ public class MuscleFairySkill : SkillBase
     #endregion
 
     #region private
+    private float _currentRotationSpeed;
     /// <summary>妖精が回転する半径</summary>
     private float _fairyRadius = 1.0f;
 
@@ -50,6 +51,7 @@ public class MuscleFairySkill : SkillBase
     protected override void Awake()
     {
         base.Awake();
+        _currentRotationSpeed = _rotationSpeed;
     }
     #endregion
 
@@ -76,7 +78,7 @@ public class MuscleFairySkill : SkillBase
             return;
         }
         _currentSkillLebel++;
-        _rotationSpeed *= _speedCoefficient;
+        _currentRotationSpeed *= _speedCoefficient;
         AttackUpSkill(_attackCoefficient);
         CreateNewFairy();
 
@@ -112,6 +114,7 @@ public class MuscleFairySkill : SkillBase
         {
             Destroy(fairy.gameObject);
         }
+        _currentRotationSpeed = _rotationSpeed;
         _currentFairyAmount.Clear();
         _currentFairyAngles.Clear();
     }

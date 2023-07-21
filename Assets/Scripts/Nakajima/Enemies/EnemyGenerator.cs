@@ -172,8 +172,8 @@ public class EnemyGenerator : MonoBehaviour
 
     private void AddGenerateLimitAmount()
     {
-        _currentGenerateLimit += 5;
-        _currentOnceGenerateAmount += 2;
+        _currentGenerateLimit += 10;
+        _currentOnceGenerateAmount += 5;
     }
     private void OnReset()
     {

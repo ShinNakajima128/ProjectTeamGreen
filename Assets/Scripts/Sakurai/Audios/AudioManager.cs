@@ -160,7 +160,7 @@ public class AudioManager : MonoBehaviour
             {
                 if (!s.isPlaying)
                 {
-                    s.PlayOneShot(se.Clip, Instance._seVolume * Instance._masterVolume * se.Volume);
+                    s.PlayOneShot(se.Clip, Instance._seVolume * Instance._masterVolume);
                     return;
                 }
             }

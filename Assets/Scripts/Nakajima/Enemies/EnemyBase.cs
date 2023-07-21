@@ -137,8 +137,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
             _coroutine = null;
         }
 
-        _enemyRenderer.color = Color.white;
-        transform.localScale = Vector3.one;
         _currentTween = null;
 
         _inactiveSubject.OnNext(Unit.Default);
@@ -161,7 +159,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
         Debug.Log(amount);
         DamageAnimation();
         DamageTextGenerate(amount);
-        
+
         if (_currentHP <= 0)
         {
             EffectManager.PlayEffect(EffectType.EnemyDied, transform.position);
@@ -172,15 +170,18 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
 
             switch (_enemyData.EnemyType)
             {
-                
+
                 case EnemyType.Wave1_Boss:
-                    EnemyManager.Instance.OnDefeatedBossEnemyEvent();
+                    //EnemyManager.Instance.OnDefeatedBossEnemyEvent();
+                    StageManager.Instance.OnGameEnd();
                     break;
                 case EnemyType.Wave2_Boss:
                     EnemyManager.Instance.OnDefeatedBossEnemyEvent();
                     break;
                 case EnemyType.Wave3_Boss:
-                    EnemyManager.Instance.OnDefeatedBossEnemyEvent();
+                    //EnemyManager.Instance.OnDefeatedBossEnemyEvent();
+                    //ウェーブ3のボスが倒されたらゲーム終了
+                    StageManager.Instance.OnGameEnd();
                     break;
                 default:
                     break;
@@ -189,6 +190,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
         }
         else
         {
+            if (amount >= 15.5f)
+            {
+                Knockback((transform.position - _playerTrans.position).normalized);
+            }
             AudioManager.PlaySE(SEType.Damage_Enemy);
         }
 
@@ -198,6 +203,18 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
     {
         _currentAttackAmount *= coefficient;
         _currentMaxHP *= coefficient;
+    }
+
+    /// <summary>
+    /// ノックバックする
+    /// </summary>
+    /// <param name="dir">吹き飛ぶ方向</param>
+    public void Knockback(Vector2 dir)
+    {
+        transform.DOLocalMove(transform.localPosition + (Vector3)(dir * _enemyData.KnockbackAmount),
+                              0.15f)
+                 .SetEase(Ease.InQuad)
+                 .SetLink(gameObject, LinkBehaviour.CompleteAndKillOnDisable);
     }
     #endregion
 
@@ -209,6 +226,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
     {
         _currentHP = _currentMaxHP;
         _enemyRenderer.color = Color.white;
+        transform.localScale = Vector3.one;
     }
 
     private void DamageAnimation()
@@ -232,7 +250,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
     private void DamageTextGenerate(float amount)
     {
         DamageText textObj = _damageTextGenerator.DamageTextPool.Rent();
-        
+
         if (textObj != null)
         {
             textObj.gameObject.SetActive(true);
