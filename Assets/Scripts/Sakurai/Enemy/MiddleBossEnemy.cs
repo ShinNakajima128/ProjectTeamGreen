@@ -7,14 +7,13 @@ using UnityEngine;
 /// </summary>
 public class MiddleBossEnemy : BossEnemyBase
 {
-
     #region serialize
     [Header("変数")]
     [Tooltip("移動速度")]
     [SerializeField]
     private float _moveSpeed = 5.0f;
 
-    [Tooltip("弾オブジェクトの速さ")]
+    [Tooltip("弾オブジェクト攻撃力")]
     [SerializeField]
     private float _bulletAttackAmount = 3.0f;
     #endregion

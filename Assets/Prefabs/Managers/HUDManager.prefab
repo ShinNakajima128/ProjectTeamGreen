@@ -13557,6 +13557,7 @@ GameObject:
   - component: {fileID: 1923373797021344563}
   - component: {fileID: 3567645505203439161}
   - component: {fileID: 6709139351116484570}
+  - component: {fileID: 221824820}
   m_Layer: 5
   m_Name: HealUi
   m_TagString: Untagged
@@ -13671,6 +13672,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &221824820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7644421846471539886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de805a4abb47648f59065d6b03a4a212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animationImage: {fileID: 3567645505203439161}
 --- !u!1 &7667282789757817288
 GameObject:
   m_ObjectHideFlags: 0
@@ -14033,6 +14047,7 @@ GameObject:
   - component: {fileID: 7847442074139918768}
   - component: {fileID: 7847442074139918771}
   - component: {fileID: 7847442074139918770}
+  - component: {fileID: 533923501}
   m_Layer: 5
   m_Name: BoulSkillUI
   m_TagString: Untagged
@@ -14146,6 +14161,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &533923501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847442074139918780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de805a4abb47648f59065d6b03a4a212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animationImage: {fileID: 7847442074139918771}
 --- !u!1 &7847442074446349941
 GameObject:
   m_ObjectHideFlags: 0
@@ -14158,6 +14186,7 @@ GameObject:
   - component: {fileID: 7847442074446349705}
   - component: {fileID: 7847442074446349704}
   - component: {fileID: 7847442074446349707}
+  - component: {fileID: 669750740}
   m_Layer: 5
   m_Name: AuraSkillUI
   m_TagString: Untagged
@@ -14271,6 +14300,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &669750740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847442074446349941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de805a4abb47648f59065d6b03a4a212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animationImage: {fileID: 7847442074446349704}
 --- !u!1 &7847442074708452302
 GameObject:
   m_ObjectHideFlags: 0
@@ -14283,6 +14325,7 @@ GameObject:
   - component: {fileID: 7847442074708452290}
   - component: {fileID: 7847442074708452301}
   - component: {fileID: 7847442074708452300}
+  - component: {fileID: 572151560}
   m_Layer: 5
   m_Name: DumbbellSkillUI
   m_TagString: Untagged
@@ -14396,6 +14439,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &572151560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847442074708452302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de805a4abb47648f59065d6b03a4a212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animationImage: {fileID: 7847442074708452301}
 --- !u!1 &7847442074754704300
 GameObject:
   m_ObjectHideFlags: 0
@@ -14439,6 +14495,7 @@ GameObject:
   - component: {fileID: 7847442074863123314}
   - component: {fileID: 7847442074863123325}
   - component: {fileID: 7847442074863123324}
+  - component: {fileID: 1970188677}
   m_Layer: 5
   m_Name: BombSkillUI
   m_TagString: Untagged
@@ -14552,6 +14609,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1970188677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847442074863123326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de805a4abb47648f59065d6b03a4a212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animationImage: {fileID: 7847442074863123325}
 --- !u!1 &7847442075057481623
 GameObject:
   m_ObjectHideFlags: 0
@@ -14564,6 +14634,7 @@ GameObject:
   - component: {fileID: 7847442075057481643}
   - component: {fileID: 7847442075057481642}
   - component: {fileID: 7847442075057481621}
+  - component: {fileID: 212635908}
   m_Layer: 5
   m_Name: FailySkillUI
   m_TagString: Untagged
@@ -14677,6 +14748,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &212635908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847442075057481623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de805a4abb47648f59065d6b03a4a212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animationImage: {fileID: 7847442075057481642}
 --- !u!1 &7847442075495608601
 GameObject:
   m_ObjectHideFlags: 0
@@ -14689,6 +14773,7 @@ GameObject:
   - component: {fileID: 7847442075495608605}
   - component: {fileID: 7847442075495608604}
   - component: {fileID: 7847442075495608607}
+  - component: {fileID: 455809237}
   m_Layer: 5
   m_Name: KnuckleSkillUI
   m_TagString: Untagged
@@ -14802,6 +14887,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &455809237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7847442075495608601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de805a4abb47648f59065d6b03a4a212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animationImage: {fileID: 7847442075495608604}
 --- !u!1 &7859938193344908767
 GameObject:
   m_ObjectHideFlags: 0
