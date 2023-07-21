@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Item
   - Enemy
+  - VanishBullet
   layers:
   - Default
   - TransparentFX
