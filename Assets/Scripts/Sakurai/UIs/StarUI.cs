@@ -37,6 +37,8 @@ public class StarUI : MonoBehaviour
     private Image _flashingImage;
 
     private Tween _currentTween;
+
+    private Sprite _originStarSprite;
     #endregion
 
     #region Constant
@@ -48,7 +50,7 @@ public class StarUI : MonoBehaviour
     #region unity methods
     private void Awake()
     {
-
+        _originStarSprite = _stars[1].sprite;
     }
 
     private void Start()
@@ -56,6 +58,10 @@ public class StarUI : MonoBehaviour
         PlayerController.Instance.Status.CurrentPlayerLevel
                         .TakeUntilDestroy(this)
                         .Subscribe(_ => IncreaseStar());
+
+        StageManager.Instance.GameResetObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => OnReset());
     }
 
     private void Update()
@@ -128,4 +134,16 @@ public class StarUI : MonoBehaviour
                                      .OnKill(() => flashingImage.DOFade(1f,0f).SetUpdate(true));
     }
 
+    private void OnReset()
+    {
+        for (int i = 0; i < _stars.Length; i++)
+        {
+            if (i == 0)
+            {
+                continue;
+            }
+
+            _stars[i].sprite = _originStarSprite;
+        }
+    }
 }

@@ -72,6 +72,10 @@ public class PlayerController : MonoBehaviour, IDamagable
                .TakeUntilDestroy(this)
                .Subscribe(_ => _health.PowerUpHealth());
 
+        StageManager.Instance.IsInGameObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(value => ChangeIsDead(!value));
+
         StageManager.Instance.GameResetObserver
                              .TakeUntilDestroy(this)
                              .Subscribe(_ => ResetPlayerStatus());
@@ -192,9 +196,16 @@ public class PlayerController : MonoBehaviour, IDamagable
     /// </summary>
     private void ResetPlayerStatus()
     {
-        _isDead = false;
         _health.ResetHealth();
         _status.ResetStatus();
+    }
+
+    /// <summary>
+    /// ゲーム開始時の初期化処理
+    /// </summary>
+    private void ChangeIsDead(bool value)
+    {
+        _isDead = value;
     }
     #endregion
 }
