@@ -11,6 +11,10 @@ public class TurretEnemy : EnemyBase
     [Tooltip("攻撃間隔")]
     [SerializeField]
     private float _attackInterval = 3.0f;
+
+    [Tooltip("弾のダメージ量")]
+    [SerializeField]
+    private float _bulletAttackAmount = 1f;
     #endregion
 
     #region private
@@ -90,7 +94,7 @@ public class TurretEnemy : EnemyBase
                     //親子関係を解除
                     bulletObj.gameObject.transform.SetParent(null);
                     //弾の攻撃力を設定
-                    bulletObj.SetAttackAmount(_currentAttackAmount);
+                    bulletObj.SetAttackAmount(_bulletAttackAmount);
                     //velocityをプレイヤーの方向に設定
                     bulletObj.SetVelocity((_playerTrans.position - transform.position).normalized);
                 }

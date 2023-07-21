@@ -15,7 +15,7 @@ MonoBehaviour:
   _enemyType: 2
   _actionType: 0
   _hp: 50
-  _attackAmount: 1
+  _attackAmount: 0.2
   _approachDistance: 0.2
   _dropItemType: 2
   _knockbackAmount: 0
