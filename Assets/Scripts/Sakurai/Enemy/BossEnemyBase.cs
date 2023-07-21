@@ -46,6 +46,8 @@ public abstract class BossEnemyBase : EnemyBase
 public enum BossState
 {
     Idle,    //アイドル
-    Move,    //動き
-    Attack　 //攻撃
+    FirstMove,    //動き1
+    SecondMove,  //動き2
+    FirstAttack,　 //攻撃1  
+    SecondAttack   //攻撃2
 }
