@@ -21,6 +21,8 @@ public class EnemyManager : MonoBehaviour
     public EnemyBulletGenerater MiddleBossPoolGenerator => _middleBossPoolGenerator;
 
     public EnemyBulletGenerater TurretPoolGenerator => _turretPoolGenerator;
+    public IObservable<float> ChangeEnemyStatusCoefficientObserver => _changeEnemyStatusCoefficientSubject;
+    public IObservable<Unit> DefeatedBossObserver => _defeatedBossSubject;
     #endregion
 
     #region serialize
@@ -35,8 +37,10 @@ public class EnemyManager : MonoBehaviour
     #endregion
 
     #region private
+    private EnemyWaveType _currentEnemyWave = EnemyWaveType.Wave_1;
     /// <summary>敵の生成機能を持つコンポーネント</summary>
     private EnemyGenerator _generator;
+    private Subject<float> _changeEnemyStatusCoefficientSubject = new Subject<float>();
     #endregion
 
     #region Constant
@@ -47,6 +51,7 @@ public class EnemyManager : MonoBehaviour
     private ReactiveProperty<uint> _defeatAmountProperty = new ReactiveProperty<uint>();
     /// <summary>討伐数を表示する処理のSubject</summary>
     private Subject<uint> _defeatedEnemyAmountViewSubject = new Subject<uint>();
+    private Subject<Unit> _defeatedBossSubject = new Subject<Unit>();
     #endregion
 
     #region unity methods
@@ -63,10 +68,13 @@ public class EnemyManager : MonoBehaviour
                     .TakeUntilDestroy(this)
                     .Subscribe(_ =>
                     {
-                        _generator.OnEnemyGenerate(EnemyType.Wave1_Chase1);
-                        //_generator.OnEnemyGenerate(EnemyType.Wave1_Point1);
+                        OnGenerateEnemies(EnemyWaveType.Wave_1);
                     });
-        
+
+        //リセット時の処理を登録
+        StageManager.Instance.GameResetObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => OnReset());
         
         //討伐数が変化した時のイベント処理を登録
         _defeatAmountProperty
@@ -80,21 +88,78 @@ public class EnemyManager : MonoBehaviour
         TimeManager.Instance.BossEventObserver
                             .TakeUntilDestroy(this)
                             .Subscribe(value => BossGenerate(value));
+
+        PlayerController.Instance.Status.CurrentPlayerLevel
+                                        .TakeUntilDestroy(this)
+                                        .Subscribe(_ => _changeEnemyStatusCoefficientSubject.OnNext(1.05f));
    
     }
     #endregion
 
     #region public method
+    public void OnDefeatedBossEnemyEvent()
+    {
+        _defeatedBossSubject.OnNext(Unit.Default);
+
+        _currentEnemyWave = (EnemyWaveType)(int)_currentEnemyWave++;
+        int currentWave = (int)_currentEnemyWave + 1;
+        OnGenerateEnemies((EnemyWaveType)currentWave);
+    }
     #endregion
 
     #region private method
-    private void PowerUpEnemy()
+    private void OnGenerateEnemies(EnemyWaveType type)
     {
-
+        switch (type)
+        {
+            case EnemyWaveType.Wave_1:
+                _generator.OnEnemyGenerate(EnemyType.Wave1_Chase1);
+                _generator.OnEnemyGenerate(EnemyType.Wave1_Point1);
+                Debug.Log("Wave1開始");
+                break;
+            case EnemyWaveType.Wave_2:
+                _generator.OnEnemyGenerate(EnemyType.Wave2_Chase1);
+                _generator.OnEnemyGenerate(EnemyType.Wave1_Point1);
+                Debug.Log("Wave2開始");
+                break;
+            case EnemyWaveType.Wave_3:
+                _generator.OnEnemyGenerate(EnemyType.Wave2_Chase1);
+                _generator.OnEnemyGenerate(EnemyType.Wave1_Point1);
+                Debug.Log("Wave3開始");
+                break;
+            default:
+                break;
+        }
     }
     private void BossGenerate(EnemyType bossType)
     {
-        _generator.BossGenerate(bossType);
+        StartCoroutine(BossEventCoroutine(bossType));
+    }
+
+    private void OnReset()
+    {
+        _defeatAmountProperty.Value = 0;
+        _currentEnemyWave = EnemyWaveType.Wave_1;
     }
     #endregion
+
+    private IEnumerator BossEventCoroutine(EnemyType bossType)
+    {
+        yield return new WaitForSeconds(5.0f);
+        
+        _generator.StopEnemyGenerate();
+        _generator.ReturnEnemies();
+
+        _generator.BossGenerate(bossType);
+    }
+}
+
+/// <summary>
+/// 敵のウェーブの種類
+/// </summary>
+public enum EnemyWaveType
+{
+    Wave_1,
+    Wave_2,
+    Wave_3
 }

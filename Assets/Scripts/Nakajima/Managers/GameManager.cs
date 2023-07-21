@@ -40,7 +40,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private void Start()
     {
         FadeManager.Fade(FadeType.In);
-        AudioManager.PlayBGM(BGMType.Title);
+        //AudioManager.PlayBGM(BGMType.Title);
 
         //ゲーム終了時にBGMを変更する処理を登録
         StageManager.Instance.GameEndObserver

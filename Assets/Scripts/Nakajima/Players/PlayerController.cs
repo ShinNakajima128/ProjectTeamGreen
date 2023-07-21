@@ -46,7 +46,6 @@ public class PlayerController : MonoBehaviour, IDamagable
     #region Event
     /// <summary>スキルに掛け合わせる係数の変更時のSubject</summary>
     private Subject<float> _changeAttackCoefficientSubject = new Subject<float>();
-
     #endregion
 
     #region unity methods
@@ -67,6 +66,15 @@ public class PlayerController : MonoBehaviour, IDamagable
         _move.IsFlipedProerty
              .TakeUntilDestroy(this)
              .Subscribe(value => FlipSprite(value));
+
+        //プレイヤーのレベルが上がった時の処理を登録
+        _status.CurrentPlayerLevel
+               .TakeUntilDestroy(this)
+               .Subscribe(_ => _health.PowerUpHealth());
+
+        StageManager.Instance.GameResetObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => ResetPlayerStatus());
     }
 
     private void OnEnable()
@@ -143,7 +151,10 @@ public class PlayerController : MonoBehaviour, IDamagable
     /// <param name="value">獲得した経験値の値（正の値のみ）</param>
     public void GetExp(uint value)
     {
-        _status.AddExp(value);
+        if (!_isDead)
+        {
+            _status.AddExp(value);
+        }
     }
     #endregion
 
@@ -174,6 +185,16 @@ public class PlayerController : MonoBehaviour, IDamagable
     private void FlipSprite(bool value)
     {
         _sr.flipX = value;
+    }
+
+    /// <summary>
+    /// プレイヤーの各パラメーターをリセットする
+    /// </summary>
+    private void ResetPlayerStatus()
+    {
+        _isDead = false;
+        _health.ResetHealth();
+        _status.ResetStatus();
     }
     #endregion
 }

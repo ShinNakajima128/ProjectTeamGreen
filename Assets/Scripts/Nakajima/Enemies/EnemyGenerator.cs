@@ -44,6 +44,7 @@ public class EnemyGenerator : MonoBehaviour
     private bool _isInGame = false;
     private uint _currentOnceGenerateAmount;
     private uint _currentGenerateLimit;
+    private float _currentCoefficient = 1f;
     #endregion
 
     #region Constant
@@ -70,7 +71,11 @@ public class EnemyGenerator : MonoBehaviour
         StageManager.Instance.IsInGameObserver
                              .TakeUntilDestroy(this)
                              .Subscribe(value => _isInGame = value);
-        
+
+        EnemyManager.Instance.ChangeEnemyStatusCoefficientObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(value => _currentCoefficient *= value);
+
         //ゲームリセット時の処理を登録
         StageManager.Instance.GameResetObserver
                              .TakeUntilDestroy(this)
@@ -100,16 +105,28 @@ public class EnemyGenerator : MonoBehaviour
     /// <summary>
     /// 敵の生成を停止する
     /// </summary>
-    /// <param name="type">敵の種類</param>
-    public void StopEnemyGenerate(EnemyType type)
+    public void StopEnemyGenerate()
     {
-        if (_generateCoroutineDic[type] != null)
-        {
-            StopCoroutine(_generateCoroutineDic[type]);
-            _generateCoroutineDic[type] = null;
-        }
+        _generateCoroutineDic.Select(x => x.Value)
+                             .ToList()
+                             .ForEach(x =>
+                             {
+                                 if (x != null)
+                                 {
+                                     StopCoroutine(x);
+                                     x = null;
+                                 }
+                             });
     }
 
+    public void ReturnEnemies()
+    {
+        //現在ステージに存在する敵を全てプールに戻す
+        _enemyPoolDic.Select(x => x.Value)
+                     .ToList()
+                     .ForEach(x => x.Return());
+        
+    }
     public void BossGenerate(EnemyType bossType)
     {
         switch (bossType)
@@ -125,13 +142,14 @@ public class EnemyGenerator : MonoBehaviour
         if (currentBoss != null)
         {
             currentBoss.gameObject.SetActive(true);
+            currentBoss.SetEnemyStatus(_currentCoefficient);
             float randomX, randomY;
             int randomRad = UnityEngine.Random.Range(0, 360);
 
-            randomX = _generatePointAbsValue.x * Mathf.Sin(Time.time * randomRad);
-            randomY = _generatePointAbsValue.y * Mathf.Cos(Time.time * randomRad);
+            randomX = (_generatePointAbsValue.x / 2) * Mathf.Sin(Time.time * randomRad);
+            randomY = (_generatePointAbsValue.y / 2) * Mathf.Cos(Time.time * randomRad);
 
-            Vector2 generatePos = new Vector2(randomX, randomY);
+            Vector2 generatePos = new Vector2(_playerTrans.position.x + randomX, _playerTrans.position.y + randomY);
 
             currentBoss.gameObject.transform.localPosition = generatePos;
         }
@@ -155,17 +173,15 @@ public class EnemyGenerator : MonoBehaviour
     private void AddGenerateLimitAmount()
     {
         _currentGenerateLimit += 5;
-        _currentOnceGenerateAmount++;
+        _currentOnceGenerateAmount += 2;
     }
     private void OnReset()
     {
-        //現在ステージに存在する敵を全てプールに戻す
-        _enemyPoolDic.Select(x => x.Value)
-                     .ToList()
-                     .ForEach(x => x.Return());
+        ReturnEnemies();
 
         _currentOnceGenerateAmount = _onceGenerateAmount;
         _currentGenerateLimit = _startGenerateLimit;
+        _currentCoefficient = 1f;
         _isInGame = true;
         Debug.Log("リセット完了");
     }
@@ -190,10 +206,13 @@ public class EnemyGenerator : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.gameObject.SetActive(true);
-                    float randomX, randomY;
+                    //生成時に基本ステータスに補正値を掛ける
+                    enemy.SetEnemyStatus(_currentCoefficient);
 
+                    float randomX, randomY;
                     int randomRad = UnityEngine.Random.Range(0, 360);
 
+                    //画面外に生成するため、プレイヤーから指定した距離の絶対値を掛け合わせる
                     randomX = _generatePointAbsValue.x * Mathf.Sin(Time.time * randomRad);
                     randomY = _generatePointAbsValue.y * Mathf.Cos(Time.time * randomRad);
 

@@ -26,7 +26,7 @@ public enum SEType
     GetSkill_3,    //ロケットランチャー
     GetSkill_4,    //決定ボタンを押す10
     BecomeBoss_1,  //文字表示の衝撃音1
-    BecomeBoss_2   //文字表示の衝撃音3
+    BecomeBoss_2,  //文字表示の衝撃音3
 }
 
 
@@ -115,16 +115,6 @@ public class AudioManager : MonoBehaviour
             }
             _seAudioSourceList.Add(source);
         }
-    }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
     }
     #endregion
 

@@ -81,6 +81,24 @@ public class PlayerHealth : MonoBehaviour
         }
         return false;
     }
+
+    /// <summary>
+    /// 最大HPを上げる
+    /// </summary>
+    public void PowerUpHealth()
+    {
+        _currentMaxHP *= 1.5f;
+        _currentHP = _currentMaxHP;
+    }
+
+    /// <summary>
+    /// HPデータをリセットする
+    /// </summary>
+    public void ResetHealth()
+    {
+        Setup();
+        _changeHPSubject.OnNext(_currentHP / _currentMaxHP);
+    }
     #endregion
 
     #region private method

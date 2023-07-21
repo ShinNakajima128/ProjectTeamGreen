@@ -14,6 +14,7 @@ using TMPro;
 [RequireComponent(typeof(GamePauseUI))]
 [RequireComponent(typeof(SkillUpSelect))]
 [RequireComponent(typeof(ResultUI))]
+[RequireComponent(typeof(BossEventUI))]
 public class HUDManager : MonoBehaviour
 {
     #region property
@@ -31,6 +32,7 @@ public class HUDManager : MonoBehaviour
     private GamePauseUI _gamePause;
     private SkillUpSelect _skillUpSelect;
     private ResultUI _result;
+    private BossEventUI _bossEvent;
     #endregion
 
     #region Constant
@@ -58,6 +60,10 @@ public class HUDManager : MonoBehaviour
                              {
                                  _result.OnResultView();
                              });
+
+        TimeManager.Instance.BossEventObserver
+                            .TakeUntilDestroy(this)
+                            .Subscribe(_ => _bossEvent.OnBossEventAction());
     }
     #endregion
 
@@ -87,6 +93,7 @@ public class HUDManager : MonoBehaviour
         _gamePause = GetComponent<GamePauseUI>();
         _skillUpSelect = GetComponent<SkillUpSelect>();
         _result = GetComponent<ResultUI>();
+        _bossEvent = GetComponent<BossEventUI>();
 
         _playerStatus.ChangeActivePanelView(false);
         _gameStatus.ChangeActivePanelView(false);
