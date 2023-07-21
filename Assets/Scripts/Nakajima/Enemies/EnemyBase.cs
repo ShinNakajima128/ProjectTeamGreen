@@ -172,8 +172,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
             {
 
                 case EnemyType.Wave1_Boss:
-                    //EnemyManager.Instance.OnDefeatedBossEnemyEvent();
-                    StageManager.Instance.OnGameEnd();
+                    EnemyManager.Instance.OnDefeatedBossEnemyEvent();
+                    //StageManager.Instance.OnGameEnd();
                     break;
                 case EnemyType.Wave2_Boss:
                     EnemyManager.Instance.OnDefeatedBossEnemyEvent();

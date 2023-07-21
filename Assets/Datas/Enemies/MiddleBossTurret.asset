@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 220521852631d0d4282eb723cc1c9fdd, type: 3}
   m_Name: MiddleBossTurret
   m_EditorClassIdentifier: 
-  _enemyType: 4
+  _enemyType: 7
   _actionType: 0
   _hp: 1000
   _attackAmount: 1
