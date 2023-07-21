@@ -94,7 +94,7 @@ MonoBehaviour:
     ItemPrefab: {fileID: 768345823086110253, guid: 6a1d22319b220b24da7a2ef9faa43fde,
       type: 3}
     Parent: {fileID: 6355326078942542571}
-    GenerateInterval: 3
+    GenerateInterval: 5
   - ItemName: "\u30D1\u30EF\u30FC\u30A2\u30C3\u30D7\u30A2\u30A4\u30C6\u30E0"
     ItemPrefab: {fileID: 212003974145673770, guid: 7c707a38549462d46a47ddbaa767ebfd,
       type: 3}
@@ -115,6 +115,7 @@ MonoBehaviour:
       type: 3}
     Parent: {fileID: 6355326079381132475}
     GenerateInterval: 5
+  _generatePointAbsValue: {x: 6, y: 8}
 --- !u!1 &6355326079381132476
 GameObject:
   m_ObjectHideFlags: 0
