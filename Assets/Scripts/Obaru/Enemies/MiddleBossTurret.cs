@@ -23,12 +23,6 @@ public class MiddleBossTurret : BossEnemyBase
     [Tooltip("ミサイルの攻撃力")]
     [SerializeField]
     private float _missileAttackAmount = 5.0f;
-
-    [SerializeField]
-    private RockGenerator _rockGenerator = default;
-
-    [SerializeField]
-    private MissileGenerator _missileGenerator = default;
     #endregion
 
     #region private
@@ -42,6 +36,10 @@ public class MiddleBossTurret : BossEnemyBase
     private bool _isCanAttack = true;
     /// <summary>弾の生成用</summary>
     private EnemyBulletGenerater _bulletGenerator;
+    /// <summary>岩の生成用</summary>
+    private RockGenerator _rockGenerator;
+    /// <summary>ミサイルの生成用</summary>
+    private MissileGenerator _missileGenerator;
     /// <summary>ステート</summary>
     private MiddleBossTurretState _turretState;
     #endregion
@@ -56,6 +54,8 @@ public class MiddleBossTurret : BossEnemyBase
     {
         base.Start();
         _bulletGenerator = EnemyManager.Instance.MiddleBossPoolGenerator;
+        _rockGenerator = EnemyManager.Instance.RockPoolGenerator;
+        _missileGenerator = EnemyManager.Instance.MissilePoolGenerator;
     }
 
     protected override void OnEnable()
