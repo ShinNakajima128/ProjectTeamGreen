@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 220521852631d0d4282eb723cc1c9fdd, type: 3}
-  m_Name: Enemy_Turret
+  m_Name: Enemy_PurinData
   m_EditorClassIdentifier: 
-  _enemyType: 2
-  _actionType: 0
-  _hp: 15
-  _attackAmount: 1
+  _enemyType: 4
+  _actionType: 1
+  _hp: 30
+  _attackAmount: 0.4
   _approachDistance: 0.2
-  _dropItemType: 2
+  _dropItemType: 3
