@@ -55,6 +55,13 @@ public class GamePauseUI : MonoBehaviour
     }
     #endregion
 
+    #region public method
+    public void ChangeButtonActive(bool value)
+    {
+        _pauseButton.gameObject.SetActive(value);
+    }
+    #endregion
+
     #region private method
     /// <summary>
     /// 一時停止
