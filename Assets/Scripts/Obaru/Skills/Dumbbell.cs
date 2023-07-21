@@ -57,6 +57,7 @@ public class Dumbbell : MonoBehaviour, IPoolable
             StopCoroutine(_currentCoroutine);
             _currentCoroutine = null;
         }
+        _inactiveSubject.OnNext(Unit.Default);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
