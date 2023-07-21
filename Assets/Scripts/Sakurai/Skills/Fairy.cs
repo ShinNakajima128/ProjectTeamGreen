@@ -44,6 +44,10 @@ public class Fairy : MonoBehaviour
                 target.Damage(_currentAttackAmount);
             }
         }
+        else if (collision.CompareTag(GameTag.VanishBullet))
+        {
+            collision.gameObject.SetActive(false);
+        }
     }
     #endregion
 
