@@ -1703,15 +1703,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 965614424, guid: e5a1960b8cb184b46824fb74e1a32120, type: 3}
       propertyPath: _bossEvents.Array.data[0].InvokeTime
-      value: 60
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 965614424, guid: e5a1960b8cb184b46824fb74e1a32120, type: 3}
       propertyPath: _bossEvents.Array.data[1].InvokeTime
-      value: 180
+      value: 175
       objectReference: {fileID: 0}
     - target: {fileID: 965614424, guid: e5a1960b8cb184b46824fb74e1a32120, type: 3}
       propertyPath: _bossEvents.Array.data[2].InvokeTime
-      value: 300
+      value: 295
       objectReference: {fileID: 0}
     - target: {fileID: 1882224226487389579, guid: e5a1960b8cb184b46824fb74e1a32120,
         type: 3}
