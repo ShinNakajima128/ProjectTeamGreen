@@ -41,6 +41,7 @@ public class SkillManager : MonoBehaviour
 
     private void Start()
     {
+        //ゲーム開始時のスキルを登録
         StageManager.Instance.GameStartObserver
                              .TakeUntilDestroy(this)
                              .Subscribe(_ =>
@@ -55,6 +56,11 @@ public class SkillManager : MonoBehaviour
         StageManager.Instance.GameEndObserver
                              .TakeUntilDestroy(this)
                              .Subscribe(_ => InActiveAllSkill());
+
+        //ゲームリセット時の処理を登録
+        StageManager.Instance.GameResetObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => ResetSkill());
     }
     #endregion
 
@@ -96,6 +102,16 @@ public class SkillManager : MonoBehaviour
     #endregion
 
     #region private method
+    /// <summary>
+    /// スキルの状態をリセットする
+    /// </summary>
+    private void ResetSkill()
+    {
+        foreach (var skill in _skills)
+        {
+            skill.ResetSkill();
+        }
+    }
     #endregion
 
     #region UniTask method

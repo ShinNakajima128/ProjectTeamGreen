@@ -25,6 +25,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
     [Tooltip("敵のデータ")]
     [SerializeField]
     private EnemyData _enemyData = default;
+
+    [Tooltip("非表示になるプレイヤーとの距離")]
+    [SerializeField]
+    protected float _hideDistance = 10f;
     #endregion
 
     #region protected
@@ -77,13 +81,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
         _coroutine = StartCoroutine(OnActionCoroutine());
         _damageTextGenerator = DamageTextManager.Instance.TextGenerator;
 
-        PlayerController.Instance.Status.CurrentPlayerLevel
-                                        .TakeUntilDestroy(this)
-                                        .Subscribe(_ =>
-                                        {
-                                            PowerUp(1.2f);
-                                        });
-
         //プレイヤーと接触した時の処理を登録する
         this.OnTriggerStay2DAsObservable()
             .TakeUntilDestroy(this)
@@ -102,13 +99,19 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
         //プレイヤーから一定距離離れたらプールに戻る処理を登録
         Observable.Interval(TimeSpan.FromSeconds(3f))
                   .TakeUntilDestroy(this)
+                  .Where(_ => gameObject.activeSelf)
                   .Subscribe(_ =>
                   {
-                      if (Vector2.Distance(_playerTrans.position, transform.position) >= 10f)
+                      if (Vector2.Distance(_playerTrans.position, transform.position) >= _hideDistance)
                       {
                           gameObject.SetActive(false);
                       }
                   });
+
+        //ゲーム開始時の処理を登録
+        StageManager.Instance.IsInGameObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(value => _isInvincible = !value);
 
         //ゲームリセット時の処理を登録
         StageManager.Instance.GameResetObserver
@@ -149,6 +152,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
     /// <param name="amount">ダメージ量</param>
     public virtual void Damage(float amount)
     {
+        if (_isInvincible)
+        {
+            return;
+        }
         _currentHP -= amount;
 
         Debug.Log(amount);
@@ -162,6 +169,22 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
             EnemyManager.Instance.DefeatAmount.Value++;
             ItemManager.Instance.GenerateItem(_enemyData.DropItemType, transform.position);
             AudioManager.PlaySE(SEType.Dead_Enemy);
+
+            switch (_enemyData.EnemyType)
+            {
+                
+                case EnemyType.Wave1_Boss:
+                    EnemyManager.Instance.OnDefeatedBossEnemyEvent();
+                    break;
+                case EnemyType.Wave2_Boss:
+                    EnemyManager.Instance.OnDefeatedBossEnemyEvent();
+                    break;
+                case EnemyType.Wave3_Boss:
+                    EnemyManager.Instance.OnDefeatedBossEnemyEvent();
+                    break;
+                default:
+                    break;
+            }
             gameObject.SetActive(false);
         }
         else
@@ -170,6 +193,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
         }
 
         Debug.Log($"{gameObject.name}:Damage、残りHP:{_currentHP}");
+    }
+    public void SetEnemyStatus(float coefficient)
+    {
+        _currentAttackAmount *= coefficient;
+        _currentMaxHP *= coefficient;
     }
     #endregion
 
@@ -181,12 +209,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
     {
         _currentHP = _currentMaxHP;
         _enemyRenderer.color = Color.white;
-    }
-
-    private void PowerUp(float coefficient)
-    {
-        _currentAttackAmount *= coefficient;
-        _currentMaxHP *= coefficient;
     }
 
     private void DamageAnimation()

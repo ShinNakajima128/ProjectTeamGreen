@@ -71,7 +71,7 @@ public class MuscleBoulSkill : SkillBase
             child.SetParent(mainCameraTransform);
         }
 
-        StartCoroutine(SkillActionCoroutine());
+        _currentCoroutine = StartCoroutine(SkillActionCoroutine());
         CreateNewBoul();
     }
 
@@ -117,6 +117,13 @@ public class MuscleBoulSkill : SkillBase
     public override void ResetSkill()
     {
         base.ResetSkill();
+
+        foreach (var boul in _currentBoulAmount)
+        {
+            Destroy(boul.gameObject);
+        }
+        _currentBoulAmount.Clear();
+        Debug.Log("削除完了");
     }
     #endregion
 

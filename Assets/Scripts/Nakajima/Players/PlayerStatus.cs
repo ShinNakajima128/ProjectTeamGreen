@@ -39,7 +39,7 @@ public class PlayerStatus : MonoBehaviour
 
     #region Constant
     /// <summary>次のレベルアップ時に必要な経験値に掛け合わせる倍率</summary>
-    private const float EXP_LEVERAGE = 1.5f;
+    private const float EXP_LEVERAGE = 1.3f;
     #endregion
 
     #region Event
@@ -83,6 +83,16 @@ public class PlayerStatus : MonoBehaviour
             _currentRequireExp.Value = (uint)((_currentRequireExp.Value + (_currentRequireExp.Value / 2)) * EXP_LEVERAGE);
         }
         _getEXPSubject.OnNext((float)_currentExp.Value / _currentRequireExp.Value);
+    }
+
+    /// <summary>
+    /// ステータスをリセットする
+    /// </summary>
+    public void ResetStatus()
+    {
+        _currentPlayerLevel.Value = 1;
+        _currentExp.Value = 0;
+        _currentRequireExp.Value = _startRequireExp;
     }
     #endregion
 

@@ -23,6 +23,10 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
     [Tooltip("アイテムデータ")]
     [SerializeField]
     private ItemData _itemData = default;
+
+    [Tooltip("非表示になるプレイヤーとの距離")]
+    [SerializeField]
+    protected float _hideDistance = 10f;
     #endregion
 
     #region private
@@ -36,6 +40,8 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
     Rigidbody2D _rb2d;
 
     private float m_arrivalTime = 0.6f;
+
+    private Transform _playerTrans;
     #endregion
 
     #region Constant
@@ -46,14 +52,25 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
     #endregion
 
     #region unity methods
-    private void Awake()
+    protected virtual void Awake()
     {
         _rb2d = GetComponent<Rigidbody2D>();
+        _playerTrans = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
-
+        //プレイヤーから一定距離離れたらプールに戻る処理を登録
+        Observable.Interval(TimeSpan.FromSeconds(3f))
+                  .TakeUntilDestroy(this)
+                  .Where(_ => gameObject.activeSelf)
+                  .Subscribe(_ =>
+                  {
+                      if (Vector2.Distance(_playerTrans.position, transform.position) >= _hideDistance)
+                      {
+                          Return();
+                      }
+                  });
     }
 
     private void OnEnable()
@@ -120,6 +137,6 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
 
     public void ReturnPool()
     {
-        throw new NotImplementedException();
+        gameObject.SetActive(false);
     }
 }

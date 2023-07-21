@@ -63,7 +63,7 @@ public class MuscleKnuckleSkill : SkillBase
     {
         Debug.Log($"{SkillType}スキル発動");
         _isSkillActived = true;
-        StartCoroutine(SkillActionCoroutine());
+        _currentCoroutine = StartCoroutine(SkillActionCoroutine());
     }
 
     /// <summary>
