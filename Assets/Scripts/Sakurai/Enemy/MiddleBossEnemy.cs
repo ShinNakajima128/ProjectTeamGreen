@@ -85,15 +85,15 @@ public class MiddleBossEnemy : BossEnemyBase
                 case BossState.Idle:
                     _waitTime = 3.0f;
                     yield return new WaitForSeconds(_waitTime);
-                    _currentState = BossState.Move;
+                    _currentState = BossState.FirstMove;
                     break;
 
                 //ムーブステート
-                case BossState.Move:
+                case BossState.FirstMove:
                     yield return StartCoroutine(OnMoveCoroutine());
                     break;
                 //攻撃ステート
-                case BossState.Attack:
+                case BossState.FirstAttack:
                     yield return StartCoroutine(OnAttackCoroutine());
                     break;
                 default:
@@ -125,7 +125,7 @@ public class MiddleBossEnemy : BossEnemyBase
             }
             yield return new WaitForSeconds(_waitTime);
         }
-        _currentState = BossState.Attack;
+        _currentState = BossState.FirstAttack;
     }
 
     /// <summary>

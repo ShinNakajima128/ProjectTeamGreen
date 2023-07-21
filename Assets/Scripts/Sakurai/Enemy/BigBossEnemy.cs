@@ -16,15 +16,19 @@ public class BigBossEnemy : BossEnemyBase
 
     [Tooltip("弾のオブジェクトの攻撃力")]
     [SerializeField]
-    private float _bulletAttackAmount = 5.0f;
+    private float _bulletAttackAmount = 30.0f;
 
     [Tooltip("爆発プレハブ")]
     [SerializeField]
-    private GameObject _explosionPrefab = default;
+    private GameObject _smokePrefab = default;
 
     [Tooltip("ターゲットイメージ")]
     [SerializeField]
     private GameObject _targetPrefab = default;
+
+    [Tooltip("弾のジェネレーター")]
+    [SerializeField]
+    private BigBossBulletGenerator _generator = default;
     #endregion
 
     #region private
@@ -33,9 +37,11 @@ public class BigBossEnemy : BossEnemyBase
 
     private bool _isFliped = false;
 
-    EnemyBulletGenerater _generator;
-
     private Rigidbody2D _rd2D;
+
+    private Collider2D _col2D;
+
+    private float _bulletCount = 7.0f;
     #endregion
 
     #region Constant
@@ -50,12 +56,12 @@ public class BigBossEnemy : BossEnemyBase
         base.Awake();
     }
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
-        _generator = EnemyManager.Instance.MiddleBossPoolGenerator;
 
-        _rd2D = GetComponent<Rigidbody2D>(); 
+        _rd2D = GetComponent<Rigidbody2D>();
+        _col2D = GetComponent<Collider2D>();
     }
 
     protected override void OnEnable()
@@ -71,7 +77,6 @@ public class BigBossEnemy : BossEnemyBase
     private void Update()
     {
         Debug.Log(_rd2D.velocity.y);
-
     }
     #endregion
 
@@ -101,17 +106,23 @@ public class BigBossEnemy : BossEnemyBase
             switch (_currentState)
             {
                 case BossState.Idle:
-                    _waitTime = 1.0f;
+                    _waitTime = 3.0f;
                     yield return new WaitForSeconds(_waitTime);
-                    _currentState = BossState.Attack;
+                    _currentState = BossState.FirstMove;
+                    break;
+                case BossState.FirstMove:
+                    yield return StartCoroutine(OnMoveCoroutine());
                     break;
                 //攻撃ステート
-                case BossState.Attack:
-                    yield return StartCoroutine(OnAttackCoroutine());
+                case BossState.FirstAttack:
+                    yield return StartCoroutine(OnFirstAttackCoroutine());
                     break;
                 //ジャンプステート
-                case BossState.Move:
+                case BossState.SecondMove:
                     yield return StartCoroutine(OnJumpCoroutine());
+                    break;
+                case BossState.SecondAttack:
+                    yield return StartCoroutine(OnSecoundAttackCoroutine());
                     break;
                 default:
                     break;
@@ -119,16 +130,105 @@ public class BigBossEnemy : BossEnemyBase
         }
     }
 
-    private IEnumerator OnAttackCoroutine()
+    /// <summary>
+    /// プレイヤーに突進する。
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator OnMoveCoroutine()
     {
-        _waitTime = 1.0f;
+        _waitTime = 2.0f;
+
         EnemyFrip();
 
-        for (int i = 0; i < 5; i++)
+        Vector2 targetPos = _playerTrans.position;
+
+        //プレイヤーとの距離が0.01以上であれば追いかける。
+         while (Vector2.Distance(transform.localPosition, targetPos) > 0.01f)
+         {
+             transform.localPosition = Vector2.MoveTowards(transform.localPosition, targetPos, _moveSpeed * Time.deltaTime);
+             yield return null;
+         }
+         yield return new WaitForSeconds(_waitTime);
+
+        _currentState = BossState.FirstAttack;
+    }
+
+    private IEnumerator OnFirstAttackCoroutine()
+    {
+        _waitTime = 0.2f;
+        EnemyFrip();
+
+        _bulletCount = 7.0f;
+        
+        float angleStep = 360.0f / _bulletCount;
+
+        for (int i = 0; i < _bulletCount; i++)
+        {
+            BigBossBullet bulletobj = _generator.BigBossBulletPool.Rent();
+
+            if (bulletobj != null)
+            {
+                bulletobj.gameObject.SetActive(true);
+
+                bulletobj.transform.position = transform.position;
+
+                bulletobj.SetAttackAmount(_bulletAttackAmount);
+
+                float angle = i * angleStep;
+
+                Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+
+                bulletobj.SetVelocity(direction);
+            }
+            yield return new WaitForSeconds(_waitTime);
+            _currentState = BossState.SecondMove;
+        }
+    }
+
+    private IEnumerator OnJumpCoroutine()
+    {
+        _waitTime = 3f;
+        yield return new WaitForSeconds(_waitTime);
+
+        Vector2 targetPos = _playerTrans.position;
+        float jumpForce = 8.0f;
+        _targetPrefab.gameObject.SetActive(true);
+        _targetPrefab.transform.position = targetPos;
+        _rd2D.AddForce(Vector2.up * jumpForce,ForceMode2D.Impulse);
+        _col2D.enabled = false;
+        _waitTime = 0.3f;
+        yield return new WaitForSeconds(_waitTime);
+        _rd2D.velocity = new Vector2(_rd2D.velocity.x, 0);
+
+        while (Vector2.Distance(transform.localPosition,targetPos)>0.01f)
+        {
+            transform.localPosition = Vector2.MoveTowards(transform.localPosition, targetPos, _moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+        _smokePrefab.transform.position = transform.position;
+        _smokePrefab.SetActive(true);
+        _col2D.enabled = true;
+        _targetPrefab.gameObject.SetActive(false);
+
+        _waitTime = 0.6f;
+        yield return new WaitForSeconds(_waitTime);
+
+        _smokePrefab.SetActive(false);
+        _currentState = BossState.SecondAttack;
+    }
+
+    private IEnumerator OnSecoundAttackCoroutine()
+    {
+        _waitTime = 0.2f;
+        EnemyFrip();
+
+        _bulletCount = 10.0f;
+
+        for (int i = 0; i < _bulletCount; i++)
         {
             if (_generator != null)
             {
-                EnemyBullet bulletobj = _generator.BulletPool.Rent();
+                BigBossBullet bulletobj = _generator.BigBossBulletPool.Rent();
 
                 if (bulletobj != null)
                 {
@@ -143,31 +243,7 @@ public class BigBossEnemy : BossEnemyBase
                     yield return new WaitForSeconds(_waitTime);
                 }
             }
-            _currentState = BossState.Move;
+            _currentState = BossState.Idle;
         }
-    }
-
-    private IEnumerator OnJumpCoroutine()
-    {
-        _waitTime = 3f;
-        yield return new WaitForSeconds(_waitTime);
-
-        Vector2 targetPos = _playerTrans.position;
-        float jumpForce = 8.0f;
-        _targetPrefab.gameObject.SetActive(true);
-        _targetPrefab.transform.position = _playerTrans.position;
-        _rd2D.AddForce(Vector2.up * jumpForce,ForceMode2D.Impulse);
-        yield return new WaitForSeconds(0.3f);
-        _rd2D.velocity = new Vector2(_rd2D.velocity.x, 0);
-
-        while (Vector2.Distance(transform.localPosition,targetPos)>0.01f)
-        {
-            transform.localPosition = Vector2.MoveTowards(transform.localPosition, targetPos, _moveSpeed * Time.deltaTime);
-            yield return null;
-        }
-        _targetPrefab.gameObject.SetActive(false);
-
-
-        _currentState = BossState.Idle;
     }
 }
