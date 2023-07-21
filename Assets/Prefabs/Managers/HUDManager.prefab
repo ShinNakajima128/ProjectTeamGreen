@@ -11096,10 +11096,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c57f01a7099724a47841b9f1b46e34d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _limitTime: 15
+  _limitTime: 5
   _bossEvents:
   - EventName: Wave1_Boss
-    InvokeTime: 30
+    InvokeTime: 10
     BossType: 3
   - EventName: Wave2_Boss
     InvokeTime: 90

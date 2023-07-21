@@ -42,6 +42,8 @@ public class SkillUpSelect : MonoBehaviour
 
     /// <summary>キャンバスグループのアルファ値</summary>
     private int _alphaAmount = 1;
+
+    private bool _isInGame = false;
     #endregion
 
     #region Constant
@@ -53,6 +55,10 @@ public class SkillUpSelect : MonoBehaviour
     #region unity methods
     private void Start()
     {
+        StageManager.Instance.IsInGameObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(value => _isInGame = value);
+
         //プレイヤーのレベルが変更されたら、UI表示の処理を行う(ゲームスタート時の1回はスキップ)
         PlayerController.Instance.Status.CurrentPlayerLevel
                                         .TakeUntilDestroy(this)
@@ -80,6 +86,10 @@ public class SkillUpSelect : MonoBehaviour
     /// </summary>
     public void ActivateRondomSkillUIs()
     {
+        if (!_isInGame)
+        {
+            return;
+        }
         int[] maxSkillIndices = SkillManager.Instance.Skills.Select((item,index) => new {Item = item , Index = index})  //Skillsの第一引数が要素、第二が要素のインデックス番号。
                                                             .Where(x => x.Item.CurrentSkillLevel >=5 )  //第一引数のカレントレベルを調べる。
                                                             .Select(c =>c.Index )　　//カレントレベル5以上のスキルの要素数を取得。

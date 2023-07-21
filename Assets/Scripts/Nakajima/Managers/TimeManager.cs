@@ -62,10 +62,15 @@ public class TimeManager : MonoBehaviour
                              .Subscribe(_ => OnLimitAndEventTimer());
 
         _currentLimitTime.TakeUntilDestroy(this)
+                         .Where(value => value >= 0)
                          .Subscribe(value => 
                          {
                              _limitTimeTMP.text = $"{value / 60:00} : {(value % 60):00}";
-                             
+
+                             if (value <= 0)
+                             {
+                                 _limitTimeTMP.enabled = false;
+                             }
                          });
 
         //ゲームリセット時の処理を登録
@@ -134,6 +139,7 @@ public class TimeManager : MonoBehaviour
         }
 
         _currentLimitTime.Value = _limitTime * 60;
+        _limitTimeTMP.enabled = true;
     }
     #endregion
 }
