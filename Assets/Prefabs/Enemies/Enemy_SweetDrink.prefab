@@ -72,12 +72,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 0ec8cccfbdcd147ce924dd8b30c17ac2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e6574fd2797844e64baccde3f159de22, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.8, y: 0.8}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -98,7 +98,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.03}
   serializedVersion: 2
-  m_Radius: 0.29
+  m_Radius: 0.4
 --- !u!114 &5019117841591959538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -113,4 +113,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: e2626d35c6e584d65a8dd0c4a446ef4b, type: 2}
   _hideDistance: 10
-  _moveSpeed: 0.2
+  _moveSpeed: 1
