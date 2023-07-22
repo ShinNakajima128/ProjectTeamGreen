@@ -25,8 +25,8 @@ TagManager:
   - Item
   - Bullet
   - ItemGet
-  - 
-  - 
+  - Fence
+  - FenceCheck
   - 
   - 
   - 

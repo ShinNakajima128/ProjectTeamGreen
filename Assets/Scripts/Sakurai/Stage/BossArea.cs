@@ -99,6 +99,7 @@ public class BossArea : MonoBehaviour
             else
             {
                 _fence = Instantiate(_fencePrefab, fencePosition, Quaternion.identity);
+
                 _fence.transform.SetParent(this.transform);
                 _fences.Add(_fence);
             }
