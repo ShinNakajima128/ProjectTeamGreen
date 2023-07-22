@@ -51,7 +51,7 @@ public class BackGroundPlacer : MonoBehaviour
             for (int j = 0; j < GRID_SIZE; j++)
             {
                 // タイルを生成
-                GameObject tile = Instantiate(_tilePrefab);
+                GameObject tile = Instantiate(_tilePrefab,this.transform);
 
                 // タイルを配列に保存
                 _tiles[i, j] = tile;
