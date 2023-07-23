@@ -4,12 +4,11 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
-[RequireComponent(typeof(CircleCollider2D))]
-[RequireComponent(typeof(Rigidbody2D))]
-
 /// <summary>
 /// ボールオブジェクトの機能
 /// </summary>
+[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Boul : MonoBehaviour
 {
     #region property
@@ -75,7 +74,6 @@ public class Boul : MonoBehaviour
     #endregion
 
     #region public method
-
     /// <summary>
     /// ボールに攻撃力を持たせる。
     /// </summary>

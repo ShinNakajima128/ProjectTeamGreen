@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// フェンスプレハブの機能
+/// </summary>
 public class Fence : MonoBehaviour
 {
-    #region property
-    #endregion
-
     #region serialize
     [Header("変数")]
     [Tooltip("プレイヤーに与えるの攻撃力")]
@@ -18,26 +18,10 @@ public class Fence : MonoBehaviour
     private float _currentAttackAmount = 5.0f;
     #endregion
 
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
         _attackAmount = _currentAttackAmount;
-    }
-
-    private void Update()
-    {
-
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -54,11 +38,5 @@ public class Fence : MonoBehaviour
             }
         }
     }
-    #endregion
-
-    #region public method
-    #endregion
-
-    #region private method
     #endregion
 }

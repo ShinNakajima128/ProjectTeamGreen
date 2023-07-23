@@ -120,6 +120,7 @@ public class BigBossEnemy : BossEnemyBase
                 case BossState.SecondAttack:
                     yield return StartCoroutine(OnSecoundAttackCoroutine());
                     break;
+
                 default:
                     Debug.Log($"{_currentState}はありません");
                     break;

@@ -5,14 +5,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using UniRx;
-using DG.Tweening;
 
 /// <summary>
 /// スキルアップ時のUI管理
 /// </summary>
 public class SkillUpSelect : MonoBehaviour
 {
-
     #region serialize
     [Header("変数")]
     [Tooltip("スキルセレクトUIを格納するリスト")]
@@ -40,16 +38,8 @@ public class SkillUpSelect : MonoBehaviour
     /// <summary>表示させるUIの数</summary>
     private int _activeAmount = 3;
 
-    /// <summary>キャンバスグループのアルファ値</summary>
-    private int _alphaAmount = 1;
-
+    /// <summary>インゲームのフラグ</summary>
     private bool _isInGame = false;
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
     #endregion
 
     #region unity methods
@@ -65,6 +55,7 @@ public class SkillUpSelect : MonoBehaviour
                                         .Skip(1)
                                         .Subscribe(_ => ActivateRondomSkillUIs());
 
+        //UIのPlayerHealを登録する。
         float healAmount = 10.0f;
         _healUI.onClick.AddListener(() => PlayerHeal(healAmount));
                                                 
@@ -73,7 +64,7 @@ public class SkillUpSelect : MonoBehaviour
             //Enumにキャスト
             SkillType type = (SkillType)i;
 
-            //クリックしたらUIにスキルを登録する。
+            //UIにOnSkillを登録する。
             _skillSelectUIs[i].onClick.AddListener(() => OnSkill(type));
         }
         CanvasGroupChange(false);
@@ -90,12 +81,13 @@ public class SkillUpSelect : MonoBehaviour
         {
             return;
         }
-        int[] maxSkillIndices = SkillManager.Instance.Skills.Select((item,index) => new {Item = item , Index = index})  //Skillsの第一引数が要素、第二が要素のインデックス番号。
+
+        //スキルマックスを調べる
+        int[] maxSkillIndices = SkillManager.Instance.Skills.Select((item,index) => new {Item = item , Index = index})  //intに格納するために要素に対してのインデックス番号が必要。
                                                             .Where(x => x.Item.CurrentSkillLevel >=5 )  //第一引数のカレントレベルを調べる。
                                                             .Select(c =>c.Index )　　//カレントレベル5以上のスキルの要素数を取得。
                                                             .ToArray();
 
-        _alphaAmount = 1;
         if (maxSkillIndices.Length == _skillSelectUIs.Count)
         {
             _healUI.gameObject.SetActive(true);
@@ -105,13 +97,14 @@ public class SkillUpSelect : MonoBehaviour
         }
         else
         {
-            //UIの数分を見てそこからOrderByでランダムの値を3つだけ値を取得する。
-            IEnumerable<int> randomIndices = Enumerable.Range(0, _skillSelectUIs.Count)
-                                                       .Except(maxSkillIndices)
-                                                       .OrderBy(x => UnityEngine.Random.value)
-                                                       .Take(_activeAmount);
+            //UIの数分を見てそこからOrderByでランダムの値を3つだけ値を取得する。LINQでシーケンス操作を行うのでIEnumerable<T>
+            var randomIndices = Enumerable.Range(0, _skillSelectUIs.Count)  //6個のシーケンスを生成
+                                          .Except(maxSkillIndices)          //上記配列の中身のシーケンスを削除
+                                          .OrderBy(x => UnityEngine.Random.value)    //各シーケンスに対してRandom.valueで0~1の間の浮上小数点を与えてから昇順にする。
+                                          .Take(_activeAmount);　　　　　　　　//OrderByからのランダム値から3つ取り出す
 
-            //レベルマックスではないスキルが残り1or2個であればpaddingの値を変更。
+
+            //レベルマックスではないスキルが残り1or2個であればpaddingの値を変更。キレイな配置にする。
             int gridLeftAmount = (randomIndices.Count() >= 3) ? -450:(randomIndices.Count() == 2) ? -270 : -100; 
             _skillUpSelectGrid.padding.left = gridLeftAmount;
 
@@ -128,6 +121,10 @@ public class SkillUpSelect : MonoBehaviour
     }
     #endregion
 
+    /// <summary>
+    /// プレイヤーを回復
+    /// </summary>
+    /// <param name="healAmount">回復する値</param>
     #region public method
     public void PlayerHeal(float healAmount)
     {
@@ -135,7 +132,6 @@ public class SkillUpSelect : MonoBehaviour
 
         _healUI.gameObject.SetActive(false);
 
-        _alphaAmount = 0;
         CanvasGroupChange(false);
         //ゲーム画面を再開
         Time.timeScale = 1f;
@@ -157,8 +153,6 @@ public class SkillUpSelect : MonoBehaviour
         {
             skillUI.gameObject.SetActive(false); 
         }
-        _alphaAmount = 0;
-
         CanvasGroupChange(false);
 
         //ゲーム画面を再開

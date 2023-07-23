@@ -24,13 +24,6 @@ public class MuscleBoulSkill : SkillBase
 
     /// <summary>ボールを格納するリスト</summary>
     private List<Boul> _currentBoulAmount = new List<Boul>();
-
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
     #endregion
 
     #region unity methods
@@ -47,7 +40,6 @@ public class MuscleBoulSkill : SkillBase
             ChildActive(false);
         }
     }
-
     #endregion
 
     #region public method

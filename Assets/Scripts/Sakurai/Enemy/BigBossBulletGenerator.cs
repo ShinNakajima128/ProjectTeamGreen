@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 大ボスの弾のプール機能
+/// </summary>
 public class BigBossBulletGenerator : MonoBehaviour
 {
     #region property

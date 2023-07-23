@@ -127,8 +127,6 @@ public class EnemyManager : MonoBehaviour
             case EnemyWaveType.Wave_1:
                 _generator.OnEnemyGenerate(EnemyType.Wave1_Chase1);
                 _generator.OnEnemyGenerate(EnemyType.Wave1_Point1);
-                _generator.OnEnemyGenerate(EnemyType.Wave3_Chase1);
-                _generator.OnEnemyGenerate(EnemyType.Wave3_Chase2);
                 Debug.Log("Wave1開始");
                 break;
             case EnemyWaveType.Wave_2:

@@ -15,7 +15,6 @@ public class SkillData : ScriptableObject
     public float AttackAmount => _attackAmount;
 
     public float Correctionvalue  => _correctionvalue;
-
     #endregion
 
     #region serialize
@@ -31,28 +30,6 @@ public class SkillData : ScriptableObject
     [Tooltip("パワーアップ時の補正値")]
     [SerializeField]
     private float _correctionvalue = 1.0f;
-
-    #endregion
-
-    #region private
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
-    #region public method
-
-    #endregion
-
-    #region protected method
-
-
-    #endregion
-
-    #region private method
     #endregion
 }
 
