@@ -1,4 +1,5 @@
-﻿/// <summary>
+﻿using UnityEngine;
+/// <summary>
 /// ダメージを受ける機能のインターフェース
 /// </summary>
 public interface IDamagable
@@ -14,5 +15,6 @@ public interface IDamagable
     /// </summary>
     /// <param name="amount">ダメージ量</param>
     void Damage(float amount);
+    void Knockback(Transform other);
     #endregion
 }

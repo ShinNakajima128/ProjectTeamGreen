@@ -46,6 +46,10 @@ public class BossArea : MonoBehaviour
                     .TakeUntilDestroy(this)
                     .Subscribe(_ => AreaDeacticve());
 
+        StageManager.Instance.GameResetObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => AreaDeacticve());
+
         GameObject player = GameObject.FindGameObjectWithTag(GameTag.Player);
         if (player != null)
         {

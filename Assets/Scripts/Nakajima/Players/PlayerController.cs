@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     #region serialize
     [SerializeField]
+    private float _knockbackAmount = 10;
+    [SerializeField]
     private bool _debugMode = false;
     #endregion
 
@@ -137,7 +139,6 @@ public class PlayerController : MonoBehaviour, IDamagable
                 _isDead = true;
             }
         }
-        Debug.Log("Playerがダメージを受けた");
     }
 
     /// <summary>
@@ -159,6 +160,15 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             _status.AddExp(value);
         }
+    }
+
+    public void Knockback(Transform other)
+    {
+        Vector2 dir = (transform.position - other.position).normalized;
+        transform.DOLocalMove(transform.localPosition + (Vector3)(dir * _knockbackAmount),
+                              0.15f)
+                 .SetEase(Ease.InQuad)
+                 .SetLink(gameObject, LinkBehaviour.CompleteAndKillOnDisable);
     }
     #endregion
 

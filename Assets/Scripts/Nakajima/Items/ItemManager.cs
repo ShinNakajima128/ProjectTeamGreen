@@ -54,7 +54,7 @@ public class ItemManager : MonoBehaviour
     /// <param name="pos">生成する座標</param>
     public void GenerateItem(ItemType type, Vector2 pos)
     {
-        _generator.Generate(type, pos);
+        _generator.Generate(type, pos, 300);
     }
     #endregion
 

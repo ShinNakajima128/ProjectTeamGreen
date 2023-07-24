@@ -35,6 +35,7 @@ public class Fence : MonoBehaviour
             {
                 //現在の攻撃力分ダメージを与える。
                 target.Damage(_currentAttackAmount);
+                target.Knockback(transform);
             }
         }
     }

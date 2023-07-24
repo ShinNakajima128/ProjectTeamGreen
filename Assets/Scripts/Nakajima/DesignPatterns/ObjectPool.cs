@@ -54,14 +54,14 @@ public class ObjectPool<T> where T : Object
     {
         if (_pool.Count > 0)
         {
-            Debug.Log($"Queueから取り出した");
+            //Debug.Log($"Queueから取り出した");
             return _pool.Dequeue();
         }
         else
         {
             if (_parent.childCount >= limit)
             {
-                Debug.Log("生成上限です");
+                //Debug.Log("生成上限です");
                 return null;
             }
 
@@ -78,7 +78,7 @@ public class ObjectPool<T> where T : Object
                  .Subscribe(_ =>
                  {
                      _pool.Enqueue(obj);
-                     Debug.Log("poolに帰還");
+                     //Debug.Log("poolに帰還");
                  });
 
                 //使用中のオブジェクトを全てプールに戻すための処理を登録
@@ -88,10 +88,7 @@ public class ObjectPool<T> where T : Object
             {
                 Debug.LogError($"インターフェースが継承されていません。オブジェクト名:{obj.name}");
             }
-
-
-            Debug.Log($"新しく{obj.name}を作成");
-
+            //Debug.Log($"新しく{obj.name}を作成");
             return obj;
         }
     }

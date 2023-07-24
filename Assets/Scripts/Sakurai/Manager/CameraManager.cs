@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UniRx;
 
 /// <summary>
 /// カメラを扱うマネージャー
@@ -15,7 +17,7 @@ public class CameraManager : MonoBehaviour
 
     /// <summary>カメラの種類</summary>
     [SerializeField]
-    private CameraType type;
+    private CameraType _type;
     #endregion
 
     /// <summary>シネマシーンカメラをenumで扱うためのDictionary</summary>
@@ -37,6 +39,27 @@ public class CameraManager : MonoBehaviour
             _camerasDic.Add((CameraType)i, _virtualCamera[i].Camera);
         }
     }
+
+    private void Start()
+    {
+        Transform player = GameObject.FindGameObjectWithTag(GameTag.Player).transform;
+
+        _camerasDic.Select(x => x.Value)
+                   .ToList()
+                   .ForEach(x =>
+                   {
+                       x.m_Follow = player;
+                       x.m_LookAt = player;
+                   });
+
+        TimeManager.Instance.BossEventObserver
+                            .TakeUntilDestroy(this)
+                            .Subscribe(_ => OnChangeCamera());
+
+        StageManager.Instance.GameResetObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => OnResetCamera());
+    }
     #endregion
 
     #region public method
@@ -53,6 +76,38 @@ public class CameraManager : MonoBehaviour
         }
         _camerasDic[cameraType].Priority = PriorityAmount;
         
+    }
+    #endregion
+
+    #region private method
+    /// <summary>
+    /// カメラを変更する
+    /// </summary>
+    private void OnChangeCamera()
+    {
+        switch (_type)
+        {
+            case CameraType.Wave1Camera:
+                _type = CameraType.Wave2Camera;
+                break;
+            case CameraType.Wave2Camera:
+                _type = CameraType.Wave3Camera;
+                break;
+            case CameraType.Wave3Camera:
+                break;
+            default:
+                break;
+        }
+        CameraChange(_type);
+    }
+
+    /// <summary>
+    /// カメラを初期状態に戻す
+    /// </summary>
+    private void OnResetCamera()
+    {
+        _type = CameraType.Wave1Camera;
+        CameraChange(_type);
     }
     #endregion
 }

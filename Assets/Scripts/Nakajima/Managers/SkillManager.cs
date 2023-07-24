@@ -99,6 +99,17 @@ public class SkillManager : MonoBehaviour
             _skills[i].StopSkill();
         }
     }
+
+    /// <summary>
+    /// アクティブ状態のスキルの攻撃力を上昇させる
+    /// </summary>
+    /// <param name="coefficient">上昇する係数</param>
+    public void PowerUpSkill(float coefficient)
+    {
+        _skills.Where(x => x.IsSkillActived)
+               .ToList()
+               .ForEach(x => x.AttackUpSkill(coefficient));
+    }
     #endregion
 
     #region private method

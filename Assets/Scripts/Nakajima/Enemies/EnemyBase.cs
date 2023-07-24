@@ -156,7 +156,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
         }
         _currentHP -= amount;
 
-        Debug.Log(amount);
         DamageAnimation();
         DamageTextGenerate(amount);
 
@@ -173,13 +172,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
 
                 case EnemyType.Wave1_Boss:
                     EnemyManager.Instance.OnDefeatedBossEnemyEvent();
-                    //StageManager.Instance.OnGameEnd();
                     break;
                 case EnemyType.Wave2_Boss:
                     EnemyManager.Instance.OnDefeatedBossEnemyEvent();
                     break;
                 case EnemyType.Wave3_Boss:
-                    //EnemyManager.Instance.OnDefeatedBossEnemyEvent();
                     //ウェーブ3のボスが倒されたらゲーム終了
                     StageManager.Instance.OnGameEnd();
                     break;
@@ -188,16 +185,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
             }
             gameObject.SetActive(false);
         }
-        else
-        {
-            if (amount >= 15.5f)
-            {
-                Knockback((transform.position - _playerTrans.position).normalized);
-            }
-            AudioManager.PlaySE(SEType.Damage_Enemy);
-        }
-
-        Debug.Log($"{gameObject.name}:Damage、残りHP:{_currentHP}");
     }
     public void SetEnemyStatus(float coefficient)
     {
@@ -209,8 +196,11 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
     /// ノックバックする
     /// </summary>
     /// <param name="dir">吹き飛ぶ方向</param>
-    public void Knockback(Vector2 dir)
+    public void Knockback(Transform other)
     {
+        Vector2 dir = (transform.position - _playerTrans.position).normalized;
+        AudioManager.PlaySE(SEType.Damage_Enemy);
+
         transform.DOLocalMove(transform.localPosition + (Vector3)(dir * _enemyData.KnockbackAmount),
                               0.15f)
                  .SetEase(Ease.InQuad)
