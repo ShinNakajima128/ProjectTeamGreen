@@ -15,6 +15,10 @@ public class TurretEnemy : EnemyBase
     [Tooltip("弾のダメージ量")]
     [SerializeField]
     private float _bulletAttackAmount = 1f;
+
+    [Tooltip("キャラクター")]
+    [SerializeField]
+    private TurretCharacter _character = TurretCharacter.Corn;
     #endregion
 
     #region private
@@ -24,8 +28,10 @@ public class TurretEnemy : EnemyBase
     private bool _isCanShot = true;
     /// <summary>フリップを行うコルーチン格納用</summary>
     private Coroutine _flipCoroutine;
-    /// <summary>弾生成コンポーネント格納用</summary>
-    private EnemyBulletGenerater _generator;
+    /// <summary>弾生成コンポーネント格納用(レモン)</summary>
+    private EnemyBulletGenerater _bulletGenerator;
+    /// <summary>弾生成コンポーネント格納用(スイカ)</summary>
+    private EnemyBulletGenerater _waterMelonBulletGenerator;
     #endregion
 
     #region unity methods
@@ -36,7 +42,8 @@ public class TurretEnemy : EnemyBase
 
     protected override void Start()
     {
-        _generator = EnemyManager.Instance.TurretPoolGenerator;
+        _bulletGenerator = EnemyManager.Instance.TurretPoolGenerator;
+        _waterMelonBulletGenerator = EnemyManager.Instance.WaterMelonBulletPoolGenerator;
         base.Start();
     }
 
@@ -69,6 +76,30 @@ public class TurretEnemy : EnemyBase
     }
     #endregion
 
+    #region private method
+    /// <summary>
+    /// 弾の生成
+    /// </summary>
+    /// <param name="bullet"></param>
+    private void BulletGenerate(EnemyBullet bullet)
+    {
+        //弾がnullでないなら
+        if (bullet != null)
+        {
+            //弾をアクティブ化
+            bullet.gameObject.SetActive(true);
+            //弾のポジションを移動
+            bullet.transform.position = transform.position;
+            //親子関係を解除
+            bullet.gameObject.transform.SetParent(null);
+            //弾の攻撃力を設定
+            bullet.SetAttackAmount(_bulletAttackAmount);
+            //velocityをプレイヤーの方向に設定
+            bullet.SetVelocity((_playerTrans.position - transform.position).normalized);
+        }
+    }
+    #endregion
+
     #region Coroutine method
     /// <summary>
     /// 敵ごとの行動処理を行うコルーチン
@@ -82,21 +113,22 @@ public class TurretEnemy : EnemyBase
             //弾を発射可能なら
             if (_isCanShot)
             {
-                //使う弾を取得
-                EnemyBullet bulletObj = _generator.BulletPool.Rent();
-                //弾がnullでないなら
-                if (bulletObj != null)
+                switch (_character)
                 {
-                    //弾をアクティブ化
-                    bulletObj.gameObject.SetActive(true);
-                    //弾のポジションを移動
-                    bulletObj.transform.position = transform.position;
-                    //親子関係を解除
-                    bulletObj.gameObject.transform.SetParent(null);
-                    //弾の攻撃力を設定
-                    bulletObj.SetAttackAmount(_bulletAttackAmount);
-                    //velocityをプレイヤーの方向に設定
-                    bulletObj.SetVelocity((_playerTrans.position - transform.position).normalized);
+                    //キャラクターがコーンの場合
+                    case TurretCharacter.Corn:
+                        EnemyBullet lemonBullet = _bulletGenerator.BulletPool.Rent();
+                        BulletGenerate(lemonBullet);
+                        break;
+
+                    //キャラクターがスイカの場合
+                    case TurretCharacter.WaterMelon:
+                        EnemyBullet waterMelonBullet = _waterMelonBulletGenerator.BulletPool.Rent();
+                        BulletGenerate(waterMelonBullet);
+                        break;
+
+                    default:
+                        break;
                 }
             }
             //発射間隔分待つ
@@ -129,4 +161,15 @@ public class TurretEnemy : EnemyBase
         }
     }
     #endregion
+}
+
+/// <summary>
+/// キャラクター
+/// </summary>
+enum TurretCharacter
+{
+    /// <summary>トウモロコシ</summary>
+    Corn,
+    /// <summary>スイカ</summary>
+    WaterMelon
 }

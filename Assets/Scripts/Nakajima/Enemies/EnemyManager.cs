@@ -22,6 +22,8 @@ public class EnemyManager : MonoBehaviour
 
     public EnemyBulletGenerater TurretPoolGenerator => _turretPoolGenerator;
 
+    public EnemyBulletGenerater WaterMelonBulletPoolGenerator => _waterMelonBulletPoolGenerator;
+
     public RockGenerator RockPoolGenerator => _rockPoolGenerator;
 
     public MissileGenerator MissilePoolGenerator => _missilePoolGenerator;
@@ -35,9 +37,13 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private EnemyBulletGenerater _middleBossPoolGenerator;
 
-    [Tooltip("タレットのバレットをプールするオブジェクト")]
+    [Tooltip("タレットのバレット(レモン)をプールするオブジェクト")]
     [SerializeField]
     private EnemyBulletGenerater _turretPoolGenerator;
+
+    [Tooltip("タレットのバレット(スイカ)をプールするオブジェクト")]
+    [SerializeField]
+    private EnemyBulletGenerater _waterMelonBulletPoolGenerator;
 
     [Tooltip("中ボスタレットの岩をプールするオブジェクト")]
     [SerializeField]
@@ -131,7 +137,7 @@ public class EnemyManager : MonoBehaviour
                 break;
             case EnemyWaveType.Wave_2:
                 _generator.OnEnemyGenerate(EnemyType.Wave2_Chase1);
-                _generator.OnEnemyGenerate(EnemyType.Wave1_Point1);
+                _generator.OnEnemyGenerate(EnemyType.Wave2_Point1);
                 Debug.Log("Wave2開始");
                 break;
             case EnemyWaveType.Wave_3:
