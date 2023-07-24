@@ -69,6 +69,8 @@ public class ResultUI : MonoBehaviour
     #region private
     /// <summary>倒した数</summary>
     private uint _currentDefeatAmount;
+    private uint _resultPlayerLevel;
+    private uint _resultDefeatAmount;
     private bool _isLoading = false;
     #endregion
 
@@ -151,7 +153,8 @@ public class ResultUI : MonoBehaviour
         try
         {
             _resultParent.SetActive(true);
-
+            _resultDefeatAmount = EnemyManager.Instance.DefeatAmount.Value;
+            _resultPlayerLevel = PlayerController.Instance.Status.CurrentPlayerLevelAmount;
             await UniTask.Delay(TimeSpan.FromSeconds(2.0f));
 
             FadeManager.Fade(FadeType.Out, () =>
@@ -159,6 +162,7 @@ public class ResultUI : MonoBehaviour
                 FadeManager.Fade(FadeType.In);
                 _gameEndTMP.enabled = false;
                 ChangeResultView(true);
+                StageManager.Instance.OnGameReset();
             });
 
             //フェード処理が終了するまで待機
@@ -168,7 +172,7 @@ public class ResultUI : MonoBehaviour
 
             //現在のプレイヤーレベルを表示
             _playerLevelViewObj.SetActive(true);
-            _playerLevelTMP.text = PlayerController.Instance.Status.CurrentPlayerLevelAmount.ToString();
+            _playerLevelTMP.text = _resultPlayerLevel.ToString();
 
             await UniTask.Delay(1000);
 
@@ -177,7 +181,7 @@ public class ResultUI : MonoBehaviour
             await DOTween.To(() =>
                           _currentDefeatAmount,
                           x => _currentDefeatAmount = x,
-                          EnemyManager.Instance.DefeatAmount.Value,
+                          _resultDefeatAmount,
                           _viewAnimTime)
                          .OnUpdate(() =>
                          {
@@ -185,7 +189,6 @@ public class ResultUI : MonoBehaviour
                          })
                          .AsyncWaitForCompletion();
 
-            StageManager.Instance.OnGameReset();
 
             await UniTask.Delay(1000);
 
