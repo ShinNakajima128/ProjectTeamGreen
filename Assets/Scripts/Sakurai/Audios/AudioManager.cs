@@ -27,6 +27,12 @@ public enum SEType
     GetSkill_4,    //決定ボタンを押す10
     BecomeBoss_1,  //文字表示の衝撃音1
     BecomeBoss_2,  //文字表示の衝撃音3
+    UIActive,      //UI表示
+    BossDied,      //ボス撃破
+    BombExplotion, //se_bomb5
+    BossAlert,     //Warning-Siren
+    AuraActive,     //重力魔法2
+    FairyUp
 }
 
 

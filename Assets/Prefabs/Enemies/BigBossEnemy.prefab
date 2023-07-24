@@ -116,8 +116,10 @@ MonoBehaviour:
   _hideDistance: 10
   _moveSpeed: 7
   _bulletAttackAmount: 30
-  _smokePrefab: {fileID: 0}
-  _targetPrefab: {fileID: 0}
+  _smokePrefab: {fileID: 1279537325256656623, guid: 60c3aaba3dfdd483f81d7884b97ebfeb,
+    type: 3}
+  _targetPrefab: {fileID: 7323711801229251188, guid: ab0ecf2bc02814334b7c581d339213d2,
+    type: 3}
   _generator: {fileID: 0}
 --- !u!50 &3279955001289809609
 Rigidbody2D:

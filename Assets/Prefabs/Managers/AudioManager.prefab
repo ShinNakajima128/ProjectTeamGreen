@@ -78,7 +78,7 @@ MonoBehaviour:
   _masterVolume: 1
   _bgmVolume: 0.3
   _seVolume: 1
-  _seAudioSourceNum: 5
+  _seAudioSourceNum: 30
   _bgmList:
   - BGMName: Title
     BGMType: 0
@@ -144,6 +144,30 @@ MonoBehaviour:
   - SEName: "\u6575\u306E\u8972\u6483\u97F32"
     SEType: 12
     Clip: {fileID: 8300000, guid: 9411c70f2f5e32f4fbfe8d3bf025babb, type: 3}
+    Volume: 0.2
+  - SEName: "\u30B9\u30AD\u30EBUI\u8868\u793A\u97F3"
+    SEType: 13
+    Clip: {fileID: 8300000, guid: 5cd3ddfe8d6154985b162cc8e892c30c, type: 3}
+    Volume: 0.2
+  - SEName: "\u30DC\u30B9\u6B7B\u4EA1\u6642"
+    SEType: 14
+    Clip: {fileID: 8300000, guid: 0c02edfc7c6554356814997fe10149ad, type: 3}
+    Volume: 0.2
+  - SEName: "\u30DC\u30E0\u30B9\u30AD\u30EB\u7206\u767A\u97F3"
+    SEType: 15
+    Clip: {fileID: 8300000, guid: f7191ffa824044c2ba39e319bdccdec2, type: 3}
+    Volume: 0.2
+  - SEName: "\u30DC\u30B9\u51FA\u73FE\u30A2\u30E9\u30FC\u30C8"
+    SEType: 16
+    Clip: {fileID: 8300000, guid: 9c4cb1e27ac69442b9ce7df1e8b5879f, type: 3}
+    Volume: 0.2
+  - SEName: "\u30AA\u30FC\u30E9 \u30EC\u30D9\u30EB\u30A2\u30C3\u30D7\u97F3"
+    SEType: 17
+    Clip: {fileID: 8300000, guid: 801df0991680b4e43b11cdcf14ea37a5, type: 3}
+    Volume: 0.2
+  - SEName: "\u30D5\u30A7\u30A2\u30EA\u30FC\u30A2\u30C3\u30D7\u97F3"
+    SEType: 18
+    Clip: {fileID: 8300000, guid: d336043f59763874283824d867488577, type: 3}
     Volume: 0.2
   _bgmSource: {fileID: 6027496811656253905}
   _seSorcesParent: {fileID: 5492856862607328422}

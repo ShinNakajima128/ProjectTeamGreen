@@ -117,6 +117,8 @@ public class Bomb : MonoBehaviour, IPoolable
         //爆発がnullでなければ
         if (skillObj != null)
         {
+            AudioManager.PlaySE(SEType.BombExplotion);
+
             //爆発オブジェクトのアクティブ化
             skillObj.gameObject.SetActive(true);
             //すきっレベルに応じてスケールを変化
