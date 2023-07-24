@@ -7,39 +7,9 @@ using UnityEngine;
 /// </summary>
 public abstract class BossEnemyBase : EnemyBase
 {
-
-    #region property
-    #endregion
-
-    #region serialize
-    #endregion
-
     #region protected
     protected BossState _currentState = BossState.Idle;
     #endregion
-
-    #region private
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
-    #region unity methods
-    #endregion
-
-    #region public method
-    #endregion
-
-    #region private method
-    #endregion
-
-    #region coroutine method
-
-    #endregion
-
 }
 
 //ボスのステート

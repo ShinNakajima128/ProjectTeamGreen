@@ -3,51 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
+/// <summary>
+/// カメラを扱うマネージャー
+/// </summary>
 public class CameraManager : MonoBehaviour
 {
-    #region property
-    #endregion
-
+    /// <summary>シネマシーンカメラ</summary>
     #region serialize
     [SerializeField]
     private ActivationCamera[] _virtualCamera;
 
+    /// <summary>カメラの種類</summary>
     [SerializeField]
     private CameraType type;
     #endregion
 
+    /// <summary>シネマシーンカメラをenumで扱うためのDictionary</summary>
     #region private
     private Dictionary<CameraType, CinemachineVirtualCamera> _camerasDic = new Dictionary<CameraType, CinemachineVirtualCamera>();
     #endregion
 
+    /// <summary>プライオリティを上げたときの値</summary>
     #region Constant
     private const int PriorityAmount = 11;
-    #endregion
-
-    #region Event
     #endregion
 
     #region unity methods
     private void Awake()
     {
+        //カメラタイプにシネマカメラを追加
         for (int i = 0; i < _virtualCamera.Length; i++)
         {
             _camerasDic.Add((CameraType)i, _virtualCamera[i].Camera);
         }
     }
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-
-    }
     #endregion
 
     #region public method
+    //カメラの変更処理
     public void CameraChange(CameraType cameraType)
     {
         Debug.Log("実行");
@@ -62,11 +55,7 @@ public class CameraManager : MonoBehaviour
         
     }
     #endregion
-
-    #region private method
-    #endregion
 }
-
 
 [System.Serializable]
 public class ActivationCamera

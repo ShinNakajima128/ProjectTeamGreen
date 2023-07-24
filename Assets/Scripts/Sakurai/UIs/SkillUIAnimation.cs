@@ -11,29 +11,14 @@ using DG.Tweening;
 /// </summary>
 public class SkillUIAnimation : MonoBehaviour
 {
-    #region property
-    #endregion
-
     #region serialize
+    [Header("変数")]
+    [Tooltip("アニメーションさせるイメージ")]
     [SerializeField]
     private Image _animationImage;
     #endregion
 
-    #region private
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
         this.UpdateAsObservable()
@@ -44,22 +29,11 @@ public class SkillUIAnimation : MonoBehaviour
             });
     }
 
-    private void Update()
-    {
-
-    }
-
     private void OnEnable()
     {
         _animationImage.transform.localScale = Vector3.zero;
         DisplayAnimation();
     }
-
-
-
-    #endregion
-
-    #region public method
     #endregion
 
     #region private method
@@ -88,6 +62,9 @@ public class SkillUIAnimation : MonoBehaviour
     //    }
     //}
 
+    /// <summary>
+    /// 表示されたときのアニメーション
+    /// </summary>
     private void DisplayAnimation()
     {
          _animationImage.transform.DOScale(Vector3.one, 0.15f)

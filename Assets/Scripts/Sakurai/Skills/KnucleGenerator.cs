@@ -34,12 +34,6 @@ public class KnucleGenerator : MonoBehaviour
     private ObjectPool<Knuckle> _knucklePool;
     #endregion
 
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
     #region unity methods
     private void Awake()
     {

@@ -6,27 +6,7 @@ using UniRx.Triggers;
 
 public class SkillTest : MonoBehaviour
 {
-    #region property
-    #endregion
-
-    #region serialize
-    #endregion
-
-    #region private
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
     #region unity methods
-    private void Awake()
-    {
-
-    }
-
     private void Start()
     {
         //Update内で行う処理を登録
@@ -61,11 +41,5 @@ public class SkillTest : MonoBehaviour
                 }
             });
     }
-    #endregion
-
-    #region public method
-    #endregion
-
-    #region private method
     #endregion
 }

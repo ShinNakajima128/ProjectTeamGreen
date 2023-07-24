@@ -9,12 +9,10 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
-
 public class Knuckle : MonoBehaviour, IPoolable
 {
 
     public IObservable<Unit> InactiveObserver => _inactiveSubject;
-
 
     #region serialize
     [Header("変数")]
@@ -36,11 +34,7 @@ public class Knuckle : MonoBehaviour, IPoolable
     #endregion
 
     #region Event
-    /// <summary>スキル機能変更用のデリゲート</summary>
-    public Action RandomDirection { get; set; }
-
     private Subject<Unit> _inactiveSubject = new Subject<Unit>(); 
-
     #endregion
 
     #region unity methods
@@ -73,7 +67,6 @@ public class Knuckle : MonoBehaviour, IPoolable
         {
             //インターフェースを取得
             var target = collision.GetComponent<IDamagable>();
-
             if (target != null)
             {
                 //現在の攻撃力分ダメージを与える。

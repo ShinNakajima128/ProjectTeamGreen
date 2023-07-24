@@ -9,9 +9,6 @@ using UnityEngine;
 [RequireComponent(typeof(CircleCollider2D))]
 public class Fairy : MonoBehaviour
 {
-    #region property
-    #endregion
-
     #region serialize
     [Header("変数")]
     [Tooltip("現在の妖精の攻撃力")]
@@ -19,17 +16,7 @@ public class Fairy : MonoBehaviour
     private float _currentAttackAmount = 0;
     #endregion
 
-    #region private
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
     #region unity methods
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //当たったのがエネミーだった場合
@@ -69,8 +56,5 @@ public class Fairy : MonoBehaviour
     {
         transform.localScale = new Vector3(scaleFactor, scaleFactor,0);
     }
-    #endregion
-
-    #region private method
     #endregion
 }

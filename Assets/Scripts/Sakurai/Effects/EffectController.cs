@@ -4,23 +4,13 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 
-
+/// <summary>
+/// エフェクトをコントロールするクラス
+/// </summary>
 public class EffectController : MonoBehaviour
 {
-    #region property
-    #endregion
-
-    #region serialize
-    #endregion
-
     #region private
     private ParticleSystem[] _particles;
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
     #endregion
 
     #region unity methods
@@ -49,7 +39,6 @@ public class EffectController : MonoBehaviour
     #endregion
 
     #region public method
-
     /// <summary>
     /// エフェクトを再生する
     /// </summary>
@@ -83,8 +72,5 @@ public class EffectController : MonoBehaviour
     {
         return gameObject.activeInHierarchy;
     }
-    #endregion
-
-    #region private method
     #endregion
 }

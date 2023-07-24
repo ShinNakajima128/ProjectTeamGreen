@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
+/// <summary>
+/// 大ボスの弾の機能
+/// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 public class BigBossBullet : MonoBehaviour,IPoolable
@@ -106,7 +109,7 @@ public class BigBossBullet : MonoBehaviour,IPoolable
 
     public void ReturnPool()
     {
-
+        throw new NotImplementedException();
     }
     #endregion
 }

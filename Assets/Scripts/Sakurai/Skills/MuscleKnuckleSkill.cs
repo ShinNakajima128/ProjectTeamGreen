@@ -9,9 +9,6 @@ using System;
 [RequireComponent(typeof(KnucleGenerator))]
 public class MuscleKnuckleSkill : SkillBase
 {
-    #region property
-    #endregion
-
     #region serialize
     [Header("変数")]
     [Tooltip("テスト用の弾丸")]
@@ -125,9 +122,14 @@ public class MuscleKnuckleSkill : SkillBase
                 sklObj.gameObject.SetActive(true);
                 sklObj.SetAttackAmount(_currentAttackAmount);
 
-                //これは使いどころではない。関数に変更する。
-                sklObj.RandomDirection = (_currentSkillLebel < 4) ? new Action(sklObj.RondomFourDirection) : new Action(sklObj.RondomEightDirection);
-                sklObj.RandomDirection.Invoke();
+                if (_currentSkillLebel < 4)
+                {
+                    sklObj.RondomFourDirection();
+                }
+                else if(_currentSkillLebel >= 4) 
+                {
+                    sklObj.RondomEightDirection();
+                }
             }
 
              yield return new WaitForSeconds(_currentAttackInterval);

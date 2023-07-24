@@ -41,12 +41,6 @@ public class MuscleFairySkill : SkillBase
     private List<float> _currentFairyAngles = new List<float>();
     #endregion
 
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
     #region unity methods
     protected override void Awake()
     {
