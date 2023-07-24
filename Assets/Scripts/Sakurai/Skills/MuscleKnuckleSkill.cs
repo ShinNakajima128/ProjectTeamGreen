@@ -70,20 +70,20 @@ public class MuscleKnuckleSkill : SkillBase
     public override void LebelUpSkill()
     {
         //既にレベルが最大値の場合は処理を行わない
-        if (_currentSkillLebel >= MAX_LEVEL)
+        if (_currentSkillLevel >= MAX_LEVEL)
         {
             Debug.Log($"{SkillType}はレベル上限です");
             return;
         }
 
         //レベルアップ
-        _currentSkillLebel++;
+        _currentSkillLevel++;
         AttackUpSkill(_attackCoefficient);
 
         //攻撃間隔を縮める
         _currentAttackInterval /= _coefficient;
 
-        Debug.Log($"レベルアップ!{_currentSkillLebel}に上がった！");
+        Debug.Log($"レベルアップ!{_currentSkillLevel}に上がった！");
     }
 
     // <summary>
@@ -123,11 +123,11 @@ public class MuscleKnuckleSkill : SkillBase
                 sklObj.gameObject.SetActive(true);
                 sklObj.SetAttackAmount(_currentAttackAmount);
 
-                if (_currentSkillLebel < 4)
+                if (_currentSkillLevel < 4)
                 {
                     sklObj.RondomFourDirection();
                 }
-                else if(_currentSkillLebel >= 4) 
+                else if(_currentSkillLevel >= 4) 
                 {
                     sklObj.RondomEightDirection();
                 }

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 敵の弾生成
 /// </summary>
-public class EnemyBulletGenerater : MonoBehaviour
+public class EnemyBulletGenerator : MonoBehaviour
 {
     #region property
     public ObjectPool<EnemyBullet> BulletPool => _bulletPool;

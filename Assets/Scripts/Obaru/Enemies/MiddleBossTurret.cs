@@ -35,7 +35,7 @@ public class MiddleBossTurret : BossEnemyBase
     /// <summary>弾を発射可能かどうか</summary>
     private bool _isCanAttack = true;
     /// <summary>弾の生成用</summary>
-    private EnemyBulletGenerater _bulletGenerator;
+    private EnemyBulletGenerator _bulletGenerator;
     /// <summary>岩の生成用</summary>
     private RockGenerator _rockGenerator;
     /// <summary>ミサイルの生成用</summary>

@@ -60,7 +60,7 @@ public class MuscleAuraSkill : SkillBase
     public override void LebelUpSkill()
     {
         //既にレベルが最大値の場合は処理を行わない
-        if (_currentSkillLebel >= MAX_LEVEL)
+        if (_currentSkillLevel >= MAX_LEVEL)
         {
             Debug.Log($"{SkillType}はレベル上限です");
 
@@ -68,11 +68,11 @@ public class MuscleAuraSkill : SkillBase
         }
 
         //レベルアップ
-        _currentSkillLebel++;
+        _currentSkillLevel++;
         AudioManager.PlaySE(SEType.AuraActive);
 
         //3レベルまでと5レベルになった際はサイズを変更。
-        if (_currentSkillLebel <= 3 || _currentSkillLebel == 5)
+        if (_currentSkillLevel <= 3 || _currentSkillLevel == 5)
         {
             AttackUpSkill(_attackCoefficient);
             _currentAura.SizeChange(_sumAmount);
@@ -80,14 +80,14 @@ public class MuscleAuraSkill : SkillBase
         }
 
         //4レベルになったらオーラを変更
-        if (_currentSkillLebel == 4)
+        if (_currentSkillLevel == 4)
         {
             AttackUpSkill(_attackHighCoefficient);
             CreateNewAura(_highAuraPrefab);
         }
 
         _currentAura.SetAttackAmount(_currentAttackAmount);
-        Debug.Log($"レベルアップ!{_currentSkillLebel}にあがった!");
+        Debug.Log($"レベルアップ!{_currentSkillLevel}にあがった!");
     }
 
     /// <summary>

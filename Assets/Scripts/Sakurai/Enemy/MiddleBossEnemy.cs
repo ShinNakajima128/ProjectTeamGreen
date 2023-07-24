@@ -26,7 +26,7 @@ public class MiddleBossEnemy : BossEnemyBase
     private bool _isFliped = false;
 
     //弾のプール用のクラスを参照
-    EnemyBulletGenerater _generator;
+    EnemyBulletGenerator _generator;
     #endregion
 
     #region unity methods
@@ -53,7 +53,7 @@ public class MiddleBossEnemy : BossEnemyBase
     #endregion
 
     #region private method
-    private void EnemyFrip()
+    private void EnemyFlip()
     {
         //エネミーよりプレイヤーのx軸が大きい場合はエネミーを右向きにする
         if (!_isFliped && transform.localPosition.x < _playerTrans.position.x)
@@ -113,7 +113,7 @@ public class MiddleBossEnemy : BossEnemyBase
         //追いかける処理を3回繰り返す。
         for (int i = 0; i < 3; i++)
         {
-            EnemyFrip();
+            EnemyFlip();
 
             Vector2 targetPos = _playerTrans.position;
 
@@ -136,7 +136,7 @@ public class MiddleBossEnemy : BossEnemyBase
     {
         Debug.Log("OnAttackCoroutineスタート");
         _waitTime = 0.5f;
-        EnemyFrip();
+        EnemyFlip();
         for (int i = 0; i < 3; i++)
         {
             //プールからオブジェクトを取り出す。

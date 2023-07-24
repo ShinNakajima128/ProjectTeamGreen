@@ -11,7 +11,7 @@ public abstract class SkillBase : MonoBehaviour
     #region property
     public SkillType SkillType => _skillData.SkillType;
     public bool IsSkillActived => _isSkillActived;
-    public int CurrentSkillLevel => _currentSkillLebel;
+    public int CurrentSkillLevel => _currentSkillLevel;
     #endregion
 
     #region serialize
@@ -24,7 +24,7 @@ public abstract class SkillBase : MonoBehaviour
     /// <summary>現在の攻撃力</summary>
     protected float _currentAttackAmount = 0;
     /// <summary>現在のスキルレベル</summary>
-    protected int _currentSkillLebel = 1;
+    protected int _currentSkillLevel = 1;
     /// <summary>スキルがアクティブかどうか</summary>
     protected bool _isSkillActived = false;
     /// <summary>現在稼働中のコルーチン</summary>
@@ -91,7 +91,7 @@ public abstract class SkillBase : MonoBehaviour
     public virtual void ResetSkill()
     {
         _isSkillActived = false;
-        _currentSkillLebel = 1;
+        _currentSkillLevel = 1;
         _currentAttackAmount = _skillData.AttackAmount;
 
         if (_currentCoroutine != null)
