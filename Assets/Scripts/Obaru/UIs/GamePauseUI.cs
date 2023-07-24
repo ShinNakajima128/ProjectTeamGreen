@@ -116,7 +116,7 @@ public class GamePauseUI : MonoBehaviour
             if (_activeSkill.Any(x => x == info.SkillType))
             {
                 info.gameObject.SetActive(true);
-                info.RewriteCurrentLevelText();
+                info.ChangeStartSprite();
             }
         }
     }

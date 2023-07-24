@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 using System.Linq;
 
 /// <summary>
@@ -14,9 +14,13 @@ public class SkillInfo : MonoBehaviour
     #endregion
 
     #region serialize
-    [Tooltip("スキルレベル表示用のテキスト")]
+    [Tooltip("スキルレベル表示用の星")]
     [SerializeField]
-    private TextMeshProUGUI _currentLevelText = default;
+    private Image[] _stars;
+
+    [Tooltip("スキルレベル表示用のスプライト")]
+    [SerializeField]
+    private Sprite _startSprite;
 
     [Tooltip("スキルタイプ")]
     [SerializeField]
@@ -31,7 +35,7 @@ public class SkillInfo : MonoBehaviour
     #region unity methods
     private void Start()
     {
-        RewriteCurrentLevelText();
+        ChangeStartSprite();
 
         gameObject.SetActive(false);
     }
@@ -41,14 +45,17 @@ public class SkillInfo : MonoBehaviour
     /// <summary>
     /// テキストの更新
     /// </summary>
-    public void RewriteCurrentLevelText()
+    public void ChangeStartSprite()
     {
         //現在のスキルレベルを取得
         _currentLevel = SkillManager.Instance.Skills
                                     .FirstOrDefault(x => x.SkillType == _skillType)
                                     .CurrentSkillLevel;
 
-        _currentLevelText.text = $"LV.{_currentLevel}";
+        for(int i = 0; i < _currentLevel; i++)
+        {
+            _stars[i].sprite = _startSprite;
+        }
     }
     #endregion
 }
