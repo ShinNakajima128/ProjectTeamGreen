@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1017495220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1017495221}
+  m_Layer: 0
+  m_Name: ExpItems_Large
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1017495221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017495220}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6355326079338186949}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1094060000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1094060001}
+  m_Layer: 0
+  m_Name: ExpItems_Middle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1094060001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094060000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6355326079338186949}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6355326078942542572
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,6 +122,8 @@ Transform:
   - {fileID: 6355326078942542571}
   - {fileID: 6355326080161253818}
   - {fileID: 6355326079381132475}
+  - {fileID: 1094060001}
+  - {fileID: 1017495221}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -108,12 +170,12 @@ MonoBehaviour:
   - ItemName: "\u7D4C\u9A13\u5024\uFF08\u4E2D\uFF09"
     ItemPrefab: {fileID: 4986574045778322860, guid: 63cb78f5347f3fc4392506c3b3a19a36,
       type: 3}
-    Parent: {fileID: 6355326079381132475}
+    Parent: {fileID: 1094060001}
     GenerateInterval: 5
   - ItemName: "\u7D4C\u9A13\u5024\uFF08\u5927\uFF09"
     ItemPrefab: {fileID: 4986574045778322860, guid: d01cf6fed938b4c4aad25f6faa45c4a4,
       type: 3}
-    Parent: {fileID: 6355326079381132475}
+    Parent: {fileID: 1017495221}
     GenerateInterval: 5
   _generatePointAbsValue: {x: 6, y: 8}
 --- !u!1 &6355326079381132476
@@ -126,7 +188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6355326079381132475}
   m_Layer: 0
-  m_Name: ExpItems
+  m_Name: ExpItems_Small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
