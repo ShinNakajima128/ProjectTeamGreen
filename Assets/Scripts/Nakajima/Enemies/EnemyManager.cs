@@ -113,9 +113,9 @@ public class EnemyManager : MonoBehaviour
     {
         _defeatedBossSubject.OnNext(Unit.Default);
 
-        _currentEnemyWave = (EnemyWaveType)(int)_currentEnemyWave++;
         int currentWave = (int)_currentEnemyWave + 1;
-        OnGenerateEnemies((EnemyWaveType)currentWave);
+        _currentEnemyWave = (EnemyWaveType)currentWave;
+        OnGenerateEnemies(_currentEnemyWave);
     }
     #endregion
 
@@ -135,8 +135,8 @@ public class EnemyManager : MonoBehaviour
                 Debug.Log("Wave2開始");
                 break;
             case EnemyWaveType.Wave_3:
-                _generator.OnEnemyGenerate(EnemyType.Wave2_Chase1);
-                _generator.OnEnemyGenerate(EnemyType.Wave1_Point1);
+                _generator.OnEnemyGenerate(EnemyType.Wave3_Chase1);
+                _generator.OnEnemyGenerate(EnemyType.Wave3_Chase2);
                 Debug.Log("Wave3開始");
                 break;
             default:

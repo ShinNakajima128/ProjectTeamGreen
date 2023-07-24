@@ -129,14 +129,6 @@ public class EnemyGenerator : MonoBehaviour
     }
     public void BossGenerate(EnemyType bossType)
     {
-        switch (bossType)
-        {
-            case EnemyType.Wave1_Boss:
-                break;
-            default:
-                Debug.LogError("ボスが指定されていません");
-                break;
-        }
         var currentBoss = _enemyPoolDic[bossType].Rent(1);
 
         if (currentBoss != null)
