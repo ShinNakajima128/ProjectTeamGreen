@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Knuckle
   m_EditorClassIdentifier: 
   _skillType: 2
-  _attackAmount: 40
+  _attackAmount: 80
   _correctionvalue: 1

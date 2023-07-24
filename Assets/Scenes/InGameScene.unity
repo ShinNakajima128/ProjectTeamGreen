@@ -2689,8 +2689,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6401274248909904476, guid: bfc6947bd3d4b6f40aee31ad9f832e15,
         type: 3}
+      propertyPath: _startRequireExp
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6401274248909904476, guid: bfc6947bd3d4b6f40aee31ad9f832e15,
+        type: 3}
       propertyPath: _skillAttackCoefficient
-      value: 1.2
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 6401274250604127970, guid: bfc6947bd3d4b6f40aee31ad9f832e15,
         type: 3}

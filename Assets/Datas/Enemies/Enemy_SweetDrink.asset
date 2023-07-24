@@ -18,4 +18,4 @@ MonoBehaviour:
   _attackAmount: 1
   _approachDistance: 0.2
   _dropItemType: 4
-  _knockbackAmount: 0.1
+  _knockbackAmount: 0.05

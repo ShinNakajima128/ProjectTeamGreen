@@ -142,51 +142,6 @@ public class ResultUI : MonoBehaviour
     }
     #endregion
 
-    private IEnumerator OnResultCoroutine()
-    {
-        _resultParent.SetActive(true);
-
-        yield return new WaitForSeconds(2f);
-
-        FadeManager.Fade(FadeType.Out, () =>
-        {
-            FadeManager.Fade(FadeType.In);
-            _gameEndTMP.enabled = false;
-            ChangeResultView(true);
-        });
-
-        //フェード処理が終了するまで待機
-        yield return new WaitUntil(() => !FadeManager.IsFading);
-
-        yield return new WaitForSeconds(1.0f);
-
-        //現在のプレイヤーレベルを表示
-        _playerLevelViewObj.SetActive(true);
-        _playerLevelTMP.text = PlayerController.Instance.Status.CurrentPlayerLevelAmount.ToString();
-
-        yield return new WaitForSeconds(1.0f);
-
-        //討伐数を表示する処理
-        _defeatAmountViewObj.SetActive(true);
-        yield return DOTween.To(() =>
-                      _currentDefeatAmount,
-                      x => _currentDefeatAmount = x,
-                      EnemyManager.Instance.DefeatAmount.Value,
-                      _viewAnimTime)
-                     .OnUpdate(() =>
-                     {
-                         _defeatAmountTMP.text = _currentDefeatAmount.ToString();
-                     })
-                     .WaitForCompletion();
-
-        StageManager.Instance.OnGameReset();
-
-        //ここで何故か処理が停止してしまう問題が発生し、「WaitForSecondsRealtime」にしたところ動作している
-        yield return new WaitForSecondsRealtime(1.0f);
-
-        //もう一度遊ぶかタイトルに戻るか選択するボタンを表示
-        _buttonsParent.SetActive(true);
-    }
     #region UniTask method
     /// <summary>
     /// リザルト画面を表示するUniTask
