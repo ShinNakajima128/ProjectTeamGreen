@@ -46,9 +46,9 @@ public class Missile : MonoBehaviour,IPoolable
 
     private void OnDisable()
     {
-        StopCoroutine(_currentCoroutine);
-        if(_currentCoroutine != null)
+        if (_currentCoroutine != null)
         {
+            StopCoroutine(_currentCoroutine);
             _currentCoroutine = null;
         }
     }
@@ -94,19 +94,27 @@ public class Missile : MonoBehaviour,IPoolable
     #endregion
 
     #region Coroutine method
+    /// <summary>
+    /// ミサイルのアクション
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
     private IEnumerator OnActionCoroutine(Transform target)
     {
+        //ライフタイムの間プレイヤーに向かって移動
         float time = 0;
-        while(_lifeTime - time > 0)
+        while (_lifeTime - time > 0)
         {
             time += Time.deltaTime;
 
+            //up方向が常にプレイヤーに向くように
             Vector3 dir = (target.position - transform.position).normalized;
             transform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
 
-            _rb.velocity = transform.up * _moveSpeed * Time.deltaTime;
+            _rb.velocity = transform.up * _moveSpeed;
             yield return null;
         }
+
         gameObject.SetActive(false);
     }
     #endregion
