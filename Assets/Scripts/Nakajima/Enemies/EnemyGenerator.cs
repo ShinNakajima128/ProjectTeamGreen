@@ -66,6 +66,7 @@ public class EnemyGenerator : MonoBehaviour
         //プレイヤーのレベルが上がった時の処理を登録
         PlayerController.Instance.Status.CurrentPlayerLevel
                                         .TakeUntilDestroy(this)
+                                        .Where(value => value % 2 == 0)
                                         .Subscribe(_ => AddGenerateLimitAmount());
 
         StageManager.Instance.IsInGameObserver
@@ -164,8 +165,8 @@ public class EnemyGenerator : MonoBehaviour
 
     private void AddGenerateLimitAmount()
     {
-        _currentGenerateLimit += 10;
-        _currentOnceGenerateAmount += 5;
+        _currentGenerateLimit += 5;
+        _currentOnceGenerateAmount += 2;
     }
     private void OnReset()
     {
