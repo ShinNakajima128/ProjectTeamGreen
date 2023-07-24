@@ -71,6 +71,7 @@ public class Rock : MonoBehaviour,IPoolable
             //プレイヤーにダメージを与える
             var target = collision.GetComponent<IDamagable>();
             target.Damage(_currentAttackAmount);
+            target.Knockback(transform);
             gameObject.SetActive(false);
         }
     }
