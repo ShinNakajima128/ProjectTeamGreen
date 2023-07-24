@@ -44,6 +44,10 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
     private Transform _playerTrans;
     #endregion
 
+    #region protected
+    protected bool _isGetting = false;
+    #endregion
+
     #region Constant
     #endregion
 
@@ -104,6 +108,11 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
 
     public IEnumerator ItemGet(PlayerController player, Transform playerPos)
     {
+        if (_isGetting)
+        {
+            yield break;
+        }
+        _isGetting = true;
         _itemPosition = transform.position;
 
         Vector2 initialDirection = _itemPosition - (Vector2)playerPos.position;
@@ -132,6 +141,7 @@ public abstract class ItemBase : MonoBehaviour,IPoolable
             yield return null;
         }
         Use(player);
+        _isGetting = false;
         this.gameObject.SetActive(false);
     }
 
