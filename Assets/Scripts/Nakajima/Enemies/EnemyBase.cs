@@ -165,8 +165,14 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
             //討伐数を加算
             EnemyManager.Instance.DefeatAmount.Value++;
             ItemManager.Instance.GenerateItem(_enemyData.DropItemType, transform.position);
-            AudioManager.PlaySE(SEType.Dead_Enemy);
-
+            if (EnemyType == EnemyType.Wave1_Boss || EnemyType == EnemyType.Wave2_Boss || EnemyType == EnemyType.Wave3_Boss)
+            {
+                AudioManager.PlaySE(SEType.BossDied);
+            }
+            else
+            {
+                AudioManager.PlaySE(SEType.Dead_Enemy);
+            }
             switch (_enemyData.EnemyType)
             {
 

@@ -17,14 +17,6 @@ public class BigBossEnemy : BossEnemyBase
     [SerializeField]
     private float _bulletAttackAmount = 30.0f;
 
-    [Tooltip("爆発プレハブ")]
-    [SerializeField]
-    private GameObject _smokePrefab = default;
-
-    [Tooltip("ターゲットイメージ")]
-    [SerializeField]
-    private GameObject _targetPrefab = default;
-
     [Tooltip("弾のジェネレーター")]
     [SerializeField]
     private BigBossBulletGenerator _generator = default;
@@ -43,6 +35,10 @@ public class BigBossEnemy : BossEnemyBase
     private Rigidbody2D _rd2D;
 
     private Collider2D _col2D;
+
+    private GameObject _smokePrefab = default;
+
+    private GameObject _targetPrefab = default;
     #endregion
 
     #region unity methods
@@ -57,6 +53,11 @@ public class BigBossEnemy : BossEnemyBase
 
         _rd2D = GetComponent<Rigidbody2D>();
         _col2D = GetComponent<Collider2D>();
+        _generator = EnemyManager.Instance.PotatoPoolGenerator;
+
+        _smokePrefab = EnemyManager.Instance.BigBossEffects.Smoke;
+        _targetPrefab = EnemyManager.Instance.BigBossEffects.Target;
+
     }
 
     protected override void OnEnable()

@@ -94,6 +94,7 @@ public class MuscleBombSkill : SkillBase
         Debug.Log($"{SkillType}スキル発動");
         _isSkillActived = true;
         _currentCoroutine = StartCoroutine(SkillActionCoroutine());
+        AudioManager.PlaySE(SEType.GetSkill_4);
     }
 
     /// <summary>
