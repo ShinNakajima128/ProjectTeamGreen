@@ -87,7 +87,7 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     public void PowerUpHealth()
     {
-        _currentMaxHP *= 1.1f;
+        _currentMaxHP *= 1.25f;
         Heal(_currentMaxHP);
     }
 

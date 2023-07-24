@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _knockbackAmount: 0.5
-  _debugMode: 1
+  _debugMode: 0
 --- !u!114 &6401274250604127968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,8 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145ed75e838d13749a08ccf4a1a6ba53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startRequireExp: 50
-  _skillAttackCoefficient: 1
+  _startRequireExp: 100
+  _skillAttackCoefficient: 1.1
 --- !u!1 &6501544364003557430
 GameObject:
   m_ObjectHideFlags: 0

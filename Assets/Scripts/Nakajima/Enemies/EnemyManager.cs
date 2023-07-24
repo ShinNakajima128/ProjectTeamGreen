@@ -121,7 +121,7 @@ public class EnemyManager : MonoBehaviour
 
         PlayerController.Instance.Status.CurrentPlayerLevel
                                         .TakeUntilDestroy(this)
-                                        .Subscribe(_ => _changeEnemyStatusCoefficientSubject.OnNext(1.05f));
+                                        .Subscribe(_ => _changeEnemyStatusCoefficientSubject.OnNext(1.01f));
    
     }
     #endregion

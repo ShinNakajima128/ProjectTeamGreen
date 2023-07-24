@@ -114,5 +114,5 @@ MonoBehaviour:
   _enemyData: {fileID: 11400000, guid: 09b329af122b27b4ebad15ba12320f12, type: 2}
   _hideDistance: 10
   _attackInterval: 3
-  _bulletAttackAmount: 1.5
+  _bulletAttackAmount: 10
   _character: 1

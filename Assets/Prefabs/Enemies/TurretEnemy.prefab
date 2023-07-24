@@ -112,6 +112,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: 0ffb0152f6c4b1a4495271e13364853e, type: 2}
+  _hideDistance: 10
   _attackInterval: 3
-  _generator: {fileID: 4104120986323239745, guid: 33cc875ab30458d468fde39e22419eba,
-    type: 3}
+  _bulletAttackAmount: 3
+  _character: 0
