@@ -157,7 +157,7 @@ public class MuscleFairySkill : SkillBase
             for (int i = 0; i < _currentFairyAmount.Count; i++)
             {
                 //１体ずつの角度を常に更新
-                _currentFairyAngles[i] += _rotationSpeed * Time.deltaTime;
+                _currentFairyAngles[i] += _currentRotationSpeed * Time.deltaTime;
 
                 //更新した角度を常にかけあわせて位置を更新
                 Vector2 fairyPosition = new Vector2(Mathf.Cos(_currentFairyAngles[i] * Mathf.Deg2Rad), Mathf.Sin(_currentFairyAngles[i] * Mathf.Deg2Rad));

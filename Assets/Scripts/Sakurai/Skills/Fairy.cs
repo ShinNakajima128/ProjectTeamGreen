@@ -29,6 +29,7 @@ public class Fairy : MonoBehaviour
             {
                 //現在の攻撃力分ダメージを与える。
                 target.Damage(_currentAttackAmount);
+                target.Knockback(transform);
             }
         }
         else if (collision.CompareTag(GameTag.VanishBullet))

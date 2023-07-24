@@ -67,6 +67,7 @@ public class Dumbbell : MonoBehaviour, IPoolable
             //敵にダメージを与える
             var target = collision.GetComponent<IDamagable>();
             target.Damage(_currentAttackAmount);
+            target.Knockback(transform);
             //親を設定しなおしてから非アクティブ化
             transform.SetParent(_parent);
             gameObject.SetActive(false);

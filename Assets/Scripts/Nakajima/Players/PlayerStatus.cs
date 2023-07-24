@@ -35,11 +35,12 @@ public class PlayerStatus : MonoBehaviour
     private readonly ReactiveProperty<uint> _currentExp = new ReactiveProperty<uint>();
     /// <summary>現在のレベルアップに必要な経験値</summary>
     private readonly ReactiveProperty<uint> _currentRequireExp = new ReactiveProperty<uint>();
+    private float _currentSkillAttackCoefficient;
     #endregion
 
     #region Constant
     /// <summary>次のレベルアップ時に必要な経験値に掛け合わせる倍率</summary>
-    private const float EXP_LEVERAGE = 1.3f;
+    private const float EXP_LEVERAGE = 1.2f;
     #endregion
 
     #region Event
@@ -61,7 +62,7 @@ public class PlayerStatus : MonoBehaviour
     /// <param name="value">新しい係数の値</param>
     public void ChangeCoefficient(float newValue)
     {
-        _skillAttackCoefficient = newValue;
+        _currentSkillAttackCoefficient = newValue;
     }
 
     /// <summary>
@@ -80,9 +81,19 @@ public class PlayerStatus : MonoBehaviour
 
             _currentPlayerLevel.Value++;
             _currentExp.Value = overFlowExp;
-            _currentRequireExp.Value = (uint)((_currentRequireExp.Value + (_currentRequireExp.Value / 2)) * EXP_LEVERAGE);
+            if (_currentPlayerLevel.Value <= 6)
+            {
+                _currentRequireExp.Value = (uint)((_currentRequireExp.Value + (_currentRequireExp.Value / 4)) * EXP_LEVERAGE);
+            }
+            else
+            {
+                _currentRequireExp.Value = (uint)((_currentRequireExp.Value + (_currentRequireExp.Value / 8)) * EXP_LEVERAGE);
+            }
+
+            SkillManager.Instance.PowerUpSkill(_currentSkillAttackCoefficient);
         }
         _getEXPSubject.OnNext((float)_currentExp.Value / _currentRequireExp.Value);
+        Debug.Log($"次に必要な経験値量:{_currentRequireExp.Value}");
     }
 
     /// <summary>
@@ -92,7 +103,7 @@ public class PlayerStatus : MonoBehaviour
     {
         _currentPlayerLevel.Value = 1;
         _currentExp.Value = 0;
-        _currentRequireExp.Value = _startRequireExp;
+        Setup();
     }
     #endregion
 
@@ -103,6 +114,7 @@ public class PlayerStatus : MonoBehaviour
     private void Setup()
     {
         _currentRequireExp.Value = _startRequireExp;
+        _currentSkillAttackCoefficient = _skillAttackCoefficient;
     }
     #endregion
 }

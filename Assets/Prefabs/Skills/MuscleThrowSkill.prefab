@@ -81,3 +81,4 @@ MonoBehaviour:
   _skillData: {fileID: 11400000, guid: 05c7f270c956f4382af08eaba27defff, type: 2}
   _startAttackInterval: 1
   _coefficient: 1.2
+  _attackCoefficient: 1.5

@@ -114,7 +114,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemData: {fileID: 11400000, guid: 9b544563d6d64e84d869330e0a077635, type: 2}
-  _expValue: 50
+  _hideDistance: 10
+  _expValue: 300
 --- !u!50 &6394385785405947771
 Rigidbody2D:
   serializedVersion: 4
