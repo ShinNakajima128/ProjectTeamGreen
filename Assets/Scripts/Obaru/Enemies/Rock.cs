@@ -26,6 +26,12 @@ public class Rock : MonoBehaviour,IPoolable
     private float _currentAttackAmount = 0;
     /// <summary>弾の持続時間</summary>
     private float _lifeTime = 5.0f;
+    /// <summary>ランダムレンジの最小</summary>
+    private int _randomRangeMin = 0;
+    /// <summary>ランダムレンジの最大</summary>
+    private int _randomRangeMax = 3;
+    /// <summary>投げられるときのx軸の大きさ</summary>
+    private float _dirXAmount = 0.5f;
     /// <summary>Rigidbody2Dコンポーネント格納用</summary>
     private Rigidbody2D _rb;
     /// <summary>コルーチン格納用</summary>
@@ -95,17 +101,17 @@ public class Rock : MonoBehaviour,IPoolable
         float dirX = 0;
 
         //ランダムに投射方向を決定
-        int num = UnityEngine.Random.Range(0, 3);
+        int num = UnityEngine.Random.Range(_randomRangeMin, _randomRangeMax);
         switch (num)
         {
-            case 0:
-                dirX = -0.5f;
+            case (int)RockThrownDirectionX.Left:
+                dirX = -_dirXAmount;
                 break;
-            case 1:
+            case (int)RockThrownDirectionX.Center:
                 dirX = 0;
                 break;
-            case 2:
-                dirX = 0.5f;
+            case (int)RockThrownDirectionX.Right:
+                dirX = _dirXAmount;
                 break;
             default:
                 break;
@@ -116,12 +122,28 @@ public class Rock : MonoBehaviour,IPoolable
     #endregion
 
     #region Coroutine method
+    /// <summary>
+    /// 一定時間後に非アクティブ
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator InactiveCoroutine()
     {
         //生存時間分待つ
         yield return new WaitForSeconds(_lifeTime);
         gameObject.SetActive(false);
     }
-
     #endregion
+}
+
+/// <summary>
+/// 投げられるX軸方向
+/// </summary>
+enum RockThrownDirectionX
+{
+    /// <summary>左</summary>
+    Left,
+    /// <summary>左</summary>
+    Center,
+    /// <summary>左</summary>
+    Right
 }
