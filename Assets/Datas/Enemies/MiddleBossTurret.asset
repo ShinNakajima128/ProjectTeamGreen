@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MiddleBossTurret
   m_EditorClassIdentifier: 
   _enemyType: 7
-  _actionType: 0
+  _actionType: 2
   _hp: 1000
   _attackAmount: 1
   _approachDistance: 0.1

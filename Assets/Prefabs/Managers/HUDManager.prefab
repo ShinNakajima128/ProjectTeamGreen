@@ -11407,7 +11407,7 @@ MonoBehaviour:
     BossType: 7
   - EventName: Wave3_Boss
     InvokeTime: 295
-    BossType: 7
+    BossType: 11
   _limitTimeTMP: {fileID: 1364316902}
 --- !u!114 &1060715736
 MonoBehaviour:
