@@ -18,11 +18,11 @@ public class EnemyManager : MonoBehaviour
     /// </summary>
     public IObservable<uint> DefeatedEnemyAmountViewObserver => _defeatedEnemyAmountViewSubject;
 
-    public EnemyBulletGenerater MiddleBossPoolGenerator => _middleBossPoolGenerator;
+    public EnemyBulletGenerator MiddleBossPoolGenerator => _middleBossPoolGenerator;
 
-    public EnemyBulletGenerater TurretPoolGenerator => _turretPoolGenerator;
+    public EnemyBulletGenerator TurretPoolGenerator => _turretPoolGenerator;
 
-    public EnemyBulletGenerater WaterMelonBulletPoolGenerator => _waterMelonBulletPoolGenerator;
+    public EnemyBulletGenerator WaterMelonBulletPoolGenerator => _waterMelonBulletPoolGenerator;
 
     public RockGenerator RockPoolGenerator => _rockPoolGenerator;
 
@@ -39,15 +39,15 @@ public class EnemyManager : MonoBehaviour
     [Header("変数")]
     [Tooltip("中ボスのバレットをプールするオブジェクト")]
     [SerializeField]
-    private EnemyBulletGenerater _middleBossPoolGenerator;
+    private EnemyBulletGenerator _middleBossPoolGenerator;
 
     [Tooltip("タレットのバレット(レモン)をプールするオブジェクト")]
     [SerializeField]
-    private EnemyBulletGenerater _turretPoolGenerator;
+    private EnemyBulletGenerator _turretPoolGenerator;
 
     [Tooltip("タレットのバレット(スイカ)をプールするオブジェクト")]
     [SerializeField]
-    private EnemyBulletGenerater _waterMelonBulletPoolGenerator;
+    private EnemyBulletGenerator _waterMelonBulletPoolGenerator;
 
     [Tooltip("中ボスタレットの岩をプールするオブジェクト")]
     [SerializeField]

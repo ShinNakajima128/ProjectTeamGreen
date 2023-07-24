@@ -60,13 +60,13 @@ public class TempSkill : SkillBase
     public override void LebelUpSkill()
     {
         //既にレベルが最大値の場合は処理を行わない
-        if (_currentSkillLebel >= MAX_LEVEL)
+        if (_currentSkillLevel >= MAX_LEVEL)
         {
             Debug.Log($"{SkillType}はレベル上限です");
             return;
         }
-        _currentSkillLebel++;
-        Debug.Log($"レベルアップ!{_currentSkillLebel}に上がった！");
+        _currentSkillLevel++;
+        Debug.Log($"レベルアップ!{_currentSkillLevel}に上がった！");
     }
     // <summary>
     /// スキルの攻撃力を上げる

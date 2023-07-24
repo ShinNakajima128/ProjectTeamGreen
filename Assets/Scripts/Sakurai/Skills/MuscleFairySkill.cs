@@ -66,20 +66,20 @@ public class MuscleFairySkill : SkillBase
     /// </summary>
     public override void LebelUpSkill()
     {
-        if (_currentSkillLebel >= MAX_LEVEL)
+        if (_currentSkillLevel >= MAX_LEVEL)
         {
             Debug.Log($"{SkillType}はレベル上限です");
 
             return;
         }
-        _currentSkillLebel++;
+        _currentSkillLevel++;
         _currentRotationSpeed *= _speedCoefficient;
         AttackUpSkill(_attackCoefficient);
         CreateNewFairy();
 
-        Debug.Log($"レベルアップ!{_currentSkillLebel}にあがった!");
+        Debug.Log($"レベルアップ!{_currentSkillLevel}にあがった!");
 
-        if (_currentSkillLebel >= 3)
+        if (_currentSkillLevel >= 3)
         {
             foreach (Fairy fairy in _currentFairyAmount)
             {
@@ -123,7 +123,7 @@ public class MuscleFairySkill : SkillBase
     private void CreateNewFairy()
     {
         //生成数は1度目のみ2体
-        int instanceCount = _currentSkillLebel == 1 ? 2 : 1;
+        int instanceCount = _currentSkillLevel == 1 ? 2 : 1;
 
         for (int i = 0; i < instanceCount; i++)
         {

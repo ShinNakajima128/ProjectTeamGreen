@@ -29,9 +29,9 @@ public class TurretEnemy : EnemyBase
     /// <summary>フリップを行うコルーチン格納用</summary>
     private Coroutine _flipCoroutine;
     /// <summary>弾生成コンポーネント格納用(レモン)</summary>
-    private EnemyBulletGenerater _bulletGenerator;
+    private EnemyBulletGenerator _bulletGenerator;
     /// <summary>弾生成コンポーネント格納用(スイカ)</summary>
-    private EnemyBulletGenerater _waterMelonBulletGenerator;
+    private EnemyBulletGenerator _waterMelonBulletGenerator;
     #endregion
 
     #region unity methods
