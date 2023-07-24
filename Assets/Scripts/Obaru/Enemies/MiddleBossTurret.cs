@@ -66,6 +66,7 @@ public class MiddleBossTurret : BossEnemyBase
     protected override void OnDisable()
     {
         base.OnDisable();
+        _turretState = MiddleBossTurretState.Idle;
     }
     #endregion
 
