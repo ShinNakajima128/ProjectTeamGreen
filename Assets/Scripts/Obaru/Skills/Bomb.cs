@@ -5,7 +5,7 @@ using UniRx;
 using UnityEngine;
 
 /// <summary>
-/// ダンベルコンポーネント
+/// ボムコンポーネント
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CircleCollider2D))]
@@ -121,7 +121,7 @@ public class Bomb : MonoBehaviour, IPoolable
 
             //爆発オブジェクトのアクティブ化
             skillObj.gameObject.SetActive(true);
-            //すきっレベルに応じてスケールを変化
+            //スキルレベルに応じてスケールを変化
             skillObj.SetScale(_currentSkillLevel);
             //爆発をボムの位置に移動
             skillObj.transform.position = transform.position;

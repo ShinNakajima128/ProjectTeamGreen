@@ -73,7 +73,7 @@ public class MuscleBoulSkill : SkillBase
     public override void LebelUpSkill()
     {
         //既にレベルが最大値の場合は処理を行わない
-        if (_currentSkillLebel >= MAX_LEVEL)
+        if (_currentSkillLevel >= MAX_LEVEL)
         {
             Debug.Log($"{SkillType}はレベル上限です");
 
@@ -81,7 +81,7 @@ public class MuscleBoulSkill : SkillBase
         }
 
         //レベルアップ
-        _currentSkillLebel++;
+        _currentSkillLevel++;
         AttackUpSkill(_attackCoefficient);
         CreateNewBoul();
 
@@ -91,7 +91,7 @@ public class MuscleBoulSkill : SkillBase
             boul.MoveSpeedChange(_speedCoefficient);
         }
 
-        Debug.Log($"レベルアップ!{_currentSkillLebel}にあがった!");
+        Debug.Log($"レベルアップ!{_currentSkillLevel}にあがった!");
     }
 
     /// <summary>
