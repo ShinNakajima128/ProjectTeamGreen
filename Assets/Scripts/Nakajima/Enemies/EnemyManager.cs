@@ -26,6 +26,10 @@ public class EnemyManager : MonoBehaviour
 
     public RockGenerator RockPoolGenerator => _rockPoolGenerator;
 
+    public BigBossBulletGenerator PotatoPoolGenerator => _potatoPoolGenerator;
+
+    public BigBossEffects BigBossEffects => _bigBossEffects;
+
     public MissileGenerator MissilePoolGenerator => _missilePoolGenerator;
     public IObservable<float> ChangeEnemyStatusCoefficientObserver => _changeEnemyStatusCoefficientSubject;
     public IObservable<Unit> DefeatedBossObserver => _defeatedBossSubject;
@@ -52,6 +56,14 @@ public class EnemyManager : MonoBehaviour
     [Tooltip("中ボスタレットのミサイルをプールするオブジェクト")]
     [SerializeField]
     private MissileGenerator _missilePoolGenerator;
+
+    [Tooltip("大ボスエネミーのポテトをプールするオブジェクト")]
+    [SerializeField]
+    private BigBossBulletGenerator _potatoPoolGenerator;
+
+    [Tooltip("大ボスに扱うエフェクト")]
+    [SerializeField]
+    private BigBossEffects _bigBossEffects;
     #endregion
 
     #region private
@@ -151,6 +163,7 @@ public class EnemyManager : MonoBehaviour
     }
     private void BossGenerate(EnemyType bossType)
     {
+        AudioManager.PlaySE(SEType.BossAlert);
         StartCoroutine(BossEventCoroutine(bossType));
     }
 
@@ -180,4 +193,11 @@ public enum EnemyWaveType
     Wave_1,
     Wave_2,
     Wave_3
+}
+
+[Serializable]
+public class BigBossEffects
+{
+    public GameObject Smoke;
+    public GameObject Target;
 }

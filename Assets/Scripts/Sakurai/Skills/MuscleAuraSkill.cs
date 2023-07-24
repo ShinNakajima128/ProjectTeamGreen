@@ -51,6 +51,7 @@ public class MuscleAuraSkill : SkillBase
         _isSkillActived = true;
         CreateNewAura(_auraPrefab);
         _currentAura.SetAttackAmount(_currentAttackAmount);
+        AudioManager.PlaySE(SEType.GetSkill_4);
     }
 
     /// <summary>
@@ -68,6 +69,7 @@ public class MuscleAuraSkill : SkillBase
 
         //レベルアップ
         _currentSkillLebel++;
+        AudioManager.PlaySE(SEType.AuraActive);
 
         //3レベルまでと5レベルになった際はサイズを変更。
         if (_currentSkillLebel <= 3 || _currentSkillLebel == 5)

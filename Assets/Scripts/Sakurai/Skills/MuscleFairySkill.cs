@@ -59,6 +59,7 @@ public class MuscleFairySkill : SkillBase
         _isSkillActived = true;
         _currentCoroutine = StartCoroutine(SkillActionCoroutine());
         CreateNewFairy();
+        AudioManager.PlaySE(SEType.GetSkill_4);
     }
     /// <summary>
     /// スキルをレベルアップする
@@ -85,6 +86,7 @@ public class MuscleFairySkill : SkillBase
                 fairy.SizeChange(_scaleFactor);
             }
         }
+        AudioManager.PlaySE(SEType.FairyUp);
     }
 
     /// <summary>

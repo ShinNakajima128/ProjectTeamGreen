@@ -77,6 +77,7 @@ public class SkillUpSelect : MonoBehaviour
     /// </summary>
     public void ActivateRondomSkillUIs()
     {
+        AudioManager.PlaySE(SEType.UIActive);
         if (!_isInGame)
         {
             return;
