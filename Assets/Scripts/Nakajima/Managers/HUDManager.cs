@@ -15,6 +15,7 @@ using TMPro;
 [RequireComponent(typeof(SkillUpSelect))]
 [RequireComponent(typeof(ResultUI))]
 [RequireComponent(typeof(BossEventUI))]
+[RequireComponent(typeof(BossStatusUI))]
 public class HUDManager : MonoBehaviour
 {
     #region property
@@ -33,6 +34,7 @@ public class HUDManager : MonoBehaviour
     private SkillUpSelect _skillUpSelect;
     private ResultUI _result;
     private BossEventUI _bossEvent;
+    private BossStatusUI _bossStatus;
     #endregion
 
     #region Constant
@@ -49,9 +51,10 @@ public class HUDManager : MonoBehaviour
 
     private void Start()
     {
+        //ゲーム開始/終了時の処理を登録
         StageManager.Instance.IsInGameObserver
                              .TakeUntilDestroy(this)
-                             .Subscribe(value => 
+                             .Subscribe(value =>
                              {
                                  ChangeHUDPanelActive(value);
                                  _gamePause.ChangeButtonActive(value);
@@ -64,11 +67,30 @@ public class HUDManager : MonoBehaviour
                              {
                                  _result.OnResultView();
                              });
-
+        //ボスがあらわれた時の処理を登録
         TimeManager.Instance.BossEventObserver
                             .TakeUntilDestroy(this)
-                            .Subscribe(_ => _bossEvent.OnBossEventAction());
+                            .Subscribe(_ =>
+                            {
+                                _bossEvent.OnBossEventAction();
+                                _bossStatus.OnBossHPView();
+                            });
+
+        //ボスの情報を更新する処理を登録
+        EnemyManager.Instance.UpdateBossObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(value =>
+                             {
+                                 _bossStatus.SetBossData(value);
+                                 EnemyManager.Instance.CurrentBoss.OnDamageAction = _bossStatus.ApplyCurrentHP;
+                             });
+
+        //ボスが倒された時の処理を登録
+        EnemyManager.Instance.DefeatedBossObserver
+                             .TakeUntilDestroy(this)
+                             .Subscribe(_ => _bossStatus.ChangeStatusView(false));
     }
+
     #endregion
 
     #region public method
@@ -98,6 +120,7 @@ public class HUDManager : MonoBehaviour
         _skillUpSelect = GetComponent<SkillUpSelect>();
         _result = GetComponent<ResultUI>();
         _bossEvent = GetComponent<BossEventUI>();
+        _bossStatus = GetComponent<BossStatusUI>();
 
         _playerStatus.ChangeActivePanelView(false);
         _gameStatus.ChangeActivePanelView(false);
