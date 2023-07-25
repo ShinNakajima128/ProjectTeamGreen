@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3715956279333587117}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -338.4375}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6601996281865033001}
@@ -78,7 +78,7 @@ MonoBehaviour:
   _masterVolume: 1
   _bgmVolume: 0.3
   _seVolume: 1
-  _seAudioSourceNum: 20
+  _seAudioSourceNum: 30
   _bgmList:
   - BGMName: Title
     BGMType: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
     Volume: 0.2
   _bgmSource: {fileID: 6027496811656253905}
   _seSorcesParent: {fileID: 5492856862607328422}
-  _mixer: {fileID: 0}
+  _mixer: {fileID: 24100000, guid: 85f928efd690b4623bb765df00153b0b, type: 2}
 --- !u!1 &8466972262296241848
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +228,8 @@ AudioSource:
   m_GameObject: {fileID: 8466972262296241848}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4776596266780416652, guid: 85f928efd690b4623bb765df00153b0b,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.3
