@@ -26,7 +26,6 @@ public abstract class BossEnemyBase : EnemyBase
     {
         base.Damage(amount);
         _onDamageAction?.Invoke(_currentHP);
-        Debug.Log($"ボスダメージ:{_currentHP} アクション：{_onDamageAction}");
     }
     #endregion
 
