@@ -82,6 +82,7 @@ public class MuscleKnuckleSkill : SkillBase
 
         //攻撃間隔を縮める
         _currentAttackInterval /= _coefficient;
+        AudioManager.PlaySE(SEType.KnuckleUp);
 
         Debug.Log($"レベルアップ!{_currentSkillLevel}に上がった！");
     }
