@@ -33,7 +33,8 @@ public class EnemyManager : MonoBehaviour
     public MissileGenerator MissilePoolGenerator => _missilePoolGenerator;
     public IObservable<float> ChangeEnemyStatusCoefficientObserver => _changeEnemyStatusCoefficientSubject;
     public IObservable<Unit> DefeatedBossObserver => _defeatedBossSubject;
-    public IObservable<string> UpdateBossNameObserver => _updateBossNameSubject;
+    public IObservable<Enemy> UpdateBossObserver => _updateBossSubject;
+    public BossEnemyBase CurrentBoss => _currentBoss;
     #endregion
 
     #region serialize
@@ -71,6 +72,7 @@ public class EnemyManager : MonoBehaviour
     private EnemyWaveType _currentEnemyWave = EnemyWaveType.Wave_1;
     /// <summary>敵の生成機能を持つコンポーネント</summary>
     private EnemyGenerator _generator;
+    private BossEnemyBase _currentBoss;
     #endregion
 
     #region Constant
@@ -83,7 +85,7 @@ public class EnemyManager : MonoBehaviour
     /// <summary>討伐数を表示する処理のSubject</summary>
     private Subject<uint> _defeatedEnemyAmountViewSubject = new Subject<uint>();
     private Subject<Unit> _defeatedBossSubject = new Subject<Unit>();
-    private Subject<string> _updateBossNameSubject = new Subject<string>();
+    private Subject<Enemy> _updateBossSubject = new Subject<Enemy>();
     #endregion
 
     #region unity methods
@@ -139,12 +141,13 @@ public class EnemyManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ボスの名前を表示する
+    /// ボスの情報を表示する
     /// </summary>
-    /// <param name="name"></param>
-    public void CurrentBossNameView(string name)
+    /// <param name="boss">ボスデータ</param>
+    public void CurrentBossView(Enemy boss, EnemyBase bossObj)
     {
-        _updateBossNameSubject.OnNext(name);
+        _currentBoss = bossObj.GetComponent<BossEnemyBase>();
+        _updateBossSubject.OnNext(boss);
     }
     #endregion
 

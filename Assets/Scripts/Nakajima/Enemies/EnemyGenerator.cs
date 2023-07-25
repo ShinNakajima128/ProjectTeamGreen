@@ -126,7 +126,7 @@ public class EnemyGenerator : MonoBehaviour
         _enemyPoolDic.Select(x => x.Value)
                      .ToList()
                      .ForEach(x => x.Return());
-        
+
     }
     public void BossGenerate(EnemyType bossType)
     {
@@ -134,6 +134,10 @@ public class EnemyGenerator : MonoBehaviour
 
         if (currentBoss != null)
         {
+            //出現するボスの情報を取得
+            Enemy currentBossInfo = _enemies.FirstOrDefault(x => x.EnemyPrefab.EnemyType == bossType);
+            EnemyManager.Instance.CurrentBossView(currentBossInfo, currentBoss);
+
             currentBoss.gameObject.SetActive(true);
             currentBoss.SetEnemyStatus(_currentCoefficient);
             float randomX, randomY;
@@ -224,7 +228,7 @@ public class EnemyGenerator : MonoBehaviour
 /// 敵
 /// </summary>
 [Serializable]
-class Enemy
+public class Enemy
 {
     public string EnemyName;
     public EnemyBase EnemyPrefab;

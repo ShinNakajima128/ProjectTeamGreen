@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 using DG.Tweening;
-using System;
 
 /// <summary>
 /// 敵の機能全般を管理するベースクラス。
@@ -15,9 +15,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
     #region property
     public EnemyType EnemyType => _enemyData.EnemyType;
     public EnemyActionType ActionType => _enemyData.ActionType;
+    public int MaxHP => _enemyData.HP;
     public bool IsInvincible => _isInvincible;
     public float ApproachDistance => _enemyData.ApproachDistance;
-
     public IObservable<Unit> InactiveObserver => _inactiveSubject;
     #endregion
 
@@ -257,7 +257,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamagable, IPoolable
     /// <summary>
     /// 各パラメーターを初期値に戻す
     /// </summary>
-    private void ResetParameter()
+    protected virtual void ResetParameter()
     {
         _currentMaxHP = _enemyData.HP;
         _currentHP = _currentMaxHP;
