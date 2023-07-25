@@ -33,6 +33,7 @@ public class EnemyManager : MonoBehaviour
     public MissileGenerator MissilePoolGenerator => _missilePoolGenerator;
     public IObservable<float> ChangeEnemyStatusCoefficientObserver => _changeEnemyStatusCoefficientSubject;
     public IObservable<Unit> DefeatedBossObserver => _defeatedBossSubject;
+    public IObservable<string> UpdateBossNameObserver => _updateBossNameSubject;
     #endregion
 
     #region serialize
@@ -70,18 +71,19 @@ public class EnemyManager : MonoBehaviour
     private EnemyWaveType _currentEnemyWave = EnemyWaveType.Wave_1;
     /// <summary>敵の生成機能を持つコンポーネント</summary>
     private EnemyGenerator _generator;
-    private Subject<float> _changeEnemyStatusCoefficientSubject = new Subject<float>();
     #endregion
 
     #region Constant
     #endregion
 
     #region Event
+    private Subject<float> _changeEnemyStatusCoefficientSubject = new Subject<float>();
     /// <summary>討伐数</summary>
     private ReactiveProperty<uint> _defeatAmountProperty = new ReactiveProperty<uint>();
     /// <summary>討伐数を表示する処理のSubject</summary>
     private Subject<uint> _defeatedEnemyAmountViewSubject = new Subject<uint>();
     private Subject<Unit> _defeatedBossSubject = new Subject<Unit>();
+    private Subject<string> _updateBossNameSubject = new Subject<string>();
     #endregion
 
     #region unity methods
@@ -135,6 +137,15 @@ public class EnemyManager : MonoBehaviour
         _currentEnemyWave = (EnemyWaveType)currentWave;
         OnGenerateEnemies(_currentEnemyWave);
     }
+
+    /// <summary>
+    /// ボスの名前を表示する
+    /// </summary>
+    /// <param name="name"></param>
+    public void CurrentBossNameView(string name)
+    {
+        _updateBossNameSubject.OnNext(name);
+    }
     #endregion
 
     #region private method
@@ -176,6 +187,7 @@ public class EnemyManager : MonoBehaviour
 
     private IEnumerator BossEventCoroutine(EnemyType bossType)
     {
+        
         yield return new WaitForSeconds(5.0f);
         
         _generator.StopEnemyGenerate();
