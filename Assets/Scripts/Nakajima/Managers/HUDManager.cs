@@ -65,6 +65,7 @@ public class HUDManager : MonoBehaviour
                              .TakeUntilDestroy(this)
                              .Subscribe(_ =>
                              {
+                                 _bossStatus.ChangeStatusView(false);
                                  _result.OnResultView();
                              });
         //ボスがあらわれた時の処理を登録
