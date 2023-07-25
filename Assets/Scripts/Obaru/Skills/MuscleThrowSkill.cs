@@ -78,6 +78,8 @@ public class MuscleThrowSkill : SkillBase
         //攻撃力をアップ
         AttackUpSkill(_attackCoefficient);
 
+        AudioManager.PlaySE(SEType.ThrowUp);
+
         Debug.Log($"レベルアップ!{_currentSkillLevel}に上がった！");
     }
 

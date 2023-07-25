@@ -63,6 +63,7 @@ public class MuscleBoulSkill : SkillBase
             child.SetParent(mainCameraTransform);
         }
 
+        AudioManager.PlaySE(SEType.GetSkill_4);
         _currentCoroutine = StartCoroutine(SkillActionCoroutine());
         CreateNewBoul();
     }
@@ -90,6 +91,7 @@ public class MuscleBoulSkill : SkillBase
         {
             boul.MoveSpeedChange(_speedCoefficient);
         }
+        AudioManager.PlaySE(SEType.BoulUp);
 
         Debug.Log($"レベルアップ!{_currentSkillLevel}にあがった!");
     }

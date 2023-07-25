@@ -82,6 +82,7 @@ public class MuscleBombSkill : SkillBase
         _currentAttackInterval /= _coefficient;
         //攻撃力アップ
         AttackUpSkill(_attackCoefficient);
+        AudioManager.PlaySE(SEType.GetSkill_3);
 
         Debug.Log($"レベルアップ!{_currentSkillLevel}に上がった！");
     }

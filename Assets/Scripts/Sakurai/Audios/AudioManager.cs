@@ -31,8 +31,11 @@ public enum SEType
     BossDied,      //ボス撃破
     BombExplotion, //se_bomb5
     BossAlert,     //Warning-Siren
-    AuraActive,     //重力魔法2
-    FairyUp
+    AuraActive,    //重力魔法2
+    FairyUp,       //男衆「オウ!」
+    KnuckleUp,     //軽いパンチ
+    BoulUp,        //ぶよん  
+    ThrowUp        //剣の素振り1
 }
 
 
