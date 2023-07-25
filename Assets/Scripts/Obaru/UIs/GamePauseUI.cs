@@ -42,15 +42,11 @@ public class GamePauseUI : MonoBehaviour
         //ポーズボタンを押した時の処理を追加
         _pauseButton.OnClickAsObservable()
             .TakeUntilDestroy(this)
-            //連打防止処理。一度押されてから「5」秒経つまでは次の処理を実行しない
-            .ThrottleFirst(TimeSpan.FromMilliseconds(5000))
             .Subscribe(_ => PauseGame());
 
         //コンティニューボタンを押した時の処理を追加
         _continueButton.OnClickAsObservable()
             .TakeUntilDestroy(this)
-            //連打防止処理。一度押されてから「5」秒経つまでは次の処理を実行しない
-            .ThrottleFirst(TimeSpan.FromMilliseconds(5000))
             .Subscribe(_ => PauseEnd());
     }
     #endregion
