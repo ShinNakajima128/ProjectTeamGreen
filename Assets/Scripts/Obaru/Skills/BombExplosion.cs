@@ -96,7 +96,7 @@ public class BombExplosion : MonoBehaviour, IPoolable
 
     public void ReturnPool()
     {
-        throw new NotImplementedException();
+        gameObject.SetActive(false);
     }
     #endregion
 }

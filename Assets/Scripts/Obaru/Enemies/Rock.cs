@@ -89,7 +89,7 @@ public class Rock : MonoBehaviour,IPoolable
 
     public void ReturnPool()
     {
-        throw new NotImplementedException();
+        gameObject.SetActive(false);
     }
     #endregion
 

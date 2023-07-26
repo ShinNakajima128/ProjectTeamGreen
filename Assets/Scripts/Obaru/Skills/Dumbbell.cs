@@ -93,6 +93,11 @@ public class Dumbbell : MonoBehaviour, IPoolable
     {
         _rb.velocity = dir * _moveSpeed;
     }
+
+    public void ReturnPool()
+    {
+        gameObject.SetActive(false);
+    }
     #endregion
 
     #region Coroutine method
@@ -104,11 +109,6 @@ public class Dumbbell : MonoBehaviour, IPoolable
     {
         yield return new WaitForSeconds(_lifeTime);
         gameObject.SetActive(false);
-    }
-
-    public void ReturnPool()
-    {
-        throw new NotImplementedException();
     }
     #endregion
 }
