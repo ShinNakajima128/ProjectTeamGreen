@@ -89,6 +89,11 @@ public class EnemyBullet : MonoBehaviour, IPoolable
     {
         _rb.velocity = dir * _moveSpeed;
     }
+
+    public void ReturnPool()
+    {
+        gameObject.SetActive(false);
+    }
     #endregion
 
     #region Coroutine method
@@ -103,11 +108,6 @@ public class EnemyBullet : MonoBehaviour, IPoolable
         //親を設定しなおして非アクティブ化
         transform.SetParent(_parent);
         gameObject.SetActive(false);
-    }
-
-    public void ReturnPool()
-    {
-        throw new NotImplementedException();
     }
     #endregion
 }

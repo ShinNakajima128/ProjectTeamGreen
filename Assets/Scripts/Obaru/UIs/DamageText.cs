@@ -102,6 +102,10 @@ public class DamageText : MonoBehaviour, IPoolable
         transform.position = target.position;
         TextRise();
     }
+    public void ReturnPool()
+    {
+        gameObject.SetActive(false);
+    }
     #endregion
 
     #region private method
@@ -130,9 +134,5 @@ public class DamageText : MonoBehaviour, IPoolable
         gameObject.SetActive(false);
     }
 
-    public void ReturnPool()
-    {
-        throw new NotImplementedException();
-    }
     #endregion
 }
