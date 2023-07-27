@@ -118,10 +118,13 @@ public class AudioManager : MonoBehaviour
             //生成したオブジェクトにAudioSourceを追加
             var source = obj.AddComponent<AudioSource>();
 
+            //オーディオ管理するグループは今回は使用していない。
             if (_mixer != null)
             {
                 source.outputAudioMixerGroup = _mixer.FindMatchingGroups("Master")[2];
             }
+
+            //ListにSEのオーディオソースを追加
             _seAudioSourceList.Add(source);
         }
     }
@@ -132,13 +135,15 @@ public class AudioManager : MonoBehaviour
     /// BGMを再生
     /// </summary>
     /// <param name="type">BGMの種類</param>
-    /// <param name="loopType"></param>
+    /// <param name="loopType">loopするかどうか</param>
     public static void PlayBGM(BGMType type, bool loopType = true)
     {
+        //enumで取得
         var bgm = GetBGM(type);
-
+                
         if (bgm != null)
         {
+            //現在再生しているものがなければ新たに再生して、あればフェードのコルーチン
             if (Instance._bgmSource.clip == null)
             {
                 Instance._bgmSource.clip = bgm.Clip;
@@ -159,12 +164,17 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// SEの再生
+    /// </summary>
+    /// <param name="type">SEの種類</param>
     public static void PlaySE(SEType type)
     {
         var se = GetSE(type);
 
         if (se != null)
         {
+            //AudioSorceクラスのプロパティisPlayingでなければ再生。
             foreach (var s in Instance._seAudioSourceList)
             {
                 if (!s.isPlaying)
@@ -196,7 +206,7 @@ public class AudioManager : MonoBehaviour
     /// <summary>
     /// 再生中のBGMの音量を徐々に下げて停止する
     /// </summary>
-    /// <param name="stopTime"></param>
+    /// <param name="stopTime">徐々に下げる値</param>
     public static void StopBGM(float stopTime)
     {
         Instance.StartCoroutine(Instance.LowerVolume(stopTime));
@@ -221,7 +231,7 @@ public class AudioManager : MonoBehaviour
     /// <summary>
     /// マスター音量を変更する
     /// </summary>
-    /// <param name="masterValue"></param>
+    /// <param name="masterValue">音量の値</param>
     public static void MasterVolChange(float masterValue)
     {
         Instance._masterVolume = masterValue;
@@ -264,7 +274,7 @@ public class AudioManager : MonoBehaviour
     /// BGMを徐々に変更する
     /// </summary>
     /// <param name="afterBgm">変更後のBGM</param>
-    /// <param name="loopType"></param>
+    /// <param name="loopType">loopさせるかどうか</param>
     IEnumerator SwitchingBgm(BGM afterBgm, bool loopType = true)
     {
         _isStoping = false;
@@ -294,7 +304,6 @@ public class AudioManager : MonoBehaviour
     /// 音量を徐々に下げて停止するコルーチン
     /// </summary>
     /// <param name="time">停止するまでの時間</param>
-    /// <returns></returns>
     IEnumerator LowerVolume(float time)
     {
         float currentVol = _bgmSource.volume;

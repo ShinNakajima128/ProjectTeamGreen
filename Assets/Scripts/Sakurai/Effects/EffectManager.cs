@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// エフェクトをプールさせるクラス
+/// </summary>
 public class EffectManager : MonoBehaviour
 {
     #region property
@@ -26,15 +29,6 @@ public class EffectManager : MonoBehaviour
     private EffectType _debugEffect = default;
     #endregion
 
-    #region private
-    #endregion
-
-    #region Constant
-    #endregion
-
-    #region Event
-    #endregion
-
     #region unity methods
     private void Awake()
     {
@@ -42,10 +36,10 @@ public class EffectManager : MonoBehaviour
 
         for (int i = 0; i < _effects.Length; i++)
         {
+            //各エフェクトをエネミーマネージャーの子オブジェクトに作成。
             _effects[i].Setup(transform);
         }
     }
-
     #endregion
 
     #region public method
@@ -55,42 +49,40 @@ public class EffectManager : MonoBehaviour
 
         foreach (var e in effect.EffectCtrlList)
         {
+            //エフェクトが再生中(アクティブ)であればスキップ
             if (e.IsActive())
             {
                 continue;
             }
             else
             {
+                //ポジションを渡して再生
                 e.Play(pos);
                 return;
             }
         }
+
         effect.AddToEffectList(pos);
     }
-    #endregion
-
-    #region private method
     #endregion
 }
 
 [Serializable]
 public class Effect
 {
-    #region property
-    #endregion
-
-    #region serialize
-    #endregion
-
     #region public
     /// <summary>エフェクト名</summary>
     public string EffectName;
+
     /// <summary>エフェクトの種類</summary>
     public EffectType Type;
+
     /// <summary>エフェクトのPrefab</summary>
     public GameObject EffectPrefab;
+
     /// <summary>最初に生成するエフェクトの数</summary>
     public int StartGenerateNum;
+
     /// <summary>エフェクトの機能を管理するコンポーネントList</summary>
     [HideInInspector]
     public List<EffectController> EffectCtrlList = new List<EffectController>();
@@ -108,11 +100,16 @@ public class Effect
     /// <param name="parent">親オブジェクト</param>
     public void Setup(Transform parent)
     {
+        //空のオブジェクトを作成
         GameObject p = new GameObject($"{EffectName}List");
+
+        //エフェクトの親となるように設定
         _parent = p.transform;
+
         //EffectManagerの子オブジェクトにセットする
         p.transform.SetParent(parent);
 
+        //エフェクトを追加
         for (int i = 0; i < StartGenerateNum; i++)
         {
             var effectPrefab = GameObject.Instantiate(EffectPrefab, _parent).AddComponent<EffectController>();

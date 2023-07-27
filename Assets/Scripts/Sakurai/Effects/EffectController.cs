@@ -5,23 +5,25 @@ using UniRx;
 using UniRx.Triggers;
 
 /// <summary>
-/// エフェクトをコントロールするクラス
+/// 各エフェクトをコントロールするクラス
 /// </summary>
 public class EffectController : MonoBehaviour
 {
     #region private
+    /// <summary>パーティクルを格納する配列</summary>
     private ParticleSystem[] _particles;
     #endregion
 
     #region unity methods
     private void Awake()
     {
+        //子オブジェクトのパーティクルシステムを取得
         _particles = GetComponentsInChildren<ParticleSystem>();
     }
 
     private void Start()
     {
-        //エフェクトが再生しているか確認する処理の登録
+        //各エフェクトが再生しているか確認する処理の登録。
         this.UpdateAsObservable()
             .TakeUntilDestroy(this)
             .Subscribe(_ =>
@@ -33,6 +35,7 @@ public class EffectController : MonoBehaviour
                         return;
                     }
                 }
+                //Particleが停止したら非アクティブ。
                 gameObject.SetActive(false);
             });
     }
@@ -67,7 +70,6 @@ public class EffectController : MonoBehaviour
     /// <summary>
     /// 使用中か確認する
     /// </summary>
-    /// <returns></returns>
     public bool IsActive()
     {
         return gameObject.activeInHierarchy;
