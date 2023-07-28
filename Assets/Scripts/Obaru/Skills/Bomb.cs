@@ -38,7 +38,9 @@ public class Bomb : MonoBehaviour, IPoolable
     private BombExplosionGenerator _bombExplosionGenerator;
     /// <summary>親のTransform</summary>
     private Transform _parent;
+    #endregion
 
+    #region Event
     private Subject<Unit> _inactiveSubject = new Subject<Unit>();
     #endregion
 
@@ -82,7 +84,7 @@ public class Bomb : MonoBehaviour, IPoolable
     /// <summary>
     /// 攻撃力の設定
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param name="amount">攻撃力</param>
     public void SetAttackAmount(float amount)
     {
         _currentAttackAmount = amount;
@@ -91,7 +93,7 @@ public class Bomb : MonoBehaviour, IPoolable
     /// <summary>
     /// velocityの設定
     /// </summary>
-    /// <param name="dir"></param>
+    /// <param name="dir">敵の方向</param>
     public void SetVelocity(Vector3 dir)
     {
         _rb.velocity = dir * _moveSpeed;
@@ -100,7 +102,7 @@ public class Bomb : MonoBehaviour, IPoolable
     /// <summary>
     /// 現在のスキルレベルを取得
     /// </summary>
-    /// <param name="currentSkillLevel"></param>
+    /// <param name="currentSkillLevel">現在のスキルレベル</param>
     public void GetCurrentLevel(int currentSkillLevel)
     {
         _currentSkillLevel = currentSkillLevel;

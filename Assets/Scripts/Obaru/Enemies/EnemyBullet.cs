@@ -11,11 +11,14 @@ using UniRx;
 [RequireComponent(typeof(CircleCollider2D))]
 public class EnemyBullet : MonoBehaviour, IPoolable
 {
+    #region property
+    public IObservable<Unit> InactiveObserver => _inactiveSubject;
+    #endregion
+
     #region serialize
     [Tooltip("弾の速さ")]
     [SerializeField]
     private float _moveSpeed = 3.0f;
-    public IObservable<Unit> InactiveObserver => _inactiveSubject;
     #endregion
 
     #region private
@@ -75,7 +78,7 @@ public class EnemyBullet : MonoBehaviour, IPoolable
     /// <summary>
     /// 攻撃力の設定
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param name="amount">攻撃力</param>
     public void SetAttackAmount(float amount)
     {
         _currentAttackAmount = amount;
@@ -84,7 +87,7 @@ public class EnemyBullet : MonoBehaviour, IPoolable
     /// <summary>
     /// velocityの設定
     /// </summary>
-    /// <param name="dir"></param>
+    /// <param name="dir">プレイヤーの方向</param>
     public void SetVelocity(Vector3 dir)
     {
         _rb.velocity = dir * _moveSpeed;

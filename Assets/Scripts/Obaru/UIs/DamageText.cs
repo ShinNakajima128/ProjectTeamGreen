@@ -80,8 +80,8 @@ public class DamageText : MonoBehaviour, IPoolable
     /// <summary>
     /// ダメージと表示位置をセット
     /// </summary>
-    /// <param name="target"></param>
-    /// <param name="amount"></param>
+    /// <param name="target">敵のTransform</param>
+    /// <param name="amount">被ダメージ</param>
     public void SetDamageText(Transform target, float amount)
     {
         //ダメージによって色を変える
@@ -102,6 +102,7 @@ public class DamageText : MonoBehaviour, IPoolable
         transform.position = target.position;
         TextRise();
     }
+
     public void ReturnPool()
     {
         gameObject.SetActive(false);

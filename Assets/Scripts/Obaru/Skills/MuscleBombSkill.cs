@@ -101,7 +101,7 @@ public class MuscleBombSkill : SkillBase
     /// <summary>
     /// スキルの攻撃力アップ
     /// </summary>
-    /// <param name="coefficient"></param>
+    /// <param name="coefficient">攻撃力に掛ける係数</param>
     public override void AttackUpSkill(float coefficient)
     {
         _currentAttackAmount *= coefficient;

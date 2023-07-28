@@ -81,7 +81,7 @@ public class Rock : MonoBehaviour,IPoolable
     /// <summary>
     /// 攻撃力の設定
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param name="amount">攻撃力</param>
     public void SetAttackAmount(float amount)
     {
         _currentAttackAmount = amount;
@@ -143,8 +143,8 @@ enum RockThrownDirectionX
 {
     /// <summary>左</summary>
     Left,
-    /// <summary>左</summary>
+    /// <summary>中央</summary>
     Center,
-    /// <summary>左</summary>
+    /// <summary>右</summary>
     Right
 }

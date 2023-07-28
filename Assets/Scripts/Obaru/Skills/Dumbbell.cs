@@ -79,7 +79,7 @@ public class Dumbbell : MonoBehaviour, IPoolable
     /// <summary>
     /// 攻撃力の設定
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param name="amount">攻撃力</param>
     public void SetAttackAmount(float amount)
     {
         _currentAttackAmount = amount;
@@ -88,7 +88,7 @@ public class Dumbbell : MonoBehaviour, IPoolable
     /// <summary>
     /// velocityの設定
     /// </summary>
-    /// <param name="dir"></param>
+    /// <param name="dir">敵の方向</param>
     public void SetVelocity(Vector3 dir)
     {
         _rb.velocity = dir * _moveSpeed;
