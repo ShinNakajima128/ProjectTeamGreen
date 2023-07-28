@@ -28,9 +28,9 @@ public class TurretEnemy : EnemyBase
     private bool _isCanShot = true;
     /// <summary>フリップを行うコルーチン格納用</summary>
     private Coroutine _flipCoroutine;
-    /// <summary>弾生成コンポーネント格納用(レモン)</summary>
+    /// <summary>弾生成コンポーネント格納用(トウモロコシ用)</summary>
     private EnemyBulletGenerator _bulletGenerator;
-    /// <summary>弾生成コンポーネント格納用(スイカ)</summary>
+    /// <summary>弾生成コンポーネント格納用(スイカ用)</summary>
     private EnemyBulletGenerator _waterMelonBulletGenerator;
     #endregion
 
@@ -80,7 +80,7 @@ public class TurretEnemy : EnemyBase
     /// <summary>
     /// 弾の生成
     /// </summary>
-    /// <param name="bullet"></param>
+    /// <param name="bullet">弾の種類</param>
     private void BulletGenerate(EnemyBullet bullet)
     {
         //弾がnullでないなら

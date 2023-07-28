@@ -82,10 +82,10 @@ public class SignalManager : MonoBehaviour
         }
     }
 
-        /// <summary>
-        ///　スキップボタンを押した時の処理
-        /// </summary>
-        public void OnClickSkipButton()
+    /// <summary>
+    ///　スキップボタンを押した時の処理
+    /// </summary>
+    public void OnClickSkipButton()
     {
         FadeManager.Fade(FadeType.Out, () =>
         {

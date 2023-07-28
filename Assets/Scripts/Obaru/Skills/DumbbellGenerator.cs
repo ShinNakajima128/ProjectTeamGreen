@@ -12,14 +12,6 @@ public class DumbbellGenerator : MonoBehaviour
     #endregion
 
     #region serialize
-    [Tooltip("初期生成量")]
-    [SerializeField]
-    private uint _reserveAmount = 10;
-
-    [Tooltip("上限")]
-    [SerializeField]
-    private uint _limit = 100;
-
     [Tooltip("プレハブ")]
     [SerializeField]
     private Dumbbell _dumbbellPrefab = default;

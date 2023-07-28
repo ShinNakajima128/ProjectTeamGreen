@@ -10,11 +10,14 @@ using UnityEngine;
 [RequireComponent(typeof(CircleCollider2D))]
 public class BombExplosion : MonoBehaviour, IPoolable
 {
+    #region property
+    public IObservable<Unit> InactiveObserver => _inactiveSubject;
+    #endregion
+
     #region serialize
     [Tooltip("スケールに対する係数")]
     [SerializeField]
     private float _scaleCoefficient = 1.2f;
-    public IObservable<Unit> InactiveObserver => _inactiveSubject;
     #endregion
 
     #region private
@@ -64,7 +67,7 @@ public class BombExplosion : MonoBehaviour, IPoolable
     /// <summary>
     /// 攻撃力の設定
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param name="amount">攻撃力</param>
     public void SetAttackAmount(float amount)
     {
         _currentAttackAmount = amount;

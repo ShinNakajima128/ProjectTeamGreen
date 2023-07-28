@@ -70,7 +70,7 @@ public class Missile : MonoBehaviour,IPoolable
     /// <summary>
     /// 攻撃力の設定
     /// </summary>
-    /// <param name="amount"></param>
+    /// <param name="amount">攻撃力</param>
     public void SetAttackAmount(float amount)
     {
         _currentAttackAmount = amount;
@@ -79,7 +79,7 @@ public class Missile : MonoBehaviour,IPoolable
     /// <summary>
     /// プレイヤーのTransformを設定する
     /// </summary>
-    /// <param name="target"></param>
+    /// <param name="target">プレイヤーのTransform</param>
     public void SetTargetTransform(Transform target)
     {
         _currentCoroutine = StartCoroutine(OnActionCoroutine(target));
@@ -91,14 +91,11 @@ public class Missile : MonoBehaviour,IPoolable
     }
     #endregion
 
-    #region private method
-    #endregion
-
     #region Coroutine method
     /// <summary>
     /// ミサイルのアクション
     /// </summary>
-    /// <param name="target"></param>
+    /// <param name="target">プレイヤーのTransform</param>
     /// <returns></returns>
     private IEnumerator OnActionCoroutine(Transform target)
     {
